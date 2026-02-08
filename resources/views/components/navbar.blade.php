@@ -1,53 +1,38 @@
-<div class="app-menu navbar-menu">
-    <!-- LOGO -->
-    <div class="navbar-brand-box">
-        <!-- Dark Logo-->
-        <a href="index.html" class="logo logo-dark">
-            <span class="logo-sm">
-                <img src="{{ asset('/') }}assets/images/logo-sm.png" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ asset('/') }}assets/images/logo-dark.png" alt="" height="17">
-            </span>
-        </a>
-        <!-- Light Logo-->
-        <a href="index.html" class="logo logo-light">
-            <span class="logo-sm">
-                <img src="{{ asset('/') }}assets/images/logo-sm.png" alt="" height="22">
-            </span>
-            <span class="logo-lg">
-                <img src="{{ asset('/') }}assets/images/logo-light.png" alt="" height="17">
-            </span>
-        </a>
-        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
-            id="vertical-hover">
-            <i class="ri-record-circle-line"></i>
-        </button>
-    </div>
+ <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+     <div class="container">
+         <a class="navbar-brand fw-bold" href="#">UM<span class="text-light">Lab</span></a>
 
-    <div id="scrollbar">
-        <div class="container-fluid">
+         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navmenu">
+             <span class="navbar-toggler-icon"></span>
+         </button>
 
-            <div id="two-column-menu">
-            </div>
-            <ul class="navbar-nav" id="navbar-nav">
-                <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                        <i class="bx bxs-dashboard"></i> <span data-key="t-dashboards">Dashboards</span>
-                    </a>
-                </li> <!-- end Dashboard Menu -->
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ Route::is('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                        <i class="bx bxs-dashboard"></i> <span data-key="t-dashboards">Activity</span>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-        <!-- Sidebar -->
-    </div>
-
-    <div class="sidebar-background"></div>
-</div>
+         <div class="collapse navbar-collapse" id="navmenu">
+             <ul class="navbar-nav ms-auto align-items-center">
+                 <li class="nav-item">
+                     <a class="nav-link active" href="{{ route('dashboard') }}">Dashboard</a>
+                 </li>
+                 <li class="nav-item ms-lg-3">
+                     <a class="nav-link" href="{{ route('activity.index') }}">Activity</a>
+                 </li>
+                 <li class="nav-item ms-lg-4 dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="logoutDropdown" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                         <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle"
+                             data-key="t-logout"> <i class="bi bi-person-circle text-white fs-4"></i></span>
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="logoutDropdown">
+                         <li>
+                             <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                 @csrf
+                                 <button class="dropdown-item" type="submit">
+                                     <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
+                                         class="align-middle" data-key="t-logout">Logout</span>
+                                 </button>
+                             </form>
+                         </li>
+                     </ul>
+                 </li>
+             </ul>
+         </div>
+     </div>
+ </nav>
