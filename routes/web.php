@@ -11,6 +11,12 @@ Route::get('/activity', function () {
     return view('pages.activity.index');
 })->name('activity.index');
 
+Route::get('/detail-course', function () {
+    return view('pages.course.detail');
+})->name('detail.course');
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

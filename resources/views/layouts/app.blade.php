@@ -139,12 +139,22 @@
                 font-size: 28px;
             }
         }
+
+        .course-item h6 {
+            font-size: 16px;
+        }
+
+        .course-item p , span, div{
+            font-size: 13px;
+        }
+
+        
     </style>
 </head>
 
 <body>
 
-   @include('components.navbar')
+    @include('components.navbar')
 
     @yield('content')
 

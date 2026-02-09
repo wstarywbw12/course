@@ -6,7 +6,7 @@
         <small>Siap lanjutkan perjalanan belajarmu hari ini?</small>
 
         <div class="level-box">
-            <div class="mb-2">
+            <div class="mb-2 text-dark">
                 You are now a <b class="text-primary">Beginner</b>
             </div>
 
@@ -23,48 +23,88 @@
             <!-- LEFT COURSES -->
             <div class="col-lg-8">
 
-                <div class="section-title">Courses</div>
+                <div class="course-wrapper ">
+                    <div class="container">
+                        <h5 class="text-white fw-bold ">Courses</h5>
 
-                <!-- ITEM -->
-                <div class="course-item d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="me-3">
-                        <div class="course-title">Pengantar UML & Diagram Kelas</div>
-                        <div class="course-desc">Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
+                        <div class="card course-card shadow-lg border-0">
+                            <div class="card-body p-4">
+
+                                <!-- Item -->
+                                <div class="course-item d-flex justify-content-between align-items-center py-3">
+                                    <div>
+                                        <h6 class="fw-bold  mb-1">Pengantar UML & Diagram Kelas</h6>
+                                        <p class="text-muted mb-0">
+                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-5">
+                                        <span class="text-muted fst-italic">Beginner</span>
+
+                                        <div  class="d-flex align-items-center text-muted">
+                                            <i class="bi bi-clock me-2"></i> 17 hours
+                                        </div>
+
+                                        <a style="font-size: 13px;display: flex; align-items: center;" href="{{ route('detail.course') }}" class="btn btn-outline-primary rounded-pill px-4">
+                                            Mulai 
+                                            <i class="bi bi-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <!-- Item -->
+                                <div class="course-item d-flex justify-content-between align-items-center py-3">
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
+                                        <p class="text-muted mb-0">
+                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-5">
+                                        <span class="text-muted fst-italic">Intermediate</span>
+
+                                        <div class="d-flex align-items-center text-muted">
+                                            <i class="bi bi-clock me-2"></i> 17 hours
+                                        </div>
+
+                                         <a style="font-size: 13px;display: flex; align-items: center;" href="#" class="btn btn-outline-primary rounded-pill px-4">
+                                            Mulai 
+                                            <i class="bi bi-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <!-- Item -->
+                                <div class="course-item d-flex justify-content-between align-items-center py-3">
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
+                                        <p class="text-muted mb-0">
+                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
+                                        </p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center gap-5">
+                                        <span class="text-muted fst-italic">Advance</span>
+
+                                        <div class="d-flex align-items-center text-muted">
+                                            <i class="bi bi-clock me-2"></i> 17 hours
+                                        </div>
+
+                                         <a style="font-size: 13px;display: flex; align-items: center;" href="#" class="btn btn-outline-primary rounded-pill px-4">
+                                            Mulai 
+                                            <i class="bi bi-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-4 mt-3 mt-lg-0">
-                        <div class="course-meta">Beginner</div>
-                        <div class="course-meta"><i class="bi bi-clock"></i> 17 hours</div>
-                        <button class="btn btn-start">Mulai →</button>
-                    </div>
-                </div>
-
-                <div class="course-item d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="me-3">
-                        <div class="course-title">Pengantar UML & Diagram Kelas</div>
-                        <div class="course-desc">Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-4 mt-3 mt-lg-0">
-                        <div class="course-meta">Intermediate</div>
-                        <div class="course-meta"><i class="bi bi-clock"></i> 17 hours</div>
-                        <button class="btn btn-start">Mulai →</button>
-                    </div>
-                </div>
-
-                <div class="course-item d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="me-3">
-                        <div class="course-title">Pengantar UML & Diagram Kelas</div>
-                        <div class="course-desc">Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
-                        </div>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-4 mt-3 mt-lg-0">
-                        <div class="course-meta">Advance</div>
-                        <div class="course-meta"><i class="bi bi-clock"></i> 17 hours</div>
-                        <button class="btn btn-start">Mulai →</button>
                     </div>
                 </div>
 
@@ -73,7 +113,7 @@
             <!-- RIGHT SIDE -->
             <div class="col-lg-4">
 
-                <div class="section-title">Continue Courses</div>
+               <h5 class="text-white fw-bold ">Continue Course</h5>
 
                 <div class="continue-card">
                     <small>Beginner</small>

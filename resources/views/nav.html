@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Sidebar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fb;
+        }
+
+        /* Courses / Notes */
+        .top-tabs {
+            background: #1e63ff;
+            padding: 6px;
+            border-radius: 14px;
+        }
+        .top-tabs .nav-link {
+            color: #fff;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 8px 28px;
+        }
+        .top-tabs .nav-link.active {
+            background: #fff;
+            color: #1e63ff;
+        }
+
+        /* Lesson / Quiz */
+        .sub-tabs .btn {
+            font-weight: 600;
+        }
+
+        /* Lesson List */
+        .lesson-list {
+            max-height: 420px;
+            overflow-y: auto;
+        }
+
+        .lesson-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            align-items: center;
+            border: 2px solid transparent;
+        }
+
+        .lesson-item.active {
+            background: #fff;
+            border-color: #1e63ff;
+        }
+
+        .lesson-number {
+            background: #1e63ff;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .lesson-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .lesson-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+
+            <!-- COURSES / NOTES -->
+            <ul class="nav nav-pills top-tabs mb-3 justify-content-between" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#courses">
+                        Courses
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notes">
+                        Notes
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content bg-white p-3 rounded-4 shadow-sm">
+
+                <!-- ================= COURSES ================= -->
+                <div class="tab-pane fade show active" id="courses">
+
+                    <!-- Lesson / Quiz -->
+                    <div class="btn-group w-100 mb-3 sub-tabs">
+                        <button class="btn btn-primary">Lesson</button>
+                        <button class="btn btn-outline-secondary">Quiz</button>
+                    </div>
+
+                    <!-- Lesson List -->
+                    <div class="lesson-list">
+
+                        <div class="lesson-item">
+                            <div class="lesson-number">1</div>
+                            <div>
+                                <div class="lesson-title">Pengantar UML & Diagram Kelas</div>
+                                <div class="lesson-time">
+                                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lesson-item active">
+                            <div class="lesson-number">2</div>
+                            <div>
+                                <div class="lesson-title">Alat Pemodelan UML & Persiapan</div>
+                                <div class="lesson-time">
+                                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lesson-item">
+                            <div class="lesson-number">3</div>
+                            <div>
+                                <div class="lesson-title">Komponen & Notasi Dasar Class Diagram</div>
+                                <div class="lesson-time">
+                                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lesson-item">
+                            <div class="lesson-number">4</div>
+                            <div>
+                                <div class="lesson-title">Merepresentasikan Kelas, Atribut, dan Operasi</div>
+                                <div class="lesson-time">
+                                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lesson-item">
+                            <div class="lesson-number">5</div>
+                            <div>
+                                <div class="lesson-title">Contoh Diagram Kelas Sederhana</div>
+                                <div class="lesson-time">
+                                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lesson-item">
+                            <div class="lesson-number">6</div>
+                            <div>
+                                <div class="lesson-title">Rangkuman Dasar Class Diagram</div>
+                                <div class="lesson-time">
+                                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================= NOTES ================= -->
+                <div class="tab-pane fade" id="notes">
+                    <h6 class="fw-bold mb-2">Catatan</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item">UML digunakan untuk memodelkan sistem.</li>
+                        <li class="list-group-item">Class Diagram terdiri dari atribut & operasi.</li>
+                        <li class="list-group-item">Relasi umum: asosiasi, agregasi, komposisi.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

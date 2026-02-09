@@ -1,6 +1,6 @@
  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
      <div class="container">
-         <a class="navbar-brand fw-bold" href="#">UM<span class="text-light">Lab</span></a>
+         <a class="navbar-brand fw-bold text-brand" href="#">UM<span >Lab</span></a>
 
          <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navmenu">
              <span class="navbar-toggler-icon"></span>
@@ -9,10 +9,10 @@
          <div class="collapse navbar-collapse" id="navmenu">
              <ul class="navbar-nav ms-auto align-items-center">
                  <li class="nav-item">
-                     <a class="nav-link active" href="{{ route('dashboard') }}">Dashboard</a>
+                     <a class="nav-link active text-nav" href="{{ route('dashboard') }}">Dashboard</a>
                  </li>
                  <li class="nav-item ms-lg-3">
-                     <a class="nav-link" href="{{ route('activity.index') }}">Activity</a>
+                     <a class="nav-link text-nav" href="{{ route('activity.index') }}">Activity</a>
                  </li>
                  <li class="nav-item ms-lg-4 dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="logoutDropdown" data-bs-toggle="dropdown"
