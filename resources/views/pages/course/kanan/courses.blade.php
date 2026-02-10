@@ -1,0 +1,29 @@
+<ul class="nav nav-pills nav-pills-materi mb-4 w-100" id="lessonQuizTab" role="tablist">
+    <li class="nav-item w-50" role="presentation">
+        <button class="nav-link w-100 fw-semibold py-2 active" data-bs-toggle="pill" data-bs-target="#lesson"
+            type="button">
+            Lesson
+        </button>
+    </li>
+
+    <li class="nav-item w-50" role="presentation">
+        <button class="nav-link w-100 fw-semibold py-2" data-bs-toggle="pill" data-bs-target="#quiz" type="button">
+            Quiz
+        </button>
+    </li>
+</ul>
+
+
+<div class="tab-content">
+
+    <!-- LESSON CONTENT -->
+    <div class="tab-pane fade show active" id="lesson" role="tabpanel">
+        @include('pages.course.kanan.lesson')
+    </div>
+
+    <!-- QUIZ CONTENT -->
+    <div class="tab-pane fade" id="quiz" role="tabpanel">
+        @include('pages.course.kanan.quiz')
+    </div>
+
+</div>
