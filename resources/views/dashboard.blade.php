@@ -10,8 +10,31 @@
                 You are now a <b class="text-primary">Beginner</b>
             </div>
 
-            <div class="progress">
-                <div class="progress-bar" style="width:35%"></div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="progress">
+                        <div class="progress-bar" style="width:35%"></div>
+                    </div>
+                    <div class="text-end">
+                        <i style="font-size: 22px" class="bi bi-circle-fill me-2 text-primary "></i>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="progress">
+                        <div class="progress-bar" style="width:0%"></div>
+                    </div>
+                    <div class="text-end">
+                        <i style="font-size: 22px" class="bi bi-triangle-fill  me-2 text-primary "></i>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="progress">
+                        <div class="progress-bar" style="width:0%"></div>
+                    </div>
+                    <div class="text-end">
+                        <i style="font-size: 22px" class="bi bi-square-fill  me-2 text-primary "></i>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -24,87 +47,114 @@
             <div class="col-lg-8">
 
                 <div class="course-wrapper ">
-                    <div class="container">
+                    <div class=" mb-3">
                         <h5 class="text-white fw-bold ">Courses</h5>
 
-                        <div class="card course-card shadow-lg border-0">
-                            <div class="card-body p-4">
+                        <div class="card course-card shadow-sm border-0">
+                            <div class="card-body p-3 p-lg-4">
 
-                                <!-- Item -->
-                                <div class="course-item d-flex justify-content-between align-items-center py-3">
-                                    <div>
-                                        <h6 class="fw-bold  mb-1">Pengantar UML & Diagram Kelas</h6>
-                                        <p class="text-muted mb-0">
-                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
-                                        </p>
-                                    </div>
+                                <!-- ITEM -->
+                                <div
+                                    class="course-item d-flex flex-column flex-lg-row 
+                   justify-content-between align-items-start align-items-lg-center 
+                   py-3 gap-3 gap-lg-0">
 
-                                    <div class="d-flex align-items-center gap-5">
-                                        <span class="text-muted fst-italic">Beginner</span>
-
-                                        <div  class="d-flex align-items-center text-muted">
-                                            <i class="bi bi-clock me-2"></i> 17 hours
-                                        </div>
-
-                                        <a style="font-size: 13px;display: flex; align-items: center;" href="{{ route('detail.course') }}" class="btn btn-outline-primary rounded-pill px-4">
-                                            Mulai 
-                                            <i class="bi bi-arrow-right ms-1"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-                                <!-- Item -->
-                                <div class="course-item d-flex justify-content-between align-items-center py-3">
-                                    <div>
+                                    <!-- LEFT -->
+                                    <div class="course-info">
                                         <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
                                         <p class="text-muted mb-0">
                                             Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
                                         </p>
                                     </div>
 
-                                    <div class="d-flex align-items-center gap-5">
+                                    <!-- RIGHT -->
+                                    <div
+                                        class="course-meta d-flex flex-wrap flex-lg-nowrap 
+                       align-items-center gap-3 gap-lg-5">
+
+                                        <span class="text-muted fst-italic">Beginner</span>
+
+                                        <div class="d-flex align-items-center text-muted">
+                                            <i class="bi bi-clock me-2"></i> 17 hours
+                                        </div>
+
+                                        <a href="{{ route('detail.course') }}"
+                                            class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
+                                            <span class="me-1">Mulai</span>
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <!-- ITEM -->
+                                <div
+                                    class="course-item d-flex flex-column flex-lg-row 
+                   justify-content-between align-items-start align-items-lg-center 
+                   py-3 gap-3 gap-lg-0">
+
+                                    <div class="course-info">
+                                        <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
+                                        <p class="text-muted mb-0">
+                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
+                                        </p>
+                                    </div>
+
+                                    <div
+                                        class="course-meta d-flex flex-wrap flex-lg-nowrap 
+                       align-items-center gap-3 gap-lg-5">
+
                                         <span class="text-muted fst-italic">Intermediate</span>
 
                                         <div class="d-flex align-items-center text-muted">
                                             <i class="bi bi-clock me-2"></i> 17 hours
                                         </div>
 
-                                         <a style="font-size: 13px;display: flex; align-items: center;" href="#" class="btn btn-outline-primary rounded-pill px-4">
-                                            Mulai 
-                                            <i class="bi bi-arrow-right ms-1"></i>
+                                       <a href="{{ route('detail.course') }}"
+                                            class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
+                                            <span class="me-1">Mulai</span>
+                                            <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
                                 </div>
 
                                 <hr>
 
-                                <!-- Item -->
-                                <div class="course-item d-flex justify-content-between align-items-center py-3">
-                                    <div>
+                                <!-- ITEM -->
+                                <div
+                                    class="course-item d-flex flex-column flex-lg-row 
+                   justify-content-between align-items-start align-items-lg-center 
+                   py-3 gap-3 gap-lg-0">
+
+                                    <div class="course-info">
                                         <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
                                         <p class="text-muted mb-0">
                                             Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
                                         </p>
                                     </div>
 
-                                    <div class="d-flex align-items-center gap-5">
+                                    <div
+                                        class="course-meta d-flex flex-wrap flex-lg-nowrap 
+                       align-items-center gap-3 gap-lg-5">
+
                                         <span class="text-muted fst-italic">Advance</span>
 
                                         <div class="d-flex align-items-center text-muted">
                                             <i class="bi bi-clock me-2"></i> 17 hours
                                         </div>
 
-                                         <a style="font-size: 13px;display: flex; align-items: center;" href="#" class="btn btn-outline-primary rounded-pill px-4">
-                                            Mulai 
-                                            <i class="bi bi-arrow-right ms-1"></i>
+                                       <a href="{{ route('detail.course') }}"
+                                            class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
+                                            <span class="me-1">Mulai</span>
+                                            <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -113,7 +163,7 @@
             <!-- RIGHT SIDE -->
             <div class="col-lg-4">
 
-               <h5 class="text-white fw-bold ">Continue Course</h5>
+                <h5 class="text-white fw-bold ">Continue Course</h5>
 
                 <div class="continue-card">
                     <small>Beginner</small>
@@ -143,3 +193,21 @@
         </div>
     </div>
 @endsection
+
+
+<style>
+    .course-info h6 {
+        font-size: 14px;
+    }
+
+    .course-info p {
+        font-size: 13px;
+    }
+
+    @media (max-width: 576px) {
+        .course-meta {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+</style>
