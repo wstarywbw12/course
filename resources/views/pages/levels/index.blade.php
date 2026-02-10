@@ -1,24 +1,43 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="row">
-
-            <!-- ================= LEFT CONTENT ================= -->
-            @include('pages.course.kiri.index')
-
-            <!-- ================= RIGHT SIDEBAR ================= -->
-            @include('pages.course.kanan.index')
+        <div class="card mb-3">
+            <div class="card-body ">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5>Manage Level</h5>
+                    <div>
+                        <a href="" class="btn btn-primary">Tambah Level</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- ================= FOOTER NAV ================= -->
-        <div class="footer-nav d-flex justify-content-between mt-4 mb-3">
-            <button id="btnPrev" class="btn btn-outline-secondary" disabled>
-                <i class="bi bi-arrow-left"></i> Kembali
-            </button>
-            <button id="btnNext" class="btn btn-primary">
-                Lanjut <i class="bi bi-arrow-right"></i>
-            </button>
+
+
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="5%" scope="col">No</th>
+                            <th width="15%"  scope="col">Keterangan</th>
+                            <th class="text-end" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th width="5%" scope="row">1</th>
+                            <td>Beginer</td>
+                            <td class="text-end">
+                                <a href="" class="btn btn-sm btn-warning"> <i class="bi bi-pencil"></i> Edit</a>
+                                <a href="" class="btn btn-sm btn-danger"> <i class="bi bi-trash"></i> Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
 
     </div>
 
@@ -26,11 +45,11 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: #fff;
+            background: #f3f5f7;
             min-height: 100vh;
         }
 
-        .text-logo{
+        .text-logo {
             color: #1e4ed8;
         }
 

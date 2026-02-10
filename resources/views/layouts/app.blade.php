@@ -18,20 +18,7 @@
             min-height: 100vh;
         }
 
-        /* NAVBAR */
-        .navbar-custom {
-            background: transparent;
-            padding: 18px 0;
-        }
-
-        .nav-link {
-            color: #dbeafe !important;
-            font-weight: 500;
-        }
-
-        .nav-link.active {
-            border-bottom: 2px solid white;
-        }
+       
 
         /* HERO */
         .hero {

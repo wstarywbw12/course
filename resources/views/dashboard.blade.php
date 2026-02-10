@@ -15,7 +15,7 @@
                     <div class="progress">
                         <div class="progress-bar" style="width:35%"></div>
                     </div>
-                    <div class="text-end">
+                    <div class="text-end mt-2">
                         <i style="font-size: 22px" class="bi bi-circle-fill me-2 text-primary "></i>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     <div class="progress">
                         <div class="progress-bar" style="width:0%"></div>
                     </div>
-                    <div class="text-end">
+                    <div class="text-end mt-2">
                         <i style="font-size: 22px" class="bi bi-triangle-fill  me-2 text-primary "></i>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     <div class="progress">
                         <div class="progress-bar" style="width:0%"></div>
                     </div>
-                    <div class="text-end">
+                    <div class="text-end mt-2">
                         <i style="font-size: 22px" class="bi bi-square-fill  me-2 text-primary "></i>
                     </div>
                 </div>
