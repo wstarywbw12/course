@@ -86,97 +86,129 @@
                     </div>
                 </div>
 
-                <!-- NAV TABS -->
-                <ul class="nav nav-pills custom-tabs mb-3" role="tablist">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#courses" type="button"
-                            role="tab">
+                <ul class="nav nav-pills custom-tabs mb-3 w-100 w-lg-auto" role="tablist">
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link active w-100" data-bs-toggle="pill" data-bs-target="#courses"
+                            type="button">
                             Courses
                         </button>
                     </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notes" type="button"
-                            role="tab">
+                    <li class="nav-item flex-fill">
+                        <button class="nav-link w-100" data-bs-toggle="pill" data-bs-target="#notes" type="button">
                             Notes
                         </button>
                     </li>
                 </ul>
+
 
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
 
                         <div class="tab-pane fade show active" id="courses">
 
-                            <!-- Lesson / Quiz -->
-                            <div class="btn-group w-100 mb-3 sub-tabs">
-                                <button class="btn btn-primary">Lesson</button>
-                                <button class="btn btn-outline-secondary">Quiz</button>
+                            <ul class="nav nav-pills nav-pills-materi mb-4 w-100" id="lessonTab" role="tablist">
+                                <li class="nav-item w-50" role="presentation">
+                                    <button class="nav-link w-100 fw-semibold py-2 active" data-bs-toggle="pill"
+                                        data-bs-target="#lesson" type="button">
+                                        Lesson
+                                    </button>
+                                </li>
+
+                                <li class="nav-item w-50" role="presentation">
+                                    <button class="nav-link w-100 fw-semibold py-2" data-bs-toggle="pill"
+                                        data-bs-target="#quiz" type="button">
+                                        Quiz
+                                    </button>
+                                </li>
+                            </ul>
+
+
+                            <div class="tab-content">
+
+                                <!-- LESSON CONTENT -->
+                                <div class="tab-pane fade show active" id="lesson" role="tabpanel">
+                                    <div class="list-group">
+
+                                        <div class="lesson-list">
+
+                                            <div class="lesson-item">
+                                                <div class="lesson-number">1</div>
+                                                <div>
+                                                    <div class="lesson-title">Pengantar UML & Diagram Kelas</div>
+                                                    <div class="lesson-time">
+                                                        <i class="bi bi-clock"></i> 5 min, 15 minute
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="lesson-item active">
+                                                <div class="lesson-number">2</div>
+                                                <div>
+                                                    <div class="lesson-title">Alat Pemodelan UML & Persiapan</div>
+                                                    <div class="lesson-time">
+                                                        <i class="bi bi-clock"></i> 5 min, 15 minute
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="lesson-item">
+                                                <div class="lesson-number">3</div>
+                                                <div>
+                                                    <div class="lesson-title">Komponen & Notasi Dasar Class Diagram</div>
+                                                    <div class="lesson-time">
+                                                        <i class="bi bi-clock"></i> 5 min, 15 minute
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="lesson-item">
+                                                <div class="lesson-number">4</div>
+                                                <div>
+                                                    <div class="lesson-title">Merepresentasikan Kelas, Atribut, dan Operasi
+                                                    </div>
+                                                    <div class="lesson-time">
+                                                        <i class="bi bi-clock"></i> 5 min, 15 minute
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="lesson-item">
+                                                <div class="lesson-number">5</div>
+                                                <div>
+                                                    <div class="lesson-title">Contoh Diagram Kelas Sederhana</div>
+                                                    <div class="lesson-time">
+                                                        <i class="bi bi-clock"></i> 5 min, 15 minute
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="lesson-item">
+                                                <div class="lesson-number">6</div>
+                                                <div>
+                                                    <div class="lesson-title">Rangkuman Dasar Class Diagram</div>
+                                                    <div class="lesson-time">
+                                                        <i class="bi bi-clock"></i> 5 min, 15 minute
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- QUIZ CONTENT -->
+                                <div class="tab-pane fade" id="quiz" role="tabpanel">
+                                    <div class="alert alert-info">
+                                        <strong>Quiz Section</strong><br>
+                                        Kerjakan quiz untuk menguji pemahaman materi UML.
+                                    </div>
+                                </div>
+
                             </div>
+
 
                             <!-- Lesson List -->
-                            <div class="lesson-list">
 
-                                <div class="lesson-item">
-                                    <div class="lesson-number">1</div>
-                                    <div>
-                                        <div class="lesson-title">Pengantar UML & Diagram Kelas</div>
-                                        <div class="lesson-time">
-                                            <i class="bi bi-clock"></i> 5 min, 15 minute
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lesson-item active">
-                                    <div class="lesson-number">2</div>
-                                    <div>
-                                        <div class="lesson-title">Alat Pemodelan UML & Persiapan</div>
-                                        <div class="lesson-time">
-                                            <i class="bi bi-clock"></i> 5 min, 15 minute
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lesson-item">
-                                    <div class="lesson-number">3</div>
-                                    <div>
-                                        <div class="lesson-title">Komponen & Notasi Dasar Class Diagram</div>
-                                        <div class="lesson-time">
-                                            <i class="bi bi-clock"></i> 5 min, 15 minute
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lesson-item">
-                                    <div class="lesson-number">4</div>
-                                    <div>
-                                        <div class="lesson-title">Merepresentasikan Kelas, Atribut, dan Operasi</div>
-                                        <div class="lesson-time">
-                                            <i class="bi bi-clock"></i> 5 min, 15 minute
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lesson-item">
-                                    <div class="lesson-number">5</div>
-                                    <div>
-                                        <div class="lesson-title">Contoh Diagram Kelas Sederhana</div>
-                                        <div class="lesson-time">
-                                            <i class="bi bi-clock"></i> 5 min, 15 minute
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lesson-item">
-                                    <div class="lesson-number">6</div>
-                                    <div>
-                                        <div class="lesson-title">Rangkuman Dasar Class Diagram</div>
-                                        <div class="lesson-time">
-                                            <i class="bi bi-clock"></i> 5 min, 15 minute
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
 
                     </div>
@@ -218,22 +250,38 @@
 
         .custom-tabs {
             background-color: #1e63ff;
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 6px;
-            width: fit-content;
+            display: flex;
+            gap: 6px;
+            width: 100%;
         }
 
         .custom-tabs .nav-link {
             color: #fff;
             font-weight: 600;
-            border-radius: 5px;
-            padding: 5px 62px;
+            border-radius: 6px;
+            padding: 8px 16px;
+            text-align: center;
+            width: 100%;
         }
 
         .custom-tabs .nav-link.active {
             background-color: #fff;
             color: #1e63ff !important;
         }
+
+        @media (min-width: 992px) {
+            .custom-tabs {
+                width: fit-content;
+            }
+
+            .custom-tabs .nav-link {
+                padding: 6px 48px;
+                width: auto;
+            }
+        }
+
 
 
         /* Lesson List */
@@ -279,6 +327,40 @@
         .lesson-time {
             font-size: 12px;
             color: #6c757d;
+        }
+
+        .nav-pills-materi {
+            display: flex;
+            width: 100%;
+            gap: 12px;
+        }
+
+        .nav-pills-materi .nav-item {
+            flex: 1;
+        }
+
+        /* default = btn-outline-secondary */
+        .nav-pills-materi .nav-link {
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            color: #2b2c2d !important;
+            border: 2px solid #6c757d;
+            border-radius: 12px;
+            transition: all .2s ease;
+        }
+
+        /* hover efek */
+        .nav-pills-materi .nav-link:hover {
+            background-color: #6c757d;
+            color: #fff !important;
+        }
+
+        /* active = btn-primary */
+        .nav-pills-materi .nav-link.active {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff !important;
         }
     </style>
 @endsection
