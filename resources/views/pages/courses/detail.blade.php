@@ -36,10 +36,10 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Materi Course</h5>
                     <div>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#materiModal">
-                            <i class="bi bi-eye"></i> Tambah Materi
+                        <button class="btn btn-primary btn-sm" onclick="openCreateMateri()">
+                            <i class="bi bi-plus"></i> Tambah Materi
                         </button>
+
                     </div>
                 </div>
             </div>
@@ -55,31 +55,45 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Pengantar UML</td>
-                            <td>Video</td>
-                            <td>https://youtu.be/EEbRdNuZASE?si=2LSPO6Kekj5lKnsK</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-warning">
-                                    <i class="bi bi-pencil"></i> Edit
-                                </button>
-
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
-                                    <i class="bi bi-eye"></i> Detail
-                                </button>
-
-                                <form id="delete-form-{{ $course->id }}" action="" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-sm btn-danger">
-                                        <i class="bi bi-trash"></i> Delete
+                        @forelse ($course->materials as $materi)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $materi->title }}</td>
+                                <td>
+                                    <span class="badge bg-{{ $materi->type === 'video' ? 'danger' : 'success' }}">
+                                        {{ strtoupper($materi->type) }}
+                                    </span>
+                                </td>
+                                <td class="text-truncate" style="max-width:250px">
+                                    {{ $materi->content }}
+                                </td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-warning"
+                                        onclick='openEditMateri(@json($materi))'>
+                                        <i class="bi bi-pencil"></i>
                                     </button>
-                                </form>
-                            </td>
-                        </tr>
+
+                                    <form id="delete-form-{{ $materi->id }}"
+                                        action="{{ route('materials.destroy', $materi->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            onclick="confirmDelete({{ $materi->id }})">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    Belum ada materi
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
+
                 </table>
             </div>
         </div>
@@ -90,3 +104,32 @@
     @include('pages.courses.modal_detail')
     @include('pages.courses.modal_add_materi')
 @endsection
+
+
+@push('scripts')
+    <script>
+        const materiModal = new bootstrap.Modal('#materiModal');
+
+        function openCreateMateri() {
+            document.getElementById('materiModalTitle').innerText = 'Tambah Materi';
+            document.getElementById('materiForm').action =
+                "{{ route('materials.store', $course->id) }}";
+            document.getElementById('materiMethod').value = 'POST';
+
+            ['materi_title', 'materi_content'].forEach(id => document.getElementById(id).value = '');
+            materiModal.show();
+        }
+
+        function openEditMateri(materi) {
+            document.getElementById('materiModalTitle').innerText = 'Edit Materi';
+            document.getElementById('materiForm').action = `/materials/${materi.id}`;
+            document.getElementById('materiMethod').value = 'PUT';
+
+            document.getElementById('materi_title').value = materi.title;
+            document.getElementById('materi_type').value = materi.type;
+            document.getElementById('materi_content').value = materi.content;
+
+            materiModal.show();
+        }
+    </script>
+@endpush

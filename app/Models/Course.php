@@ -19,4 +19,9 @@ class Course extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function materials()
+    {
+        return $this->hasMany(CourseMaterial::class)->orderBy('order_number');
+    }
 }
