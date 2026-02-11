@@ -29,7 +29,7 @@
                              <a class="dropdown-item" href="{{ route('levels.index') }}">Level Course</a>
                          </li>
                          <li>
-                             <a class="dropdown-item" href="{{ route('couses.index') }}">Course</a>
+                             <a class="dropdown-item" href="{{ route('courses.index') }}">Course</a>
                          </li>
                      </ul>
                  </li>

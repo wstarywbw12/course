@@ -49,6 +49,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/levels', [LevelController::class, 'store'])->name('levels.store');
     Route::put('/levels/{level}', [LevelController::class, 'update'])->name('levels.update');
     Route::delete('/levels/{level}', [LevelController::class, 'destroy'])->name('levels.destroy');
+
+   Route::resource('courses', CourseController::class)->except(['create', 'edit']);
+
 });
 
 require __DIR__.'/auth.php';
