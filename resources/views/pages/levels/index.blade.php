@@ -1,45 +1,63 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="card mb-3">
-            <div class="card-body ">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5>Manage Level</h5>
-                    <div>
-                        <a href="" class="btn btn-primary">Tambah Level</a>
-                    </div>
-                </div>
-            </div>
+
+    <div class="card mb-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Manage Level</h5>
+            <button class="btn btn-primary" onclick="openCreateModal()">Tambah Level</button>
         </div>
+    </div>
 
-
-
-        <div class="card">
-            <div class="card-body">
-                <table class="table">
-                    <thead>
+    <div class="card">
+        <div class="card-body table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th width="20%">Keterangan</th>
+                        <th>Icon</th>
+                        <th width="20%" class="text-end">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($levels as $level)
                         <tr>
-                            <th width="5%" scope="col">No</th>
-                            <th width="15%"  scope="col">Keterangan</th>
-                            <th class="text-end" scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th width="5%" scope="row">1</th>
-                            <td>Beginer</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $level->level }}</td>
+                            <td>{{ $level->icon }}</td>
                             <td class="text-end">
-                                <a href="" class="btn btn-sm btn-warning"> <i class="bi bi-pencil"></i> Edit</a>
-                                <a href="" class="btn btn-sm btn-danger"> <i class="bi bi-trash"></i> Delete</a>
+                                <button class="btn btn-sm btn-warning"
+                                    onclick='openEditModal(@json($level))'>
+                                    Edit
+                                </button>
+
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="confirmDelete({{ $level->id }}, 'delete-level')">
+                                    Delete
+                                </button>
+
+                                <form id="delete-level-{{ $level->id }}"
+                                      action="{{ route('levels.destroy', $level->id) }}"
+                                      method="POST" class="d-none">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                Belum ada data level
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-
-
     </div>
+
+</div>
 
 
     <style>
@@ -138,4 +156,43 @@
             color: #fff !important;
         }
     </style>
+
+    @include('pages.levels.modal')
 @endsection
+
+
+@push('scripts')
+<script>
+    const levelModal = new bootstrap.Modal(
+        document.getElementById('levelModal')
+    );
+
+    // =====================
+    // CREATE
+    // =====================
+    window.openCreateModal = function () {
+        document.getElementById('modalTitle').innerText = 'Tambah Level';
+        document.getElementById('levelForm').action = "{{ route('levels.store') }}";
+        document.getElementById('formMethod').value = 'POST';
+
+        document.getElementById('level').value = '';
+        document.getElementById('icon').value = '';
+
+        levelModal.show();
+    };
+
+    // =====================
+    // EDIT
+    // =====================
+    window.openEditModal = function (level) {
+        document.getElementById('modalTitle').innerText = 'Edit Level';
+        document.getElementById('levelForm').action = `/levels/${level.id}`;
+        document.getElementById('formMethod').value = 'PUT';
+
+        document.getElementById('level').value = level.level;
+        document.getElementById('icon').value = level.icon ?? '';
+
+        levelModal.show();
+    };
+</script>
+@endpush

@@ -43,6 +43,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
+    Route::get('/levels', [LevelController::class, 'index'])->name('levels.index');
+    Route::post('/levels', [LevelController::class, 'store'])->name('levels.store');
+    Route::put('/levels/{level}', [LevelController::class, 'update'])->name('levels.update');
+    Route::delete('/levels/{level}', [LevelController::class, 'destroy'])->name('levels.destroy');
 });
 
 require __DIR__.'/auth.php';
