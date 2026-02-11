@@ -26,7 +26,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: #fff;
+            /* background: #fff; */
+            background: #f6f8f9;
             min-height: 100vh;
         }
 

@@ -16,29 +16,31 @@
 
         <div class="card">
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th width="5%" scope="col">No</th>
-                            <th width="15%"  scope="col">Username</th>
-                            <th width="20%" scope="col">Email</th>
-                            <th width="8%" scope="col">Role</th>
-                            <th class="text-end" scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th width="5%" scope="row">1</th>
-                            <td>Admin</td>
-                            <td>admin@gmail.com</td>
-                            <td>admin</td>
-                            <td class="text-end">
-                                <a href="" class="btn btn-sm btn-warning"> <i class="bi bi-pencil"></i> Edit</a>
-                                <a href="" class="btn btn-sm btn-danger"> <i class="bi bi-trash"></i> Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="5%" scope="col">No</th>
+                                <th width="15%" scope="col">Username</th>
+                                <th width="20%" scope="col">Email</th>
+                                <th width="8%" scope="col">Role</th>
+                                <th class="text-end" scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th width="5%" scope="row">1</th>
+                                <td class="text-nowrap">Admin</td>
+                                <td class="text-nowrap">admin@gmail.com</td>
+                                <td class="text-nowrap">admin</td>
+                                <td class="text-end">
+                                    <a href="" class="btn btn-sm btn-warning"> <i class="bi bi-pencil"></i> Edit</a>
+                                    <a href="" class="btn btn-sm btn-danger"> <i class="bi bi-trash"></i> Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
