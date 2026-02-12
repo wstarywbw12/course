@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,8 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy'])
         ->name('quiz.destroy');
 
-
-        // materi
+    // materi
     Route::post('courses/{course}/materials', [CourseMaterialController::class, 'store'])
         ->name('materials.store');
 
@@ -69,6 +69,20 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('materials/{material}', [CourseMaterialController::class, 'destroy'])
         ->name('materials.destroy');
+
+    Route::prefix('quiz')->group(function () {
+        Route::get('{quiz}/questions', [QuizQuestionController::class, 'index'])
+            ->name('quiz.questions.index');
+
+        Route::post('{quiz}/questions', [QuizQuestionController::class, 'store'])
+            ->name('quiz.questions.store');
+
+        Route::put('questions/{question}', [QuizQuestionController::class, 'update'])
+            ->name('quiz.questions.update');
+
+        Route::delete('questions/{question}', [QuizQuestionController::class, 'destroy'])
+            ->name('quiz.questions.destroy');
+    });
 
 });
 

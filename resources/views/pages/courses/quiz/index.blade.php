@@ -62,11 +62,19 @@
                                 <td>{{ Str::limit($quiz->description, 60) }}</td>
                                 <td class="text-end">
 
+                                    {{-- Button Soal / Option --}}
+                                    <a href="{{ route('quiz.questions.index', $quiz->id) }}" class="btn btn-sm btn-primary"
+                                        title="Kelola Soal">
+                                        <i class="bi bi-list-check"></i>
+                                    </a>
+
+                                    {{-- Edit --}}
                                     <button class="btn btn-sm btn-warning"
                                         onclick='openEditQuiz(@json($quiz))'>
                                         <i class="bi bi-pencil"></i>
                                     </button>
 
+                                    {{-- Delete --}}
                                     <form id="delete-form-{{ $quiz->id }}"
                                         action="{{ route('quiz.destroy', $quiz->id) }}" method="POST" class="d-inline">
                                         @csrf
@@ -78,6 +86,7 @@
                                     </form>
 
                                 </td>
+
                             </tr>
                         @empty
                             <tr>
