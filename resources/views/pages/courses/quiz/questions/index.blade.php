@@ -14,8 +14,11 @@
             <div class="card-body">
                 @foreach ($quiz->questions as $no => $question)
                     <div class="mb-4 border-bottom pb-3">
-                        <strong>{{ $no + 1 }}. {!! $question->question !!}
-                        </strong>
+                        <div class="d-flex align-items-start mb-2">
+                            <div class="me-2 fw-bold">{{ $no + 1 }}.</div>
+                            <div class="question-text fw-bold">{!! $question->question !!}</div>
+                        </div>
+
 
                         <div class="mt-2">
 
@@ -129,6 +132,14 @@
 
 <style>
     .option-text p {
-    margin: 0;
+        margin: 0;
+    }
+
+    .question-text p {
+        margin: 0;
+    }
+
+    .ck-editor__editable {
+    min-height: 200px; /* ubah sesuai kebutuhan */
 }
 </style>
