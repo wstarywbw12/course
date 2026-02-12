@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('courses', CourseController::class)->except(['create', 'edit']);
 
+    // quiz
+    Route::get('/courses/{course}/quizzes', [QuizController::class, 'index'])
+        ->name('quiz.index');
+
+    Route::post('/courses/{course}/quizzes', [QuizController::class, 'store'])
+        ->name('quiz.store');
+
+    Route::put('/quizzes/{quiz}', [QuizController::class, 'update'])
+        ->name('quiz.update');
+
+    Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy'])
+        ->name('quiz.destroy');
+
+
+        // materi
     Route::post('courses/{course}/materials', [CourseMaterialController::class, 'store'])
         ->name('materials.store');
 
