@@ -53,104 +53,42 @@
                         <div class="card course-card shadow-sm border-0">
                             <div class="card-body p-3 p-lg-4">
 
-                                <!-- ITEM -->
-                                <div
-                                    class="course-item d-flex flex-column flex-lg-row 
-                   justify-content-between align-items-start align-items-lg-center 
-                   py-3 gap-3 gap-lg-0">
-
-                                    <!-- LEFT -->
-                                    <div class="course-info">
-                                        <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
-                                        <p class="text-muted mb-0">
-                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
-                                        </p>
-                                    </div>
-
-                                    <!-- RIGHT -->
+                                @foreach ($courses as $course)
+                                    <!-- ITEM -->
                                     <div
-                                        class="course-meta d-flex flex-wrap flex-lg-nowrap 
-                       align-items-center gap-3 gap-lg-5">
+                                        class="course-item d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center  py-3 gap-3 gap-lg-0">
 
-                                        <span class="text-muted fst-italic">Beginner</span>
-
-                                        <div class="d-flex align-items-center text-muted">
-                                            <i class="bi bi-clock me-2"></i> 17 hours
+                                        <!-- LEFT -->
+                                        <div class="course-info">
+                                            <h6 class="fw-bold mb-1">{{ $course->title ?? '-' }}</h6>
+                                            <p class="text-muted mb-0">
+                                                {{ $course->description ?? '-' }}
+                                            </p>
                                         </div>
 
-                                        <a href="{{ route('detail.course') }}"
-                                            class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
-                                            <span class="me-1">Mulai</span>
-                                            <i class="bi bi-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                        <!-- RIGHT -->
+                                        <div
+                                            class="course-meta d-flex flex-wrap flex-lg-nowrap  align-items-center gap-3 gap-lg-5">
 
-                                <hr>
+                                            <span class="text-muted fst-italic">{{ $course->level->level }}</span>
 
-                                <!-- ITEM -->
-                                <div
-                                    class="course-item d-flex flex-column flex-lg-row 
-                   justify-content-between align-items-start align-items-lg-center 
-                   py-3 gap-3 gap-lg-0">
+                                            <div class="d-flex align-items-center text-muted">
+                                                <i class="bi bi-clock me-2"></i> 17 hours
+                                            </div>
 
-                                    <div class="course-info">
-                                        <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
-                                        <p class="text-muted mb-0">
-                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
-                                        </p>
-                                    </div>
-
-                                    <div
-                                        class="course-meta d-flex flex-wrap flex-lg-nowrap 
-                       align-items-center gap-3 gap-lg-5">
-
-                                        <span class="text-muted fst-italic">Intermediate</span>
-
-                                        <div class="d-flex align-items-center text-muted">
-                                            <i class="bi bi-clock me-2"></i> 17 hours
+                                            <a href="{{ route('detail.course') }}"
+                                                class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
+                                                <span class="me-1">Mulai</span>
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
                                         </div>
-
-                                       <a href="{{ route('detail.course') }}"
-                                            class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
-                                            <span class="me-1">Mulai</span>
-                                            <i class="bi bi-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-                                <!-- ITEM -->
-                                <div
-                                    class="course-item d-flex flex-column flex-lg-row 
-                   justify-content-between align-items-start align-items-lg-center 
-                   py-3 gap-3 gap-lg-0">
-
-                                    <div class="course-info">
-                                        <h6 class="fw-bold mb-1">Pengantar UML & Diagram Kelas</h6>
-                                        <p class="text-muted mb-0">
-                                            Menjelaskan apa itu UML, tujuan, dan konteks penggunaannya dalam SDLC.
-                                        </p>
                                     </div>
 
-                                    <div
-                                        class="course-meta d-flex flex-wrap flex-lg-nowrap 
-                       align-items-center gap-3 gap-lg-5">
+                                    <hr>
+                                @endforeach
 
-                                        <span class="text-muted fst-italic">Advance</span>
 
-                                        <div class="d-flex align-items-center text-muted">
-                                            <i class="bi bi-clock me-2"></i> 17 hours
-                                        </div>
 
-                                       <a href="{{ route('detail.course') }}"
-                                            class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
-                                            <span class="me-1">Mulai</span>
-                                            <i class="bi bi-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>
