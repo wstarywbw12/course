@@ -2,7 +2,8 @@
     <div class="lesson-list" id="lessonList">
         @foreach ($course->materials as $index => $lesson)
             <div class="lesson-item {{ $index === 0 ? 'active' : '' }}" data-index="{{ $index }}"
-                data-title="{{ $lesson->title }}" data-type="{{ $lesson->type }}" data-content="{{ $lesson->content }}">
+                data-title="{{ $lesson->title }}" data-type="{{ $lesson->type }}" {{-- video | text --}}
+                data-content="{{ $lesson->content }}">
 
                 <div class="lesson-number">{{ $index + 1 }}</div>
 
@@ -14,10 +15,9 @@
                 </div>
             </div>
         @endforeach
-
     </div>
-
 </div>
+
 
 
 
@@ -79,113 +79,161 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function convertYoutubeUrl(url) {
+    if (!url) return null;
 
-    const lessonItems = document.querySelectorAll('.lesson-item');
-    const btnPrev = document.getElementById('btnPrev');
-    const btnNext = document.getElementById('btnNext');
-
-    const lessonTitle = document.getElementById('lessonTitle');
-    const videoWrapper = document.getElementById('lessonVideoWrapper');
-    const videoEl = document.getElementById('lessonVideo');
-    const videoSource = document.getElementById('lessonVideoSource');
-    const youtubeFrame = document.getElementById('lessonYoutube');
-    const textWrapper = document.getElementById('lessonTextWrapper');
-
-    let currentIndex = [...lessonItems].findIndex(el => el.classList.contains('active'));
-    if (currentIndex === -1) currentIndex = 0;
-
-    // ================= YOUTUBE =================
-    function getYoutubeEmbed(url) {
-        let videoId = '';
-
-        if (url.includes('youtu.be')) {
-            videoId = url.split('/').pop().split('?')[0];
-        } else if (url.includes('youtube.com')) {
-            const params = new URL(url).searchParams;
-            videoId = params.get('v');
-        }
-
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    // youtu.be/xxxx
+    if (url.includes('youtu.be')) {
+        const id = url.split('youtu.be/')[1].split('?')[0];
+        return `https://www.youtube.com/embed/${id}`;
     }
 
-    // ================= RENDER =================
-    function renderLesson(item) {
-        const title = item.dataset.title;
-        const type = item.dataset.type;
-        const content = item.dataset.content;
+    // youtube.com/watch?v=xxxx
+    if (url.includes('watch?v=')) {
+        const id = url.split('watch?v=')[1].split('&')[0];
+        return `https://www.youtube.com/embed/${id}`;
+    }
 
-        lessonTitle.innerText = title;
+    // already embed
+    if (url.includes('youtube.com/embed')) {
+        return url;
+    }
 
-        // reset
-        youtubeFrame.src = '';
-        youtubeFrame.classList.add('d-none');
-        videoEl.pause();
-        videoEl.classList.add('d-none');
-        textWrapper?.classList.add('d-none');
+    return null;
+}
+</script>
 
+
+<script>
+    function renderLesson(lesson) {
+
+        const container = document.getElementById('lessonContent');
+
+        const title = lesson.dataset.title;
+        const type = lesson.dataset.type;
+        const content = lesson.dataset.content;
+
+        let html = `<h5 class="fw-bold mb-3">${title}</h5>`;
+
+        // ================= VIDEO =================
         if (type === 'video') {
-            videoWrapper.classList.remove('d-none');
 
-            const yt = getYoutubeEmbed(content);
+            const embedUrl = convertYoutubeUrl(content);
 
-            if (yt) {
-                youtubeFrame.src = yt;
-                youtubeFrame.classList.remove('d-none');
-            } else {
-                videoSource.src = content;
-                videoEl.load();
-                videoEl.classList.remove('d-none');
+            if (!embedUrl) {
+                container.innerHTML = `<p class="text-danger">Video tidak valid</p>`;
+                return;
             }
 
-        } else {
-            videoWrapper.classList.add('d-none');
-            if (textWrapper) {
-                textWrapper.innerHTML = content;
-                textWrapper.classList.remove('d-none');
-            }
+            html += `
+            <div class="ratio ratio-16x9">
+                <iframe 
+                    src="${embedUrl}"
+                    frameborder="0"
+                    allowfullscreen
+                    allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
+        `;
         }
+
+        // ================= TEXT =================
+        if (type === 'text') {
+            html += `
+            <div class="card">
+                <div class="card-body">
+                    ${content}
+                </div>
+            </div>
+        `;
+        }
+
+        container.innerHTML = html;
     }
+</script>
 
-    // ================= ACTIVE =================
-    function updateActiveLesson(index) {
-        if (index < 0 || index >= lessonItems.length) return;
 
-        lessonItems.forEach(el => el.classList.remove('active'));
-        lessonItems[index].classList.add('active');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
-        currentIndex = index;
-        renderLesson(lessonItems[index]);
-        updateNavButton();
-    }
+        const lessonItems = document.querySelectorAll('.lesson-item');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
 
-    // ================= BUTTON =================
-    function updateNavButton() {
-        // PREV
-        btnPrev.disabled = currentIndex === 0;
-        btnPrev.classList.toggle('btn-outline-secondary', btnPrev.disabled);
-        btnPrev.classList.toggle('btn-outline-primary', !btnPrev.disabled);
+        let currentIndex = [...lessonItems].findIndex(el => el.classList.contains('active'));
+        if (currentIndex === -1) currentIndex = 0;
 
-        // NEXT
-        btnNext.disabled = currentIndex === lessonItems.length - 1;
-        btnNext.classList.toggle('btn-outline-secondary', btnNext.disabled);
-        btnNext.classList.toggle('btn-primary', !btnNext.disabled);
-    }
+        function updateActiveLesson(index) {
+            if (index < 0 || index >= lessonItems.length) return;
 
-    // ================= EVENTS =================
-    lessonItems.forEach((item, index) => {
-        item.addEventListener('click', () => updateActiveLesson(index));
+            lessonItems.forEach(el => el.classList.remove('active'));
+            lessonItems[index].classList.add('active');
+            currentIndex = index;
+
+            renderLesson(lessonItems[index]);
+            updateNavButton();
+        }
+
+        function updateNavButton() {
+            btnPrev.disabled = currentIndex === 0;
+
+            btnPrev.className = btnPrev.disabled ?
+                'btn btn-outline-secondary' :
+                'btn btn-outline-primary';
+
+            btnNext.innerHTML =
+                currentIndex === lessonItems.length - 1 ?
+                'Selesai' :
+                'Lanjut <i class="bi bi-arrow-right"></i>';
+        }
+
+        // ================== NEXT ==================
+        btnNext.addEventListener('click', () => {
+
+            Swal.fire({
+                title: 'Mantap!',
+                html: `
+                <p class="mb-0">
+                    Pelajaran ini berhasil kamu selesaikan.<br>
+                    Lanjut ke materi selanjutnya ya.
+                </p>
+            `,
+                icon: 'success',
+                confirmButtonText: 'Oke!',
+                confirmButtonColor: '#1e63ff',
+                background: '#fff',
+                color: '#2b2c2d',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                customClass: {
+                    popup: 'rounded-4'
+                }
+            }).then((result) => {
+
+                if (!result.isConfirmed) return;
+
+                // ✅ JIKA MASIH ADA MATERI
+                if (currentIndex < lessonItems.length - 1) {
+                    updateActiveLesson(currentIndex + 1);
+                    return;
+                }
+
+                // ✅ JIKA MATERI TERAKHIR
+                // contoh:
+                // window.location.href = "/dashboard";
+                updateActiveLesson(0);
+            });
+
+        });
+
+        // ================== PREV ==================
+        btnPrev.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                updateActiveLesson(currentIndex - 1);
+            }
+        });
+
+        // INIT
+        updateActiveLesson(currentIndex);
     });
-
-    btnPrev.addEventListener('click', () => {
-        if (currentIndex > 0) updateActiveLesson(currentIndex - 1);
-    });
-
-    btnNext.addEventListener('click', () => {
-        if (currentIndex < lessonItems.length - 1) updateActiveLesson(currentIndex + 1);
-    });
-
-    // ================= INIT =================
-    updateActiveLesson(currentIndex);
-});
 </script>

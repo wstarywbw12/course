@@ -1,18 +1,8 @@
 <div class="col-lg-8 mb-4">
-    <h4 id="lessonTitle" class="fw-bold mb-3">
-        {{ $course->materials->first()->title ?? '-' }}
-    </h4>
+    <h5 id="lessonTitle" class="mb-3"></h5>
 
-    <!-- VIDEO -->
-    <div id="lessonVideoWrapper" class="video-box mb-3 ratio ratio-16x9">
-        <iframe id="lessonYoutube" class="w-100 h-100 d-none" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-        </iframe>
-
-        <video id="lessonVideo" class="w-100 h-100 d-none" controls>
-            <source id="lessonVideoSource" src="" type="video/mp4">
-        </video>
+    <div id="lessonContent">
+        <!-- video / text akan dirender di sini -->
     </div>
 
 
