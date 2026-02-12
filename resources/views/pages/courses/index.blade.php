@@ -35,7 +35,11 @@
                                     </button>
 
                                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-eye"></i> Detail
+                                        <i class="bi bi-eye"></i> Materi
+                                    </a>
+
+                                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info btn-sm">
+                                        <i class="bi bi-eye"></i> Quiz
                                     </a>
 
 
