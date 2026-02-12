@@ -76,7 +76,7 @@
                                                 <i class="bi bi-clock me-2"></i> 17 hours
                                             </div>
 
-                                            <a href="{{ route('detail.course') }}"
+                                            <a href="{{ route('courses.detail', $course) }}"
                                                 class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
                                                 <span class="me-1">Mulai</span>
                                                 <i class="bi bi-arrow-right"></i>

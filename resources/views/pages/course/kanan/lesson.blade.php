@@ -1,37 +1,22 @@
 <div class="list-group">
     <div class="lesson-list" id="lessonList">
+        @foreach ($course->materials as $index => $lesson)
+            <div class="lesson-item {{ $index === 0 ? 'active' : '' }}" data-index="{{ $index }}"
+                data-title="{{ $lesson->title }}" data-type="{{ $lesson->type }}" data-content="{{ $lesson->content }}">
 
-        <div class="lesson-item" data-lesson="1">
-            <div class="lesson-number">1</div>
-            <div>
-                <div class="lesson-title">Pengantar UML & Diagram Kelas</div>
-                <div class="lesson-time">
-                    <i class="bi bi-clock"></i> 5 min, 15 minute
+                <div class="lesson-number">{{ $index + 1 }}</div>
+
+                <div>
+                    <div class="lesson-title">{{ $lesson->title }}</div>
+                    <div class="lesson-time">
+                        <i class="bi bi-clock"></i> {{ $lesson->duration ?? 0 }} menit
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="lesson-item active" data-lesson="2">
-            <div class="lesson-number">2</div>
-            <div>
-                <div class="lesson-title">Alat Pemodelan UML & Persiapan</div>
-                <div class="lesson-time">
-                    <i class="bi bi-clock"></i> 5 min, 15 minute
-                </div>
-            </div>
-        </div>
-
-        <div class="lesson-item" data-lesson="3">
-            <div class="lesson-number">3</div>
-            <div>
-                <div class="lesson-title">Komponen & Notasi Dasar Class Diagram</div>
-                <div class="lesson-time">
-                    <i class="bi bi-clock"></i> 5 min, 15 minute
-                </div>
-            </div>
-        </div>
+        @endforeach
 
     </div>
+
 </div>
 
 
@@ -95,68 +80,112 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
     const lessonItems = document.querySelectorAll('.lesson-item');
     const btnPrev = document.getElementById('btnPrev');
     const btnNext = document.getElementById('btnNext');
 
-    let currentIndex = [...lessonItems].findIndex(item =>
-        item.classList.contains('active')
-    );
+    const lessonTitle = document.getElementById('lessonTitle');
+    const videoWrapper = document.getElementById('lessonVideoWrapper');
+    const videoEl = document.getElementById('lessonVideo');
+    const videoSource = document.getElementById('lessonVideoSource');
+    const youtubeFrame = document.getElementById('lessonYoutube');
+    const textWrapper = document.getElementById('lessonTextWrapper');
 
+    let currentIndex = [...lessonItems].findIndex(el => el.classList.contains('active'));
+    if (currentIndex === -1) currentIndex = 0;
+
+    // ================= YOUTUBE =================
+    function getYoutubeEmbed(url) {
+        let videoId = '';
+
+        if (url.includes('youtu.be')) {
+            videoId = url.split('/').pop().split('?')[0];
+        } else if (url.includes('youtube.com')) {
+            const params = new URL(url).searchParams;
+            videoId = params.get('v');
+        }
+
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    }
+
+    // ================= RENDER =================
+    function renderLesson(item) {
+        const title = item.dataset.title;
+        const type = item.dataset.type;
+        const content = item.dataset.content;
+
+        lessonTitle.innerText = title;
+
+        // reset
+        youtubeFrame.src = '';
+        youtubeFrame.classList.add('d-none');
+        videoEl.pause();
+        videoEl.classList.add('d-none');
+        textWrapper?.classList.add('d-none');
+
+        if (type === 'video') {
+            videoWrapper.classList.remove('d-none');
+
+            const yt = getYoutubeEmbed(content);
+
+            if (yt) {
+                youtubeFrame.src = yt;
+                youtubeFrame.classList.remove('d-none');
+            } else {
+                videoSource.src = content;
+                videoEl.load();
+                videoEl.classList.remove('d-none');
+            }
+
+        } else {
+            videoWrapper.classList.add('d-none');
+            if (textWrapper) {
+                textWrapper.innerHTML = content;
+                textWrapper.classList.remove('d-none');
+            }
+        }
+    }
+
+    // ================= ACTIVE =================
     function updateActiveLesson(index) {
-        // safety check
         if (index < 0 || index >= lessonItems.length) return;
 
         lessonItems.forEach(el => el.classList.remove('active'));
         lessonItems[index].classList.add('active');
-        currentIndex = index;
 
+        currentIndex = index;
+        renderLesson(lessonItems[index]);
         updateNavButton();
-        console.log('Lesson dipilih:', lessonItems[index].dataset.lesson);
     }
 
+    // ================= BUTTON =================
     function updateNavButton() {
         // PREV
-        if (currentIndex === 0) {
-            btnPrev.disabled = true;
-            btnPrev.classList.remove('btn-outline-primary');
-            btnPrev.classList.add('btn-outline-secondary');
-        } else {
-            btnPrev.disabled = false;
-            btnPrev.classList.remove('btn-outline-secondary');
-            btnPrev.classList.add('btn-outline-primary');
-        }
+        btnPrev.disabled = currentIndex === 0;
+        btnPrev.classList.toggle('btn-outline-secondary', btnPrev.disabled);
+        btnPrev.classList.toggle('btn-outline-primary', !btnPrev.disabled);
 
         // NEXT
-        if (currentIndex === lessonItems.length - 1) {
-            btnNext.disabled = true;
-            btnNext.classList.remove('btn-primary');
-            btnNext.classList.add('btn-outline-secondary');
-        } else {
-            btnNext.disabled = false;
-            btnNext.classList.remove('btn-outline-secondary');
-            btnNext.classList.add('btn-primary');
-        }
+        btnNext.disabled = currentIndex === lessonItems.length - 1;
+        btnNext.classList.toggle('btn-outline-secondary', btnNext.disabled);
+        btnNext.classList.toggle('btn-primary', !btnNext.disabled);
     }
 
-    // klik lesson manual
+    // ================= EVENTS =================
     lessonItems.forEach((item, index) => {
-        item.addEventListener('click', function () {
-            updateActiveLesson(index);
-        });
+        item.addEventListener('click', () => updateActiveLesson(index));
     });
 
-    // klik kembali
-    btnPrev.addEventListener('click', function () {
-        updateActiveLesson(currentIndex - 1);
+    btnPrev.addEventListener('click', () => {
+        if (currentIndex > 0) updateActiveLesson(currentIndex - 1);
     });
 
-    // klik lanjut
-    btnNext.addEventListener('click', function () {
-        updateActiveLesson(currentIndex + 1);
+    btnNext.addEventListener('click', () => {
+        if (currentIndex < lessonItems.length - 1) updateActiveLesson(currentIndex + 1);
     });
 
-    // init state
-    updateNavButton();
+    // ================= INIT =================
+    updateActiveLesson(currentIndex);
 });
 </script>

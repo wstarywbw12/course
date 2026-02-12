@@ -1,12 +1,20 @@
 <div class="col-lg-8 mb-4">
-    <h4 class="fw-bold mb-3">Alat Pemodelan UML & Persiapan</h4>
+    <h4 id="lessonTitle" class="fw-bold mb-3">
+        {{ $course->materials->first()->title ?? '-' }}
+    </h4>
 
-    <!-- Video -->
-    <div class="video-box mb-3 ratio ratio-16x9">
-        <video controls>
-            <source src="video.mp4" type="video/mp4">
+    <!-- VIDEO -->
+    <div id="lessonVideoWrapper" class="video-box mb-3 ratio ratio-16x9">
+        <iframe id="lessonYoutube" class="w-100 h-100 d-none" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+
+        <video id="lessonVideo" class="w-100 h-100 d-none" controls>
+            <source id="lessonVideoSource" src="" type="video/mp4">
         </video>
     </div>
+
 
     <!-- Tabs -->
     <ul class="nav nav-tabs mb-3">

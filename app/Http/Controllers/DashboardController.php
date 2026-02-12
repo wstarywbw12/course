@@ -12,4 +12,16 @@ class DashboardController extends Controller
         $courses = Course::with('level')->get();
         return view('dashboard', compact('courses'));
     }
+
+
+     public function show(Course $course)
+    {
+        $course->load([
+            'level',
+            'materials',   
+            'quizzes'       
+        ]);
+
+        return view('pages.course.detail', compact('course'));
+    }
 }

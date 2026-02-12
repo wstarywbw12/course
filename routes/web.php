@@ -80,6 +80,10 @@ Route::middleware(['auth'])->group(function () {
             ->name('quiz.questions.destroy');
     });
 
+
+    Route::get('/dasboard/courses/{course}', [DashboardController::class, 'show'])
+    ->name('courses.detail');
+
 });
 
 require __DIR__.'/auth.php';
