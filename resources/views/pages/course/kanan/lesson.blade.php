@@ -1,9 +1,12 @@
 <div class="list-group">
     <div class="lesson-list" id="lessonList">
         @foreach ($course->materials as $index => $lesson)
-            <div class="lesson-item {{ $index === 0 ? 'active' : '' }}" data-index="{{ $index }}"
-                data-title="{{ $lesson->title }}" data-type="{{ $lesson->type }}" {{-- video | text --}}
-                data-content="{{ $lesson->content }}">
+            <div class="lesson-item {{ $index === 0 ? 'active' : '' }}"
+                data-id="{{ $lesson->id }}"
+                data-index="{{ $index }}"
+                data-title="{{ $lesson->title }}"
+                data-type="{{ $lesson->type }}"
+                data-content="{{ e($lesson->content) }}">
 
                 <div class="lesson-number">{{ $index + 1 }}</div>
 
@@ -17,6 +20,7 @@
         @endforeach
     </div>
 </div>
+
 
 
 
@@ -82,19 +86,16 @@
 function convertYoutubeUrl(url) {
     if (!url) return null;
 
-    // youtu.be/xxxx
-    if (url.includes('youtu.be')) {
+    if (url.includes('youtu.be/')) {
         const id = url.split('youtu.be/')[1].split('?')[0];
         return `https://www.youtube.com/embed/${id}`;
     }
 
-    // youtube.com/watch?v=xxxx
     if (url.includes('watch?v=')) {
         const id = url.split('watch?v=')[1].split('&')[0];
         return `https://www.youtube.com/embed/${id}`;
     }
 
-    // already embed
     if (url.includes('youtube.com/embed')) {
         return url;
     }
@@ -103,137 +104,141 @@ function convertYoutubeUrl(url) {
 }
 </script>
 
-
 <script>
-    function renderLesson(lesson) {
+function renderLesson(lesson) {
 
-        const container = document.getElementById('lessonContent');
+    const container = document.getElementById('lessonContent');
 
-        const title = lesson.dataset.title;
-        const type = lesson.dataset.type;
-        const content = lesson.dataset.content;
+    const title = lesson.dataset.title;
+    const type = lesson.dataset.type;
+    const content = lesson.dataset.content;
 
-        let html = `<h5 class="fw-bold mb-3">${title}</h5>`;
+    let html = `<h5 class="fw-bold mb-3">${title}</h5>`;
 
-        // ================= VIDEO =================
-        if (type === 'video') {
+    if (type === 'video') {
+        const embedUrl = convertYoutubeUrl(content);
 
-            const embedUrl = convertYoutubeUrl(content);
+        if (!embedUrl) {
+            container.innerHTML = `<p class="text-danger">URL video tidak valid</p>`;
+            return;
+        }
 
-            if (!embedUrl) {
-                container.innerHTML = `<p class="text-danger">Video tidak valid</p>`;
-                return;
-            }
-
-            html += `
-            <div class="ratio ratio-16x9">
-                <iframe 
+        html += `
+            <div class="ratio ratio-16x9 mb-3">
+                <iframe
                     src="${embedUrl}"
                     frameborder="0"
                     allowfullscreen
-                    allow="autoplay; encrypted-media">
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
                 </iframe>
             </div>
         `;
-        }
+    }
 
-        // ================= TEXT =================
-        if (type === 'text') {
-            html += `
+    if (type === 'text') {
+        html += `
             <div class="card">
                 <div class="card-body">
                     ${content}
                 </div>
             </div>
         `;
-        }
-
-        container.innerHTML = html;
     }
+
+    container.innerHTML = html;
+}
 </script>
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-        const lessonItems = document.querySelectorAll('.lesson-item');
-        const btnPrev = document.getElementById('btnPrev');
-        const btnNext = document.getElementById('btnNext');
+    const lessonItems = document.querySelectorAll('.lesson-item');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
 
-        let currentIndex = [...lessonItems].findIndex(el => el.classList.contains('active'));
-        if (currentIndex === -1) currentIndex = 0;
+    let currentIndex = 0;
 
-        function updateActiveLesson(index) {
-            if (index < 0 || index >= lessonItems.length) return;
+    function updateActiveLesson(index) {
+        if (index < 0 || index >= lessonItems.length) return;
 
-            lessonItems.forEach(el => el.classList.remove('active'));
-            lessonItems[index].classList.add('active');
-            currentIndex = index;
+        lessonItems.forEach(el => el.classList.remove('active'));
+        lessonItems[index].classList.add('active');
 
-            renderLesson(lessonItems[index]);
-            updateNavButton();
+        currentIndex = index;
+        renderLesson(lessonItems[index]);
+        updateNavButton();
+    }
+
+    function updateNavButton() {
+        btnPrev.disabled = currentIndex === 0;
+
+        btnNext.innerHTML =
+            currentIndex === lessonItems.length - 1
+                ? 'Selesai'
+                : 'Lanjut <i class="bi bi-arrow-right"></i>';
+    }
+
+    // CLICK LIST
+    lessonItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            updateActiveLesson(index);
+        });
+    });
+
+    // PREV
+    btnPrev.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            updateActiveLesson(currentIndex - 1);
         }
+    });
 
-        function updateNavButton() {
-            btnPrev.disabled = currentIndex === 0;
+    // NEXT + SWEET ALERT (SETIAP MATERI)
+    btnNext.addEventListener('click', () => {
 
-            btnPrev.className = btnPrev.disabled ?
-                'btn btn-outline-secondary' :
-                'btn btn-outline-primary';
+        const activeLesson = lessonItems[currentIndex];
+        const materialId = activeLesson.dataset.id;
 
-            btnNext.innerHTML =
-                currentIndex === lessonItems.length - 1 ?
-                'Selesai' :
-                'Lanjut <i class="bi bi-arrow-right"></i>';
-        }
-
-        // ================== NEXT ==================
-        btnNext.addEventListener('click', () => {
-
-            Swal.fire({
-                title: 'Mantap!',
-                html: `
+        Swal.fire({
+            title: 'Mantap!',
+            html: `
                 <p class="mb-0">
-                    Pelajaran ini berhasil kamu selesaikan.<br>
-                    Lanjut ke materi selanjutnya ya.
+                    Materi ini berhasil kamu selesaikan.<br>
+                    Yuk lanjut ke materi berikutnya!
                 </p>
             `,
-                icon: 'success',
-                confirmButtonText: 'Oke!',
-                confirmButtonColor: '#1e63ff',
-                background: '#fff',
-                color: '#2b2c2d',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                customClass: {
-                    popup: 'rounded-4'
+            icon: 'success',
+            confirmButtonText: 'Lanjut',
+            confirmButtonColor: '#1e63ff',
+            allowOutsideClick: false
+        }).then(result => {
+
+            if (!result.isConfirmed) return;
+
+            // SIMPAN AKTIVITAS (opsional backend)
+            fetch(`/materials/${materialId}/complete`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content')
                 }
-            }).then((result) => {
-
-                if (!result.isConfirmed) return;
-
-                // ✅ JIKA MASIH ADA MATERI
-                if (currentIndex < lessonItems.length - 1) {
-                    updateActiveLesson(currentIndex + 1);
-                    return;
-                }
-
-                // ✅ JIKA MATERI TERAKHIR
-                // contoh:
-                // window.location.href = "/dashboard";
-                updateActiveLesson(0);
             });
 
-        });
-
-        // ================== PREV ==================
-        btnPrev.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                updateActiveLesson(currentIndex - 1);
+            // PINDAH MATERI
+            if (currentIndex < lessonItems.length - 1) {
+                updateActiveLesson(currentIndex + 1);
+            } else {
+                Swal.fire({
+                    title: 'Selesai 🎓',
+                    text: 'Semua materi sudah kamu selesaikan!',
+                    icon: 'success'
+                });
             }
         });
-
-        // INIT
-        updateActiveLesson(currentIndex);
     });
+
+    // INIT
+    updateActiveLesson(0);
+});
 </script>

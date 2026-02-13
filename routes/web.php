@@ -4,7 +4,6 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LevelController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\UserController;
@@ -22,14 +21,12 @@ Route::get('/detail-course', function () {
     return view('pages.course.detail');
 })->name('detail.course');
 
-
 Route::get('/levels', [LevelController::class, 'index'])->name('levels.index');
 Route::get('/courses', [CourseController::class, 'index'])->name('couses.index');
 
-
 Route::middleware(['auth'])->group(function () {
 
-     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -80,9 +77,25 @@ Route::middleware(['auth'])->group(function () {
             ->name('quiz.questions.destroy');
     });
 
-
     Route::get('/dasboard/courses/{course}', [DashboardController::class, 'show'])
-    ->name('courses.detail');
+        ->name('courses.detail');
+
+    Route::post('/materials/{material}/complete', function (\App\Models\CourseMaterial $material) {
+        \App\Models\UserMaterialActivity::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'material_id' => $material->id,
+                'activity_type' => 'complete',
+            ],
+            [
+                'activity_time' => now(),
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+        ]);
+    });
 
 });
 

@@ -11,11 +11,12 @@
         </div>
 
         <!-- ================= FOOTER NAV ================= -->
-        <div class="footer-nav d-flex justify-content-between mt-4 mb-3">
-            <button id="btnPrev" class="btn btn-outline-secondary" disabled>
-                <i class="bi bi-arrow-left"></i> Kembali
+        <div class="d-flex justify-content-between mt-3">
+            <button id="btnPrev" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Sebelumnya
             </button>
-            <button id="btnNext" class="btn btn-primary">
+
+            <button id="btnNext" class="btn btn-outline-primary">
                 Lanjut <i class="bi bi-arrow-right"></i>
             </button>
         </div>
@@ -31,7 +32,7 @@
             min-height: 100vh;
         }
 
-        .text-logo{
+        .text-logo {
             color: #1e4ed8;
         }
 
