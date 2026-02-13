@@ -1,8 +1,3 @@
- <div class="alert alert-info">
-     <strong>Quiz Section</strong><br>
-     Kerjakan quiz untuk menguji pemahaman materi UML.
- </div>
-
  <div class="list-group">
     <div class="lesson-list" id="lessonList">
         @foreach ($course->quizzes as $index => $quiz)

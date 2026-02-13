@@ -128,3 +128,26 @@
         }
     </style>
 @endsection
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const lessonWrapper = document.getElementById('lessonWrapper');
+    const quizWrapper   = document.getElementById('quizWrapper');
+
+    const lessonTab = document.getElementById('lesson-tab');
+    const quizTab   = document.getElementById('quiz-tab');
+
+    lessonTab.addEventListener('shown.bs.tab', function () {
+        lessonWrapper.classList.remove('d-none');
+        quizWrapper.classList.add('d-none');
+    });
+
+    quizTab.addEventListener('shown.bs.tab', function () {
+        lessonWrapper.classList.add('d-none');
+        quizWrapper.classList.remove('d-none');
+    });
+
+});
+</script>
