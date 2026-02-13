@@ -29,4 +29,10 @@ class CourseMaterial extends Model
     {
         return $this->hasMany(UserMaterialActivity::class, 'material_id');
     }
+
+    public function userActivity()
+    {
+        return $this->hasOne(UserMaterialActivity::class, 'material_id')
+            ->where('user_id', auth()->id());
+    }
 }
