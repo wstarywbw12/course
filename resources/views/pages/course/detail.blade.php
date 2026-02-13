@@ -11,14 +11,20 @@
         </div>
 
         <!-- ================= FOOTER NAV ================= -->
-        <div class="d-flex justify-content-between mt-3">
-            <button id="btnPrev" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> Sebelumnya
-            </button>
+        <div class="fixed-bottom mx-0 mx-md-5">
+            <div class="card">
+               <div class="card-body">
+                 <div class="d-flex justify-content-between">
+                    <button id="btnPrev" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Sebelumnya
+                    </button>
 
-            <button id="btnNext" class="btn btn-outline-primary">
-                Lanjut <i class="bi bi-arrow-right"></i>
-            </button>
+                    <button id="btnNext" class="btn btn-primary">
+                        Lanjut <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+               </div>
+            </div>
         </div>
 
     </div>
