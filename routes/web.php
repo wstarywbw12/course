@@ -97,6 +97,10 @@ Route::middleware(['auth'])->group(function () {
         ]);
     });
 
+    Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submit'])
+    ->name('quiz.submit');
+
+
 });
 
 require __DIR__.'/auth.php';
