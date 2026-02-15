@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Level;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $userId = auth()->id();
+        $userId = Auth::id();
 
         $courses = Course::with('level')
             ->orderBy('id', 'desc')
@@ -115,7 +116,7 @@ class DashboardController extends Controller
             'materials' => function ($q) {
                 $q->with([
                     'userActivity' => function ($qa) {
-                        $qa->where('user_id', auth()->id());
+                        $qa->where('user_id', Auth::id());
                     },
                 ])->orderBy('order_number');
             },
