@@ -50,6 +50,7 @@
                         <tr>
                             <th width="5%">No</th>
                             <th>Title</th>
+                            <th>Time</th>
                             <th>Deskription</th>
                             <th class="text-end"></th>
                         </tr>
@@ -59,6 +60,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $quiz->title }}</td>
+                                <td>{{ $quiz->time }}</td>
                                 <td>{{ Str::limit($quiz->description, 60) }}</td>
                                 <td class="text-end">
 
@@ -121,6 +123,7 @@
             document.getElementById('quizMethod').value = 'POST';
 
             document.getElementById('quiz_title').value = '';
+            document.getElementById('quiz_time').value = '';
             document.getElementById('quiz_description').value = '';
 
             quizModal.show();
@@ -133,6 +136,7 @@
             document.getElementById('quizMethod').value = 'PUT';
 
             document.getElementById('quiz_title').value = quiz.title;
+            document.getElementById('quiz_time').value = quiz.time;
             document.getElementById('quiz_description').value = quiz.description ?? '';
 
             quizModal.show();

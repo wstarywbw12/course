@@ -17,6 +17,12 @@
                                class="form-control" required>
                     </div>
 
+                     <div class="mb-3">
+                        <label>Waktu</label>
+                        <input type="number" name="time" id="quiz_time"
+                               class="form-control" required>
+                    </div>
+
                     <div class="mb-3">
                         <label>Deskripsi</label>
                         <textarea name="description" id="quiz_description"

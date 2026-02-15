@@ -20,10 +20,11 @@ class QuizController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'time' => 'required|integer',
             'description' => 'nullable|string',
         ]);
 
-        $course->quizzes()->create($request->only('title', 'description'));
+        $course->quizzes()->create($request->only('title','time', 'description'));
 
         return back()->with('success', 'Quiz berhasil ditambahkan');
     }
@@ -32,10 +33,11 @@ class QuizController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'time' => 'required|integer',
             'description' => 'nullable|string',
         ]);
 
-        $quiz->update($request->only('title', 'description'));
+        $quiz->update($request->only('title','time', 'description'));
 
         return back()->with('success', 'Quiz berhasil diperbarui');
     }
