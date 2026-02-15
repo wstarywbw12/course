@@ -13,6 +13,7 @@ class CourseMaterial extends Model
         'course_id',
         'title',
         'type',
+        'time',
         'content',
         'transcript',
         'description',

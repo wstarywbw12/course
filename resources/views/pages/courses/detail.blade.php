@@ -49,6 +49,7 @@
                         <tr>
                             <th width="5%">No</th>
                             <th>Materi</th>
+                            <th>Time</th>
                             <th>Type</th>
                             <th>content</th>
                             <th class="text-end"></th>
@@ -58,7 +59,8 @@
                         @forelse ($course->materials as $materi)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $materi->title }}</td>
+                                <td >{{ $materi->title }}</td>
+                                <td class="text-center">{{ $materi->time }}</td>
                                 <td>
                                     <span class="badge bg-{{ $materi->type === 'video' ? 'danger' : 'success' }}">
                                         {{ strtoupper($materi->type) }}
@@ -127,6 +129,7 @@
 
             document.getElementById('materi_title').value = materi.title;
             document.getElementById('materi_type').value = materi.type;
+            document.getElementById('materi_time').value = materi.time;
             document.getElementById('materi_content').value = materi.content;
 
             materiModal.show();

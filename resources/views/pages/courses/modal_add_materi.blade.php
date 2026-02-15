@@ -24,6 +24,11 @@
                             <option value="text">Text</option>
                         </select>
                     </div>
+                     <div class="mb-3">
+                        <label>Time</label>
+                        <input type="number" name="time" id="materi_time"
+                               class="form-control" required>
+                    </div>
 
                     <div class="mb-3">
                         <label>Content (URL / Text)</label>

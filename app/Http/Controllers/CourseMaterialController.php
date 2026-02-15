@@ -13,6 +13,7 @@ class CourseMaterialController extends Controller
         $request->validate([
             'title'        => 'required|string|max:255',
             'type'         => 'required|in:video,text',
+            'time'         => 'nullable|integer',
             'content'      => 'required|string',
             'order_number' => 'nullable|integer',
         ]);
@@ -27,6 +28,7 @@ class CourseMaterialController extends Controller
         $request->validate([
             'title'   => 'required|string|max:255',
             'type'    => 'required|in:video,text',
+            'time'    => 'nullable|integer',
             'content' => 'required|string',
         ]);
 

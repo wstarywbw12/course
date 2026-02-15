@@ -15,7 +15,7 @@
                 <div>
                     <div class="lesson-title">{{ $lesson->title }}</div>
                     <div class="lesson-time">
-                        <i class="bi bi-clock"></i> {{ $lesson->duration ?? 0 }} menit
+                        <i class="bi bi-clock"></i> {{ $lesson->time ?? 0 }} menit
                     </div>
                 </div>
             </div>
