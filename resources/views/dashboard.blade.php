@@ -72,8 +72,10 @@
                                             <span class="text-muted fst-italic">{{ $course->level->level }}</span>
 
                                             <div class="d-flex align-items-center text-muted">
-                                                <i class="bi bi-clock me-2"></i> 17 hours
+                                                <i class="bi bi-clock me-2"></i>
+                                                {{ $course->total_hours }} Hours
                                             </div>
+
 
                                             <a href="{{ route('courses.detail', $course) }}"
                                                 class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
@@ -130,11 +132,11 @@
                     <div class="fw-bold">Total Time Spent</div>
 
                     <h2 class="text-primary fw-bold d-inline">
-                        {{ $totalHours}}
+                        {{ $totalHours }}
                     </h2>
                     Hours
                     <h2 class="text-primary fw-bold d-inline">
-                        {{ $totalRemainingMinutes }} 
+                        {{ $totalRemainingMinutes }}
                     </h2>
                     Minutes
 

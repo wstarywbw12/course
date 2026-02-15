@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class ActivityController extends Controller
@@ -25,26 +24,17 @@ class ActivityController extends Controller
         // COURSE YANG PERNAH DIPELAJARI
         // ================================
         $courses = \App\Models\Course::whereHas('materials.activities', function ($q) use ($userId) {
-                $q->where('user_id', $userId);
-            })
-            ->with(['level', 'materials'])
+            $q->where('user_id', $userId);
+        })
+            ->with('level')
+            ->withCount('materials as total_modules')
+            ->withSum('materials as total_minutes', 'time')
             ->get();
 
-        // ================================
-        // TOTAL JAM & MODUL PER COURSE
-        // ================================
+        // convert menit ke jam
         foreach ($courses as $course) {
-
-            $course->total_minutes = DB::table('user_material_activities')
-                ->join('course_materials', 'user_material_activities.material_id', '=', 'course_materials.id')
-                ->where('user_material_activities.user_id', $userId)
-                ->where('course_materials.course_id', $course->id)
-                ->where('user_material_activities.activity_type', 'complete')
-                ->sum('course_materials.time');
-
-            $course->total_hours = round($course->total_minutes / 60);
-
-            $course->total_modules = $course->materials->count();
+            $minutes = $course->total_minutes ?? 0;
+            $course->total_hours = round($minutes / 60, 1);
         }
 
         // ================================

@@ -83,6 +83,19 @@ class DashboardController extends Controller
         $totalHours = floor($totalMinutesAllTime / 60);
         $totalRemainingMinutes = $totalMinutesAllTime % 60;
 
+        // ================================
+        // COURSES + TOTAL TIME MATERIAL
+        // ================================
+        $courses = Course::with('level')
+            ->withSum('materials as total_minutes', 'time')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        // convert menit ke jam
+        foreach ($courses as $course) {
+            $course->total_hours = round(($course->total_minutes ?? 0) / 60, 1);
+        }
+
         return view('dashboard', compact(
             'levels',
             'levelProgress',
