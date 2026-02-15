@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mb-5 pb-5">
 
             <!-- ================= LEFT CONTENT ================= -->
             @include('pages.course.kiri.index')

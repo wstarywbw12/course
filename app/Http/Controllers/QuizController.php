@@ -56,7 +56,7 @@ class QuizController extends Controller
 
         foreach ($quiz->questions as $question) {
 
-            $selectedOptionId = $request->answers[$question->id] ?? null;
+            $selectedOptionId = $request->input("answers.$question->id");
 
             if ($selectedOptionId) {
 
@@ -70,13 +70,13 @@ class QuizController extends Controller
             }
         }
 
-        $finalScore = ($score / $total) * 100;
+        $finalScore = $total > 0 ? ($score / $total) * 100 : 0;
         $isPassed = $finalScore >= 70;
 
         UserQuizResult::create([
             'user_id' => auth()->id(),
             'quiz_id' => $quiz->id,
-            'score' => $finalScore,
+            'score' => round($finalScore),
             'is_passed' => $isPassed,
             'submitted_at' => now(),
         ]);
@@ -87,6 +87,5 @@ class QuizController extends Controller
                 'passed' => $isPassed,
             ],
         ]);
-
     }
 }

@@ -13,21 +13,20 @@ class DashboardController extends Controller
         return view('dashboard', compact('courses'));
     }
 
-   public function show(Course $course)
-{
-    $course->load([
-        'level',
-        'materials' => function ($q) {
-            $q->with([
-                'userActivity' => function ($qa) {
-                    $qa->where('user_id', auth()->id());
-                },
-            ])->orderBy('order_number');
-        },
-        'quizzes.questions.options' // ✅ penting
-    ]);
+    public function show(Course $course)
+    {
+        $course->load([
+            'level',
+            'materials' => function ($q) {
+                $q->with([
+                    'userActivity' => function ($qa) {
+                        $qa->where('user_id', auth()->id());
+                    },
+                ])->orderBy('order_number');
+            },
+            'quizzes.questions.options', // ✅ penting
+        ]);
 
-    return view('pages.course.detail', compact('course'));
-}
-
+        return view('pages.course.detail', compact('course'));
+    }
 }
