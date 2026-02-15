@@ -2,41 +2,40 @@
 @section('content')
     <div class="container hero">
 
-        <h1>Hello Nat 👋</h1>
+        <h1>Hello {{ Auth::user()->name ?? '' }} 👋</h1>
         <small>Siap lanjutkan perjalanan belajarmu hari ini?</small>
 
         <div class="level-box">
             <div class="mb-2 text-dark">
-                You are now a <b class="text-primary">Beginner</b>
+                You are now a <b class="text-primary">
+                    {{ $levels->sortByDesc(fn($l) => $levelProgress[$l->id])->first()->name ?? 'Beginner' }}
+                </b>
             </div>
 
             <div class="row">
-                <div class="col-4">
-                    <div class="progress">
-                        <div class="progress-bar" style="width:35%"></div>
+                @foreach ($levels as $level)
+                    @php
+                        $progress = $levelProgress[$level->id] ?? 0;
+                    @endphp
+
+                    <div class="col-4 mb-3">
+
+                        <div class="progress" style="height:16px;">
+                            <div class="progress-bar bg-primary" style="width: {{ $progress }}%">
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <small class="text-dark ">{{ $progress }}%</small>
+                            <i style="font-size: 22px" class="{{ $level->icon }} text-primary">
+                            </i>
+                        </div>
+
                     </div>
-                    <div class="text-end mt-2">
-                        <i style="font-size: 22px" class="bi bi-circle-fill me-2 text-primary "></i>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="progress">
-                        <div class="progress-bar" style="width:0%"></div>
-                    </div>
-                    <div class="text-end mt-2">
-                        <i style="font-size: 22px" class="bi bi-triangle-fill  me-2 text-primary "></i>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="progress">
-                        <div class="progress-bar" style="width:0%"></div>
-                    </div>
-                    <div class="text-end mt-2">
-                        <i style="font-size: 22px" class="bi bi-square-fill  me-2 text-primary "></i>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
+
 
     </div>
 
@@ -101,31 +100,53 @@
             <!-- RIGHT SIDE -->
             <div class="col-lg-4">
 
-                <h5 class="text-white fw-bold ">Continue Course</h5>
+                <h5 class="text-white fw-bold">Continue Course</h5>
 
-                <div class="continue-card">
-                    <small>Beginner</small>
-                    <h5 class="mt-2">Modul 1</h5>
-                    <small>Pengantar UML & Diagram Kelas</small>
+                @if ($continueCourse)
+                    <div class="continue-card">
+                        <small>{{ $continueCourse->level->level }}</small>
 
-                    <div class="text-end mt-3">
-                        <button class="btn btn-primary btn-sm">
-                            <i class="bi bi-arrow-right"></i>
-                        </button>
+                        <h6 class="my-2">{{ $continueCourse->title }}</h6>
+
+                        <small>
+                            {{ $continueCourse->description }}
+                        </small>
+
+                        <div class="text-end mt-3">
+                            <a href="{{ route('courses.detail', $continueCourse->id) }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="continue-card">
+                        <small>Belum ada course yang dipelajari</small>
+                    </div>
+                @endif
+
 
                 <div class="stats-card">
-                    <div class="text-muted small">Total Time Spent</div>
-                    <h2 class="text-primary fw-bold">27 <small class="text-muted fs-6">Hours</small></h2>
+
+                    <div class="fw-bold">Total Time Spent</div>
+
+                    <h2 class="text-primary fw-bold d-inline">
+                        {{ $totalHours}}
+                    </h2>
+                    Hours
+                    <h2 class="text-primary fw-bold d-inline">
+                        {{ $totalRemainingMinutes }} 
+                    </h2>
+                    Minutes
 
                     <hr>
 
                     <div class="d-flex justify-content-between">
                         <span class="text-muted small">This Week</span>
-                        <b>6.5H</b>
+                        <b>{{ $totalHoursThisWeek }}H</b>
                     </div>
+
                 </div>
+
 
             </div>
         </div>

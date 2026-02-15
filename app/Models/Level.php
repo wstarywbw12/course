@@ -15,4 +15,9 @@ class Level extends Model
         'level',
         'icon',
     ];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }
