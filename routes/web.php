@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\DashboardController;
@@ -13,9 +14,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/activity', function () {
-    return view('pages.activity.index');
-})->name('activity.index');
+Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index');
 
 Route::get('/detail-course', function () {
     return view('pages.course.detail');
