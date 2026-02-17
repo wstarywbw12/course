@@ -15,6 +15,7 @@
                      <a class="nav-link text-nav" href="{{ route('activity.index') }}">Activity</a>
                  </li>
                  <!-- Dropdown -->
+                 @role('admin')
                  <li class="nav-item ms-lg-3 dropdown">
                      <a class="nav-link text-nav d-flex align-items-center gap-2 dropdown-toggle custom-dropdown-btn"
                          type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,6 +34,7 @@
                          </li>
                      </ul>
                  </li>
+                 @endrole
 
 
                   <li class="nav-item ms-lg-3 dropdown">

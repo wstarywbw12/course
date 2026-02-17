@@ -22,12 +22,41 @@ Route::get('/detail-course', function () {
     return view('pages.course.detail');
 })->name('detail.course');
 
-Route::get('/levels', [LevelController::class, 'index'])->name('levels.index');
-Route::get('/courses', [CourseController::class, 'index'])->name('couses.index');
+
 
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/dasboard/courses/{course}', [DashboardController::class, 'show'])
+        ->name('courses.detail');
+
+    Route::post('/materials/{material}/complete', function (\App\Models\CourseMaterial $material) {
+        \App\Models\UserMaterialActivity::updateOrCreate(
+            [
+                'user_id' => Auth::id(),
+                'material_id' => $material->id,
+                'activity_type' => 'complete',
+            ],
+            [
+                'activity_time' => now(),
+            ]
+        );
+
+        return response()->json([
+            'success' => true,
+        ]);
+    });
+
+    Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submit'])
+        ->name('quiz.submit');
+
+    Route::post('/upload-image', [UploadController::class, 'store'])
+        ->name('upload.image');
+
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -77,35 +106,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('questions/{question}', [QuizQuestionController::class, 'destroy'])
             ->name('quiz.questions.destroy');
     });
-
-    Route::get('/dasboard/courses/{course}', [DashboardController::class, 'show'])
-        ->name('courses.detail');
-
-    Route::post('/materials/{material}/complete', function (\App\Models\CourseMaterial $material) {
-        \App\Models\UserMaterialActivity::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'material_id' => $material->id,
-                'activity_type' => 'complete',
-            ],
-            [
-                'activity_time' => now(),
-            ]
-        );
-
-        return response()->json([
-            'success' => true,
-        ]);
-    });
-
-    Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submit'])
-    ->name('quiz.submit');
-
-
-    Route::post('/upload-image', [UploadController::class, 'store'])
-    ->name('upload.image');
-
-
 });
 
 require __DIR__.'/auth.php';
