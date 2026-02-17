@@ -22,7 +22,7 @@
                         </div>
 
                         <p class="level-desc mt-3">
-                            {{ $course->description }}
+                            {!! Str::limit(strip_tags($course->description ?? ''), 83) !!}
                         </p>
 
                         <div class="d-flex justify-content-between align-items-center mt-3">
@@ -71,10 +71,10 @@
                     <div class="continue-card">
                         <small>{{ $continueCourse->level->level }}</small>
 
-                        <h6 class="my-2">{{ $continueCourse->title }}</h6>
+                        <h6 class="my-2">{{ Str::limit($continueCourse->title, 30) }}</h6>
 
                         <small>
-                            {{ $continueCourse->description }}
+                             {!! Str::limit(strip_tags($continueCourse->description ?? ''), 83) !!}
                         </small>
 
                         <div class="text-end mt-3">
