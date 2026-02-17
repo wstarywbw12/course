@@ -1,7 +1,7 @@
 <div class="col-lg-4">
     <div class="card shadow-sm border-0 my-3 bg-dark">
         <div class="card-body">
-            <h6 class="fw-bold text-light">Pengantar UML & Diagram Kelas</h6>
+            <h6 class="fw-bold text-light">{{ $course->title ?? '' }}</h6>
 
             <!-- Progress -->
             <div class="progress" style="height:6px;">

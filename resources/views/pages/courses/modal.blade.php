@@ -11,6 +11,7 @@
                 </div>
 
                 <div class="modal-body">
+
                     <div class="mb-3">
                         <label class="form-label">Title</label>
                         <input type="text" name="title" id="title" class="form-control" required>
@@ -28,9 +29,21 @@
 
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+                        <textarea name="description" id="description" class="form-control"></textarea>
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Transcript</label>
+                        <textarea name="transcript" id="transcript" class="form-control"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Resources</label>
+                        <textarea name="resources" id="resources" class="form-control"></textarea>
+                    </div>
+
                 </div>
+
 
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

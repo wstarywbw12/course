@@ -12,6 +12,8 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
+        'transcript',
+        'resources',
         'level_id',
     ];
 

@@ -18,6 +18,9 @@
             min-height: 100vh;
         }
 
+        .ck-editor__editable {
+    min-height: 200px;
+}
 
 
         /* HERO */

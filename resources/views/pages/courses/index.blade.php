@@ -27,7 +27,10 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $course->title }}</td>
                                 <td>{{ $course->level->level }}</td>
-                                <td>{{ Str::limit($course->description, 50) }}</td>
+                                <td>
+                                    {!! Str::limit(strip_tags($course->description ?? ''), 50) !!}
+                                </td>
+
                                 <td class="text-end">
                                     <button class="btn btn-sm btn-warning"
                                         onclick='openEditModal(@json($course))'>
@@ -38,7 +41,7 @@
                                         <i class="bi bi-eye"></i> Materi
                                     </a>
 
-                                     <a href="{{ route('quiz.index', $course->id) }}" class="btn btn-info btn-sm">
+                                    <a href="{{ route('quiz.index', $course->id) }}" class="btn btn-info btn-sm">
                                         <i class="bi bi-eye"></i> Quiz
                                     </a>
 
@@ -65,35 +68,54 @@
     @include('pages.courses.modal')
 
     @include('pages.courses.style')
-
-
-   
 @endsection
 
 @push('scripts')
     <script>
+        let descriptionEditor;
+        let transcriptEditor;
+        let resourcesEditor;
+
+        ClassicEditor.create(document.querySelector('#description'))
+            .then(editor => descriptionEditor = editor);
+
+        ClassicEditor.create(document.querySelector('#transcript'))
+            .then(editor => transcriptEditor = editor);
+
+        ClassicEditor.create(document.querySelector('#resources'))
+            .then(editor => resourcesEditor = editor);
+
+
         const modal = new bootstrap.Modal(document.getElementById('courseModal'));
 
         function openCreateModal() {
+
             document.getElementById('modalTitle').innerText = 'Tambah Course';
             document.getElementById('courseForm').action = "{{ route('courses.store') }}";
             document.getElementById('method').value = 'POST';
 
             document.getElementById('title').value = '';
             document.getElementById('level_id').value = '';
-            document.getElementById('description').value = '';
+
+            descriptionEditor.setData('');
+            transcriptEditor.setData('');
+            resourcesEditor.setData('');
 
             modal.show();
         }
 
         function openEditModal(course) {
+
             document.getElementById('modalTitle').innerText = 'Edit Course';
             document.getElementById('courseForm').action = `/courses/${course.id}`;
             document.getElementById('method').value = 'PUT';
 
             document.getElementById('title').value = course.title;
             document.getElementById('level_id').value = course.level_id;
-            document.getElementById('description').value = course.description ?? '';
+
+            descriptionEditor.setData(course.description ?? '');
+            transcriptEditor.setData(course.transcript ?? '');
+            resourcesEditor.setData(course.resources ?? '');
 
             modal.show();
         }

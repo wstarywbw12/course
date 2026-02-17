@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f5f6f8;
+        }
+
+        .question-number {
+            width: 35px;
+            height: 35px;
+            background-color: #0d6efd;
+            color: white;
+            font-weight: 600;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .option-box {
+            border-radius: 10px;
+            padding: 14px 18px;
+            background-color: #e3e3e4;
+            border: 2px solid transparent;
+            transition: 0.2s ease-in-out;
+        }
+
+        .option-label {
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        .wrong {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+
+        .wrong .option-label {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .wrong .option-text {
+            color: #dc3545;
+            font-weight: 500;
+        }
+
+        .correct {
+            border-color: #198754;
+            background-color: #d1e7dd;
+        }
+
+        .correct .option-label {
+            background-color: #198754;
+            color: white;
+        }
+
+        .correct .option-text {
+            color: #198754;
+            font-weight: 500;
+        }
+
+        .explanation-box {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <!-- Header Question -->
+        <div class="d-flex align-items-center mb-4">
+            <div class="question-number me-3">2</div>
+            <h5 class="mb-0">Notasi + pada anggota kelas berarti...</h5>
+        </div>
+
+        <!-- Option A -->
+        <div class="option-box d-flex align-items-center mb-3">
+            <div class="option-label bg-primary text-white">A</div>
+            <div class="option-text">Private</div>
+        </div>
+
+        <!-- Option B (Wrong) -->
+        <div class="option-box d-flex align-items-center mb-3 wrong">
+            <div class="option-label">B</div>
+            <div class="option-text">Protect</div>
+        </div>
+
+        <!-- Option C -->
+        <div class="option-box d-flex align-items-center mb-3">
+            <div class="option-label bg-primary text-white">C</div>
+            <div class="option-text">Package</div>
+        </div>
+
+        <!-- Option D (Correct) -->
+        <div class="option-box d-flex align-items-center mb-4 correct">
+            <div class="option-label">D</div>
+            <div class="option-text">Public</div>
+        </div>
+
+        <!-- Explanation -->
+        <div class="explanation-box shadow-sm">
+            <p><strong>D → + berarti public.</strong></p>
+            <p>Dalam UML, setiap atribut dan operasi dapat memiliki visibilitas tertentu.</p>
+            <p>Notasi yang dipakai adalah:</p>
+            <ul>
+                <li>+ → public (dapat diakses oleh kelas apa pun)</li>
+                <li># → protected</li>
+                <li>~ → package</li>
+                <li>- → private</li>
+            </ul>
+            <p>
+                Dengan demikian, simbol "+" menandakan bahwa atribut atau metode tersebut bersifat public,
+                sehingga dapat diakses secara bebas oleh objek atau kelas lain dalam sistem.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -22,9 +22,17 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'level_id' => 'required|exists:levels,id',
             'description' => 'nullable|string',
+            'transcript' => 'nullable|string',
+            'resources' => 'nullable|string',
         ]);
 
-        Course::create($request->all());
+        Course::create([
+            'title' => $request->title,
+            'level_id' => $request->level_id,
+            'description' => $request->description,
+            'transcript' => $request->transcript,
+            'resources' => $request->resources,
+        ]);
 
         return back()->with('success', 'Course berhasil ditambahkan');
     }
@@ -42,9 +50,17 @@ class CourseController extends Controller
             'title' => 'required|string|max:255',
             'level_id' => 'required|exists:levels,id',
             'description' => 'nullable|string',
+            'transcript' => 'nullable|string',
+            'resources' => 'nullable|string',
         ]);
 
-        $course->update($request->all());
+        $course->update([
+            'title' => $request->title,
+            'level_id' => $request->level_id,
+            'description' => $request->description,
+            'transcript' => $request->transcript,
+            'resources' => $request->resources,
+        ]);
 
         return back()->with('success', 'Course berhasil diperbarui');
     }
@@ -55,8 +71,4 @@ class CourseController extends Controller
 
         return back()->with('success', 'Course berhasil dihapus');
     }
-
-
-
-   
 }

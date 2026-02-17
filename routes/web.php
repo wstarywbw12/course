@@ -8,6 +8,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -82,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/materials/{material}/complete', function (\App\Models\CourseMaterial $material) {
         \App\Models\UserMaterialActivity::updateOrCreate(
             [
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'material_id' => $material->id,
                 'activity_type' => 'complete',
             ],
