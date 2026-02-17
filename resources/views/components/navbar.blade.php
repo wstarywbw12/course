@@ -9,10 +9,10 @@
          <div class="collapse navbar-collapse" id="navmenu">
              <ul class="navbar-nav ms-auto align-items-center">
                  <li class="nav-item">
-                     <a class="nav-link active text-nav" href="{{ route('dashboard') }}">Dashboard</a>
+                     <a class="nav-link text-nav {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
                  </li>
                  <li class="nav-item ms-lg-3">
-                     <a class="nav-link text-nav" href="{{ route('activity.index') }}">Activity</a>
+                     <a class="nav-link text-nav {{ request()->routeIs('activity.index') ? 'active' : '' }}"  href="{{ route('activity.index') }}">Activity</a>
                  </li>
                  <!-- Dropdown -->
                  @role('admin')

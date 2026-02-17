@@ -8,19 +8,19 @@
         <div id="lessonContent"></div>
 
         <!-- Tabs Lesson -->
-        <ul class="nav nav-tabs mb-3">
+        <ul class="nav nav-tabs">
             <li class="nav-item">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#transcript">
+                <button style="color: #1e63ff !important;" class="nav-link active" data-bs-toggle="tab" data-bs-target="#transcript">
                     Transcript
                 </button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#description">
+                <button style="color: #1e63ff !important;" class="nav-link" data-bs-toggle="tab" data-bs-target="#description">
                     Description
                 </button>
             </li>
             <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#resources">
+                <button style="color: #1e63ff !important;" class="nav-link" data-bs-toggle="tab" data-bs-target="#resources">
                     Resources
                 </button>
             </li>
