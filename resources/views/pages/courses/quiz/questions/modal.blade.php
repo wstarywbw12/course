@@ -16,6 +16,14 @@
                     <textarea name="question" id="questionEditor"></textarea>
                     <hr>
 
+                    <hr>
+
+                    <label class="fw-bold mb-2">Pembahasan</label>
+                    <textarea name="pembahasan" id="pembahasanEditor"></textarea>
+
+                    <hr>
+
+
                     @for ($i = 0; $i < 4; $i++)
                         @php
                             $label = chr(65 + $i); // A, B, C, D

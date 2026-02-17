@@ -11,6 +11,7 @@ class QuizQuestionController extends Controller
     public function index(Quiz $quiz)
     {
         $quiz->load('questions.options');
+
         return view('pages.courses.quiz.questions.index', compact('quiz'));
     }
 
@@ -18,18 +19,20 @@ class QuizQuestionController extends Controller
     {
         $request->validate([
             'question' => 'required',
+            'pembahasan' => 'nullable',
             'options.*.text' => 'required',
-            'correct_option' => 'required'
+            'correct_option' => 'required',
         ]);
 
         $question = $quiz->questions()->create([
-            'question' => $request->question
+            'question' => $request->question,
+            'pembahasan' => $request->pembahasan,
         ]);
 
         foreach ($request->options as $key => $option) {
             $question->options()->create([
                 'option_text' => $option['text'],
-                'is_correct' => $request->correct_option == $key
+                'is_correct' => $request->correct_option == $key,
             ]);
         }
 
@@ -37,30 +40,33 @@ class QuizQuestionController extends Controller
     }
 
     public function update(Request $request, QuizQuestion $question)
-{
-    $request->validate([
-        'question' => 'required',
-        'options.*.text' => 'required',
-        'correct_option' => 'required'
-    ]);
-
-    $question->update([
-        'question' => $request->question
-    ]);
-
-    foreach ($question->options as $key => $option) {
-        $option->update([
-            'option_text' => $request->options[$key]['text'],
-            'is_correct' => $request->correct_option == $key
+    {
+        $request->validate([
+            'question' => 'required',
+            'pembahasan' => 'nullable',
+            'options.*.text' => 'required',
+            'correct_option' => 'required',
         ]);
-    }
 
-    return back()->with('success', 'Soal berhasil diperbarui');
-}
+        $question->update([
+            'question' => $request->question,
+            'pembahasan' => $request->pembahasan,
+        ]);
+
+        foreach ($question->options as $key => $option) {
+            $option->update([
+                'option_text' => $request->options[$key]['text'],
+                'is_correct' => $request->correct_option == $key,
+            ]);
+        }
+
+        return back()->with('success', 'Soal berhasil diperbarui');
+    }
 
     public function destroy(QuizQuestion $question)
     {
         $question->delete();
+
         return back()->with('success', 'Soal berhasil dihapus');
     }
 }
