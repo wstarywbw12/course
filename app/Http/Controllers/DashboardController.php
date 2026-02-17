@@ -142,6 +142,11 @@ class DashboardController extends Controller
             ? round(($completedMaterials / $totalMaterials) * 100)
             : 0;
 
-        return view('pages.course.detail', compact('course', 'progress'));
+        $notes = $course->notes()
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('pages.course.detail', compact('course', 'progress', 'notes'));
     }
 }

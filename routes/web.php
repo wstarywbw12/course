@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\UploadController;
@@ -21,8 +22,6 @@ Route::get('/activity', [ActivityController::class, 'index'])->name('activity.in
 Route::get('/detail-course', function () {
     return view('pages.course.detail');
 })->name('detail.course');
-
-
 
 Route::middleware(['auth'])->group(function () {
 
@@ -53,6 +52,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/upload-image', [UploadController::class, 'store'])
         ->name('upload.image');
+
+    Route::post('/courses/{course}/notes', [NoteController::class, 'store'])
+        ->name('notes.store');
+
+    Route::delete('/notes/{note}', [NoteController::class, 'destroy'])
+        ->name('notes.destroy');
 
 });
 
