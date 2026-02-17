@@ -17,7 +17,6 @@
                             <th width="5%">No</th>
                             <th>Title</th>
                             <th>Level</th>
-                            <th>Description</th>
                             <th class="text-end"></th>
                         </tr>
                     </thead>
@@ -27,13 +26,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $course->title }}</td>
                                 <td>{{ $course->level->level }}</td>
-                                <td>
-                                    {!! Str::limit(strip_tags($course->description ?? ''), 50) !!}
-                                </td>
-
                                 <td class="text-end">
-                                    <button class="btn btn-sm btn-warning"
-                                        onclick='openEditModal(@json($course))'>
+                                    <button class="btn btn-sm btn-warning" onclick="openEditModal({{ $course->id }})">
                                         <i class="bi bi-pencil"></i> Edit
                                     </button>
 
@@ -71,40 +65,103 @@
 @endsection
 
 @push('scripts')
-    <script>
-        let descriptionEditor;
-        let transcriptEditor;
-        let resourcesEditor;
+<script>
+let descriptionEditor, transcriptEditor, resourcesEditor;
+let modal;
 
-        ClassicEditor.create(document.querySelector('#description'))
-            .then(editor => descriptionEditor = editor);
+document.addEventListener("DOMContentLoaded", function () {
 
-        ClassicEditor.create(document.querySelector('#transcript'))
-            .then(editor => transcriptEditor = editor);
+    modal = new bootstrap.Modal(document.getElementById('courseModal'));
 
-        ClassicEditor.create(document.querySelector('#resources'))
-            .then(editor => resourcesEditor = editor);
+    function MyUploadAdapter(loader) {
+        this.loader = loader;
+    }
 
+    MyUploadAdapter.prototype.upload = function () {
+        return this.loader.file.then(file => {
+            let data = new FormData();
+            data.append('upload', file);
+            data.append('_token', '{{ csrf_token() }}');
 
-        const modal = new bootstrap.Modal(document.getElementById('courseModal'));
+            return fetch("{{ route('upload.image') }}", {
+                method: 'POST',
+                body: data
+            })
+            .then(response => response.json())
+            .then(result => {
+                return {
+                    default: result.url
+                };
+            });
+        });
+    };
 
-        function openCreateModal() {
+    function MyCustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new MyUploadAdapter(loader);
+        };
+    }
 
-            document.getElementById('modalTitle').innerText = 'Tambah Course';
-            document.getElementById('courseForm').action = "{{ route('courses.store') }}";
-            document.getElementById('method').value = 'POST';
+    function createEditor(selector) {
+        return ClassicEditor.create(document.querySelector(selector), {
+            extraPlugins: [MyCustomUploadAdapterPlugin],
+            toolbar: [
+                'heading',
+                '|',
+                'bold', 'italic', 'underline',
+                '|',
+                'bulletedList', 'numberedList',
+                '|',
+                'insertTable',
+                'imageUpload',
+                '|',
+                'undo', 'redo'
+            ]
+        });
+    }
 
-            document.getElementById('title').value = '';
-            document.getElementById('level_id').value = '';
+    // 🔥 INIT EDITOR SEKALI SAJA
+    Promise.all([
+        createEditor('#description'),
+        createEditor('#transcript'),
+        createEditor('#resources')
+    ]).then(editors => {
+        descriptionEditor = editors[0];
+        transcriptEditor = editors[1];
+        resourcesEditor = editors[2];
+    });
 
-            descriptionEditor.setData('');
-            transcriptEditor.setData('');
-            resourcesEditor.setData('');
+    // =============================
+    // CREATE
+    // =============================
+    window.openCreateModal = function () {
 
-            modal.show();
-        }
+        document.getElementById('modalTitle').innerText = 'Tambah Course';
+        document.getElementById('courseForm').action = "{{ route('courses.store') }}";
+        document.getElementById('method').value = 'POST';
 
-        function openEditModal(course) {
+        document.getElementById('title').value = '';
+        document.getElementById('level_id').value = '';
+
+        descriptionEditor.setData('');
+        transcriptEditor.setData('');
+        resourcesEditor.setData('');
+
+        modal.show();
+    }
+
+    // =============================
+    // EDIT
+    // =============================
+    window.openEditModal = function (id) {
+
+        fetch(`/courses/${id}/edit`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(course => {
 
             document.getElementById('modalTitle').innerText = 'Edit Course';
             document.getElementById('courseForm').action = `/courses/${course.id}`;
@@ -118,6 +175,13 @@
             resourcesEditor.setData(course.resources ?? '');
 
             modal.show();
-        }
-    </script>
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Gagal mengambil data');
+        });
+    }
+
+});
+</script>
 @endpush

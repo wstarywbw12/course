@@ -18,7 +18,7 @@
                 <div>
                     <h4 class="fw-bold">{{ $course->title }}</h4>
                     <p class="text-muted">
-                        {{ $course->description ?? '-' }}
+                       {!! $course->description !!}
                     </p>
                 </div>
 

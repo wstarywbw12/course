@@ -1,3 +1,3 @@
- <p>
-     {!! strip_tags($course->description ?? '') !!}
- </p>
+<p>
+    {!! $course->description !!}
+</p>

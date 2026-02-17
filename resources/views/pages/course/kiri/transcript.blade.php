@@ -1,3 +1,3 @@
  <p>
-     {!! strip_tags($course->transcript ?? '') !!}
+     {!! $course->transcript ?? '' !!}
  </p>

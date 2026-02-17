@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/levels/{level}', [LevelController::class, 'update'])->name('levels.update');
     Route::delete('/levels/{level}', [LevelController::class, 'destroy'])->name('levels.destroy');
 
-    Route::resource('courses', CourseController::class)->except(['create', 'edit']);
+    Route::resource('courses', CourseController::class)->except(['create']);
 
     // quiz
     Route::get('/courses/{course}/quizzes', [QuizController::class, 'index'])
@@ -99,6 +100,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/quiz/{quiz}/submit', [QuizController::class, 'submit'])
     ->name('quiz.submit');
+
+
+    Route::post('/upload-image', [UploadController::class, 'store'])
+    ->name('upload.image');
 
 
 });

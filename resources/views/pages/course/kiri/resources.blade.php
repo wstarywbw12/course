@@ -1,3 +1,3 @@
  <p>
-     {!! strip_tags($course->resources ?? '') !!}
+     {!! $course->resources ?? '' !!}
  </p>

@@ -37,6 +37,11 @@ class CourseController extends Controller
         return back()->with('success', 'Course berhasil ditambahkan');
     }
 
+    public function edit(Course $course)
+    {
+        return response()->json($course);
+    }
+
     public function show(Course $course)
     {
         $course->load(['level', 'materials']);
