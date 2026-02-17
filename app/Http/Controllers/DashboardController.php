@@ -111,18 +111,37 @@ class DashboardController extends Controller
 
     public function show(Course $course)
     {
+        $userId = Auth::id();
+
         $course->load([
             'level',
-            'materials' => function ($q) {
+            'materials' => function ($q) use ($userId) {
                 $q->with([
-                    'userActivity' => function ($qa) {
-                        $qa->where('user_id', Auth::id());
+                    'userActivity' => function ($qa) use ($userId) {
+                        $qa->where('user_id', $userId)
+                            ->where('activity_type', 'complete');
                     },
                 ])->orderBy('order_number');
             },
-            'quizzes.questions.options', // ✅ penting
+            'quizzes.questions.options',
         ]);
 
-        return view('pages.course.detail', compact('course'));
+        // ==========================
+        // HITUNG PROGRESS COURSE
+        // ==========================
+
+        $totalMaterials = $course->materials->count();
+
+        $completedMaterials = $course->materials
+            ->filter(function ($material) {
+                return $material->userActivity !== null;
+            })
+            ->count();
+
+        $progress = $totalMaterials > 0
+            ? round(($completedMaterials / $totalMaterials) * 100)
+            : 0;
+
+        return view('pages.course.detail', compact('course', 'progress'));
     }
 }

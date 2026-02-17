@@ -1,13 +1,23 @@
 <div class="col-lg-4">
     <div class="card shadow-sm border-0 my-3 bg-dark">
         <div class="card-body">
-            <h6 class="fw-bold text-light">{{ $course->title ?? '' }}</h6>
+            <h6 class="fw-bold text-light">
+                <i class="text-primary {{ $course->level->icon }}"></i>
+                {{ Str::limit($course->title ?? '', 70) }}
+            </h6>
 
             <!-- Progress -->
-            <div class="progress" style="height:6px;">
-                <div class="progress-bar" style="width:30%"></div>
+            <div class="progress mt-2" style="height:6px;">
+                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ $progress }}%"
+                    aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                </div>
             </div>
+
+            <small class="text-muted">
+                {{ $progress }}% completed
+            </small>
         </div>
+
     </div>
 
     <ul class="nav nav-pills custom-tabs mb-3 w-100" role="tablist">
