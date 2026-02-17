@@ -1,137 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>UMLab Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Forgot Password</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<!-- Bootstrap Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        /* LEFT SIDE */
+        .left-panel {
+            background: linear-gradient(160deg, #000000 40%, #1e4ed8 70%, #e5e7eb 100%);
+            color: white;
+            position: relative;
+        }
 
-<style>
-body{
-    background:#f3f4f6;
-    font-family:'Inter',sans-serif;
-}
+        .brand-text {
+            font-size: 48px;
+            font-weight: 700;
+        }
 
-.auth-wrapper{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+        .vertical-line {
+            width: 3px;
+            height: 120px;
+            background: white;
+            margin: 40px auto 0;
+        }
 
-.auth-card{
-    width:380px;
-    background:#fff;
-    padding:35px 30px;
-    border-radius:14px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
+        /* RIGHT SIDE */
+        .right-panel {
+            background-color: #f8f9fa;
+        }
 
-.auth-title{
-    font-size:28px;
-    font-weight:700;
-}
+        .login-card {
+            width: 100%;
+            max-width: 310px;
+        }
 
-.auth-subtitle{
-    color:#6b7280;
-    font-size:14px;
-    margin-bottom:25px;
-}
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #2563eb;
+        }
 
-.input-group-text{
-    background:transparent;
-    border-right:0;
-    color:#6b7280;
-}
+        .btn-primary {
+            background-color: #2563eb;
+            border: none;
+        }
 
-.form-control{
-    border-left:0;
-    padding:12px;
-}
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
 
-.form-control:focus{
-    box-shadow:none;
-    border-color:#c7d2fe;
-}
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
 
-.btn-auth{
-    background:#2563eb;
-    border:none;
-    padding:12px;
-    border-radius:10px;
-    font-weight:600;
-}
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+        }
 
-.btn-auth:hover{
-    background:#1d4ed8;
-}
+        .divider:not(:empty)::before {
+            margin-right: .75em;
+        }
 
-.invalid-feedback{
-    display:block;
-}
-</style>
+        .divider:not(:empty)::after {
+            margin-left: .75em;
+        }
+
+        @media (max-width: 992px) {
+            .left-panel {
+                display: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="auth-wrapper">
-    <div class="auth-card">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
 
-        <div class="mb-4">
-            <div class="auth-title">Forgot password?</div>
-            <div class="auth-subtitle">
-                You’ll receive an email to recover your password.
-            </div>
-        </div>
-
-        <!-- SUCCESS MESSAGE -->
-        @if (session('status'))
-            <div class="alert alert-success small">
-                {{ session('status') }}
-            </div>
-        @endif
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- EMAIL -->
-            <div class="mb-4">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-envelope"></i>
-                    </span>
-                    <input type="email"
-                        name="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        placeholder="Enter your email"
-                        value="{{ old('email') }}"
-                        required autofocus>
+            <!-- LEFT SIDE -->
+            <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center left-panel">
+                <div class="text-center">
+                    <div class="brand-text">UMLab</div>
+                    <div class="vertical-line"></div>
                 </div>
-
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
             </div>
 
-            <!-- BUTTON -->
-            <div class="d-grid">
-                <button class="btn btn-auth text-white">
-                    Send
-                </button>
+            <!-- RIGHT SIDE -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center right-panel">
+                <div class="login-card">
+
+                    <h3 class="fw-bold">Forgot Password?</h3>
+                    <p class="text-muted mb-4">You'll receive an email to recover your password</p>
+
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <!-- EMAIL -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email"
+                                    required>
+                            </div>
+                        </div>
+
+
+                        <!-- Login Button -->
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary ">Send</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
             </div>
 
-        </form>
-
+        </div>
     </div>
-</div>
+
 
 </body>
+
 </html>

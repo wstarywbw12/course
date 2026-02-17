@@ -1,235 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>UMLab Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Register</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<!-- Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        /* LEFT SIDE */
+        .left-panel {
+            background: linear-gradient(160deg, #000000 40%, #1e4ed8 70%, #e5e7eb 100%);
+            color: white;
+            position: relative;
+        }
 
-<style>
-body{
-    background:#f3f4f6;
-    font-family:'Inter',sans-serif;
-}
+        .brand-text {
+            font-size: 48px;
+            font-weight: 700;
+        }
 
-.auth-wrapper{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
+        .vertical-line {
+            width: 3px;
+            height: 120px;
+            background: white;
+            margin: 40px auto 0;
+        }
 
-.auth-card{
-    width:380px;
-    background:#fff;
-    padding:35px 30px;
-    border-radius:14px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
+        /* RIGHT SIDE */
+        .right-panel {
+            background-color: #f8f9fa;
+        }
 
-.auth-title{
-    font-size:28px;
-    font-weight:700;
-}
+        .login-card {
+            width: 100%;
+            max-width: 310px;
+        }
 
-.auth-subtitle{
-    color:#6b7280;
-    font-size:14px;
-    margin-bottom:25px;
-}
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #2563eb;
+        }
 
-.input-group-text{
-    background:transparent;
-    border-right:0;
-    color:#6b7280;
-}
+        .btn-primary {
+            background-color: #2563eb;
+            border: none;
+        }
 
-.form-control{
-    border-left:0;
-    padding:12px;
-}
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
 
-.form-control:focus{
-    box-shadow:none;
-    border-color:#c7d2fe;
-}
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
 
-.btn-auth{
-    background:#2563eb;
-    border:none;
-    padding:12px;
-    border-radius:10px;
-    font-weight:600;
-}
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+        }
 
-.btn-auth:hover{
-    background:#1d4ed8;
-}
+        .divider:not(:empty)::before {
+            margin-right: .75em;
+        }
 
-.divider{
-    display:flex;
-    align-items:center;
-    text-align:center;
-    color:#9ca3af;
-    font-size:13px;
-}
+        .divider:not(:empty)::after {
+            margin-left: .75em;
+        }
 
-.divider::before,
-.divider::after{
-    content:'';
-    flex:1;
-    border-bottom:1px solid #e5e7eb;
-}
-
-.divider:not(:empty)::before{
-    margin-right:.75em;
-}
-.divider:not(:empty)::after{
-    margin-left:.75em;
-}
-
-.btn-google{
-    border:1px solid #2563eb;
-    border-radius:10px;
-    padding:12px;
-    font-weight:500;
-    background:white;
-}
-
-.btn-google:hover{
-    background:#f9fafb;
-}
-
-.invalid-feedback{
-    display:block;
-}
-</style>
+        @media (max-width: 992px) {
+            .left-panel {
+                display: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="auth-wrapper">
-    <div class="auth-card">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
 
-        <div class="mb-4">
-            <div class="auth-title">Hi!</div>
-            <div class="auth-subtitle">Let’s start your UML Class Diagram journey</div>
+            <!-- LEFT SIDE -->
+            <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center left-panel">
+                <div class="text-center">
+                    <div class="brand-text">UMLab</div>
+                    <div class="vertical-line"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center right-panel">
+                <div class="login-card">
+
+                    <h3 class="fw-bold">Hi!</h3>
+                    <p class="text-muted mb-4">Let’s start your UML Class Diagram journey</p>
+
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <!-- NAME -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-person"></i>
+                                </span>
+                                <input type="text" name="name"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    placeholder="Enter your name" value="{{ old('name') }}" required autofocus>
+                            </div>
+                            @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="Enter your email" value="{{ old('email') }}" required>
+                            </div>
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- PASSWORD -->
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input id="password" type="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    placeholder="Enter your password" required>
+                                <span class="input-group-text" style="cursor:pointer" onclick="togglePassword()">
+                                    <i class="bi bi-eye-slash" id="eyeIcon"></i>
+                                </span>
+                            </div>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- CONFIRM PASSWORD -->
+                        <div class="mb-4">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" name="password_confirmation" class="form-control"
+                                    placeholder="Confirm your password" required>
+                            </div>
+                        </div>
+
+                        <!-- BUTTON -->
+                        <div class="d-grid mb-4">
+                            <button class="btn btn-auth  btn-primary ">Sign up</button>
+                        </div>
+
+                        <!-- DIVIDER -->
+                        <div class="divider mb-4">or</div>
+
+                         <!-- Google Button -->
+                        <div class="d-grid mb-3">
+                            <button class="btn btn-outline-primary">
+                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20"
+                                    class="me-2">
+                                Sign in with Google
+                            </button>
+                        </div>
+
+                        <div class="text-center small">
+                            Already have an account?
+                            <a href="{{ route('login') }}" class="text-primary fw-semibold text-decoration-none">
+                                Login here
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
         </div>
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- NAME -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-person"></i>
-                    </span>
-                    <input type="text" name="name"
-                        class="form-control @error('name') is-invalid @enderror"
-                        placeholder="Enter your name"
-                        value="{{ old('name') }}" required autofocus>
-                </div>
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- EMAIL -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-envelope"></i>
-                    </span>
-                    <input type="email" name="email"
-                        class="form-control @error('email') is-invalid @enderror"
-                        placeholder="Enter your email"
-                        value="{{ old('email') }}" required>
-                </div>
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- PASSWORD -->
-            <div class="mb-3">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-lock"></i>
-                    </span>
-                    <input id="password" type="password" name="password"
-                        class="form-control @error('password') is-invalid @enderror"
-                        placeholder="Enter your password" required>
-                    <span class="input-group-text" style="cursor:pointer" onclick="togglePassword()">
-                        <i class="bi bi-eye-slash" id="eyeIcon"></i>
-                    </span>
-                </div>
-                @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- CONFIRM PASSWORD -->
-            <div class="mb-4">
-                <div class="input-group">
-                    <span class="input-group-text">
-                        <i class="bi bi-lock"></i>
-                    </span>
-                    <input type="password" name="password_confirmation"
-                        class="form-control"
-                        placeholder="Confirm your password" required>
-                </div>
-            </div>
-
-            <!-- BUTTON -->
-            <div class="d-grid mb-4">
-                <button class="btn btn-auth text-white">Sign up</button>
-            </div>
-
-            <!-- DIVIDER -->
-            <div class="divider mb-4">or</div>
-
-            <!-- GOOGLE -->
-            <div class="d-grid mb-4">
-                <button type="button" class="btn btn-google">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" class="me-2">
-                    Sign up with Google
-                </button>
-            </div>
-
-            <div class="text-center small">
-                Already have an account?
-                <a href="{{ route('login') }}" class="text-primary fw-semibold text-decoration-none">
-                    Login here
-                </a>
-            </div>
-
-        </form>
     </div>
-</div>
 
-<script>
-function togglePassword(){
-    const password = document.getElementById("password");
-    const eye = document.getElementById("eyeIcon");
 
-    if(password.type === "password"){
-        password.type = "text";
-        eye.classList.replace("bi-eye-slash","bi-eye");
-    }else{
-        password.type = "password";
-        eye.classList.replace("bi-eye","bi-eye-slash");
-    }
-}
-</script>
+    <script>
+        function togglePassword() {
+            const password = document.getElementById("password");
+            const eye = document.getElementById("eyeIcon");
+
+            if (password.type === "password") {
+                password.type = "text";
+                eye.classList.replace("bi-eye-slash", "bi-eye");
+            } else {
+                password.type = "password";
+                eye.classList.replace("bi-eye", "bi-eye-slash");
+            }
+        }
+    </script>
 
 </body>
+
 </html>
