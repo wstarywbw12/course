@@ -126,6 +126,35 @@
                 </div>
             @endforeach
 
+
+            {{-- HASIL NILAI (MUNCUL SAAT SUDAH SELESAI) --}}
+            @if ($isFinished && isset($quizScores[$quiz->id]))
+                <div class="mt-5">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+
+                            <h5 class="fw-bold mb-3">Hasil Quiz</h5>
+
+                            <div
+                                class="display-5 fw-bold 
+                    {{ $quizScores[$quiz->id] >= 70 ? 'text-success' : 'text-danger' }}">
+                                {{ $quizScores[$quiz->id] }}%
+                            </div>
+
+                            <p class="mt-3 mb-0">
+                                @if ($quizScores[$quiz->id] >= 70)
+                                    🎉 Selamat, kamu dinyatakan <strong>LULUS</strong>
+                                @else
+                                    😢 Kamu belum lulus. Minimal nilai 70%
+                                @endif
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+
         </form>
     </div>
 @endforeach
@@ -133,193 +162,197 @@
 @include('pages.course.quiz.style')
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-    let activeTimer = null;
+        let activeTimer = null;
 
-    // ======================================================
-    // START QUIZ BUTTON
-    // ======================================================
-    document.querySelectorAll('.start-quiz-btn').forEach(btn => {
+        // ======================================================
+        // START QUIZ BUTTON
+        // ======================================================
+        document.querySelectorAll('.start-quiz-btn').forEach(btn => {
 
-        btn.addEventListener('click', function () {
+            btn.addEventListener('click', function() {
 
-            const quizId = this.dataset.quizId;
-            const isReview = this.dataset.review === "true";
+                const quizId = this.dataset.quizId;
+                const isReview = this.dataset.review === "true";
 
-            // Hide semua quiz
-            document.querySelectorAll('.quiz-container')
-                .forEach(q => q.classList.add('d-none'));
+                // Hide semua quiz
+                document.querySelectorAll('.quiz-container')
+                    .forEach(q => q.classList.add('d-none'));
 
-            const container = document.querySelector(
-                `.quiz-container[data-quiz-id="${quizId}"]`
-            );
+                const container = document.querySelector(
+                    `.quiz-container[data-quiz-id="${quizId}"]`
+                );
 
-            if (!container) return;
+                if (!container) return;
 
-            // Stop timer jika ada
-            clearInterval(activeTimer);
+                // Stop timer jika ada
+                clearInterval(activeTimer);
 
-            // ===============================
-            // MODE REVIEW
-            // ===============================
-            if (isReview) {
-
-                Swal.fire({
-                    title: 'Lihat Pembahasan?',
-                    text: 'Quiz sudah pernah dikerjakan',
-                    icon: 'info',
-                    confirmButtonText: 'Ya, Lihat',
-                    confirmButtonColor: '#0d6efd'
-                }).then(result => {
-
-                    if (!result.isConfirmed) return;
-
-                    container.classList.remove('d-none');
-                    container.scrollIntoView({ behavior: 'smooth' });
-
-                    // Hapus timer jika masih ada
-                    container.querySelectorAll('.quiz-timer')
-                        .forEach(t => {
-                            const wrapper = t.closest('.d-flex');
-                            if (wrapper) wrapper.remove();
-                        });
-
-                    // Hapus tombol submit
-                    container.querySelectorAll('.btn-success')
-                        .forEach(btn => btn.remove());
-
-                    // Init quiz TANPA timer
-                    initQuiz(container, true);
-                });
-
-            } 
-            // ===============================
-            // MODE NORMAL
-            // ===============================
-            else {
-
-                Swal.fire({
-                    title: 'Siap Mengerjakan Quiz?',
-                    text: 'Timer akan langsung berjalan setelah klik OK',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Mulai!',
-                    cancelButtonText: 'Batal',
-                    confirmButtonColor: '#0d6efd'
-                }).then(result => {
-
-                    if (!result.isConfirmed) return;
-
-                    container.classList.remove('d-none');
-                    container.scrollIntoView({ behavior: 'smooth' });
-
-                    initQuiz(container, false);
-                });
-            }
-
-        });
-
-    });
-
-    // ======================================================
-    // QUIZ INITIALIZER
-    // ======================================================
-    function initQuiz(container, isReview = false) {
-
-        const duration = parseInt(container.dataset.duration);
-        const timerEl = container.querySelector('.quiz-timer');
-        const questions = container.querySelectorAll('.question-item');
-        const steps = container.querySelectorAll('.quiz-step');
-        const form = container.querySelector('.quiz-form');
-
-        let current = 0;
-        let totalSeconds = duration * 60;
-
-        clearInterval(activeTimer);
-
-        // ==========================================
-        // SHOW QUESTION
-        // ==========================================
-        function showQuestion(index) {
-
-            if (index < 0 || index >= questions.length) return;
-
-            questions.forEach(q => q.classList.add('d-none'));
-            questions[index].classList.remove('d-none');
-
-            steps.forEach(s => {
-                s.classList.remove('bg-primary');
-                s.classList.add('bg-secondary');
-            });
-
-            steps[index].classList.remove('bg-secondary');
-            steps[index].classList.add('bg-primary');
-
-            current = index;
-        }
-
-        // ==========================================
-        // STEP CLICK
-        // ==========================================
-        steps.forEach((step, index) => {
-            step.onclick = () => showQuestion(index);
-        });
-
-        // ==========================================
-        // NEXT BUTTON
-        // ==========================================
-        container.querySelectorAll('.btn-next').forEach(btn => {
-            btn.onclick = () => showQuestion(current + 1);
-        });
-
-        // ==========================================
-        // PREV BUTTON
-        // ==========================================
-        container.querySelectorAll('.btn-prev').forEach(btn => {
-            btn.onclick = () => showQuestion(current - 1);
-        });
-
-        // ==========================================
-        // TIMER (HANYA JALAN JIKA BUKAN REVIEW)
-        // ==========================================
-        if (!isReview && timerEl) {
-
-            function updateTimer() {
-
-                let m = Math.floor(totalSeconds / 60);
-                let s = totalSeconds % 60;
-
-                if (s < 10) s = '0' + s;
-
-                timerEl.innerHTML = `${m}:${s}`;
-
-                if (totalSeconds <= 0) {
-
-                    clearInterval(activeTimer);
+                // ===============================
+                // MODE REVIEW
+                // ===============================
+                if (isReview) {
 
                     Swal.fire({
-                        icon: 'warning',
-                        title: 'Waktu Habis ⏰',
-                        text: 'Quiz akan otomatis dikirim',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    }).then(() => {
-                        if (form) form.submit();
+                        title: 'Lihat Pembahasan?',
+                        text: 'Quiz sudah pernah dikerjakan',
+                        icon: 'info',
+                        confirmButtonText: 'Ya, Lihat',
+                        confirmButtonColor: '#0d6efd'
+                    }).then(result => {
+
+                        if (!result.isConfirmed) return;
+
+                        container.classList.remove('d-none');
+                        container.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+
+                        // Hapus timer jika masih ada
+                        container.querySelectorAll('.quiz-timer')
+                            .forEach(t => {
+                                const wrapper = t.closest('.d-flex');
+                                if (wrapper) wrapper.remove();
+                            });
+
+                        // Hapus tombol submit
+                        container.querySelectorAll('.btn-success')
+                            .forEach(btn => btn.remove());
+
+                        // Init quiz TANPA timer
+                        initQuiz(container, true);
+                    });
+
+                }
+                // ===============================
+                // MODE NORMAL
+                // ===============================
+                else {
+
+                    Swal.fire({
+                        title: 'Siap Mengerjakan Quiz?',
+                        text: 'Timer akan langsung berjalan setelah klik OK',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Mulai!',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: '#0d6efd'
+                    }).then(result => {
+
+                        if (!result.isConfirmed) return;
+
+                        container.classList.remove('d-none');
+                        container.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+
+                        initQuiz(container, false);
                     });
                 }
 
-                totalSeconds--;
+            });
+
+        });
+
+        // ======================================================
+        // QUIZ INITIALIZER
+        // ======================================================
+        function initQuiz(container, isReview = false) {
+
+            const duration = parseInt(container.dataset.duration);
+            const timerEl = container.querySelector('.quiz-timer');
+            const questions = container.querySelectorAll('.question-item');
+            const steps = container.querySelectorAll('.quiz-step');
+            const form = container.querySelector('.quiz-form');
+
+            let current = 0;
+            let totalSeconds = duration * 60;
+
+            clearInterval(activeTimer);
+
+            // ==========================================
+            // SHOW QUESTION
+            // ==========================================
+            function showQuestion(index) {
+
+                if (index < 0 || index >= questions.length) return;
+
+                questions.forEach(q => q.classList.add('d-none'));
+                questions[index].classList.remove('d-none');
+
+                steps.forEach(s => {
+                    s.classList.remove('bg-primary');
+                    s.classList.add('bg-secondary');
+                });
+
+                steps[index].classList.remove('bg-secondary');
+                steps[index].classList.add('bg-primary');
+
+                current = index;
             }
 
-            activeTimer = setInterval(updateTimer, 1000);
+            // ==========================================
+            // STEP CLICK
+            // ==========================================
+            steps.forEach((step, index) => {
+                step.onclick = () => showQuestion(index);
+            });
+
+            // ==========================================
+            // NEXT BUTTON
+            // ==========================================
+            container.querySelectorAll('.btn-next').forEach(btn => {
+                btn.onclick = () => showQuestion(current + 1);
+            });
+
+            // ==========================================
+            // PREV BUTTON
+            // ==========================================
+            container.querySelectorAll('.btn-prev').forEach(btn => {
+                btn.onclick = () => showQuestion(current - 1);
+            });
+
+            // ==========================================
+            // TIMER (HANYA JALAN JIKA BUKAN REVIEW)
+            // ==========================================
+            if (!isReview && timerEl) {
+
+                function updateTimer() {
+
+                    let m = Math.floor(totalSeconds / 60);
+                    let s = totalSeconds % 60;
+
+                    if (s < 10) s = '0' + s;
+
+                    timerEl.innerHTML = `${m}:${s}`;
+
+                    if (totalSeconds <= 0) {
+
+                        clearInterval(activeTimer);
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Waktu Habis ⏰',
+                            text: 'Quiz akan otomatis dikirim',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        }).then(() => {
+                            if (form) form.submit();
+                        });
+                    }
+
+                    totalSeconds--;
+                }
+
+                activeTimer = setInterval(updateTimer, 1000);
+            }
+
+            // Tampilkan soal pertama
+            showQuestion(0);
         }
 
-        // Tampilkan soal pertama
-        showQuestion(0);
-    }
-
-});
+    });
 </script>
 
 

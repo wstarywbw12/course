@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Level;
+use App\Models\UserQuizResult;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -155,12 +156,25 @@ class DashboardController extends Controller
             ->get()
             ->groupBy('quiz_question_id');
 
+        $quizScores = [];
+
+        foreach ($course->quizzes as $quiz) {
+            $result = UserQuizResult::where('user_id', auth()->id())
+                ->where('quiz_id', $quiz->id)
+                ->first();
+
+            if ($result) {
+                $quizScores[$quiz->id] = $result->score;
+            }
+        }
+
         return view('pages.course.detail', compact(
             'course',
             'progress',
             'notes',
             'quizResults',
-            'quizAnswers'
+            'quizAnswers',
+            'quizScores'
         ));
     }
 }
