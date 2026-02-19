@@ -8,6 +8,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
+use App\Http\Controllers\ResultQuizController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -111,6 +112,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::delete('questions/{question}', [QuizQuestionController::class, 'destroy'])
             ->name('quiz.questions.destroy');
     });
+
+    Route::get('/results-quiz', [ResultQuizController::class, 'index'])->name('results-quiz.index');
 });
 
 require __DIR__.'/auth.php';

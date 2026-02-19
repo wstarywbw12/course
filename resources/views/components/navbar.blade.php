@@ -1,6 +1,6 @@
  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
      <div class="container">
-         <a class="navbar-brand fw-bold text-brand" href="#">UM<span>Lab</span></a>
+         <a class="navbar-brand fw-bold text-brand" style="font-size: 30px" href="#">UM<span>Lab</span></a>
 
          <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navmenu">
              <span class="navbar-toggler-icon"></span>
@@ -31,6 +31,9 @@
                          </li>
                          <li>
                              <a class="dropdown-item" href="{{ route('courses.index') }}">Course</a>
+                         </li>
+                          <li>
+                             <a class="dropdown-item" href="{{ route('results-quiz.index') }}">Result Quiz</a>
                          </li>
                      </ul>
                  </li>

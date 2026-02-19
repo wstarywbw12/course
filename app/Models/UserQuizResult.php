@@ -14,4 +14,20 @@ class UserQuizResult extends Model
     'submitted_at'
 ];
 
+protected $casts = [
+    'submitted_at' => 'datetime',
+    'is_passed' => 'boolean'
+];
+
+
+ public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
 }
