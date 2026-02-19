@@ -154,10 +154,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 
-    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script> --}}
-
-    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/super-build/ckeditor.js"></script> --}}
-
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
 

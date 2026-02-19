@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
             toolbar: [
                 'heading',
                 '|',
-                'bold', 'italic', 'underline',
+                'bold', 'italic',
                 '|',
                 'bulletedList', 'numberedList',
                 '|',
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 🔥 INIT EDITOR SEKALI SAJA
+    //  INIT EDITOR SEKALI SAJA
     Promise.all([
         createEditor('#description'),
         createEditor('#transcript'),

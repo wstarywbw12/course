@@ -144,7 +144,7 @@ class DashboardController extends Controller
             : 0;
 
         $notes = $course->notes()
-            ->where('user_id', auth()->id())
+            ->where('user_id', Auth::id())
             ->latest()
             ->get();
 
@@ -159,7 +159,7 @@ class DashboardController extends Controller
         $quizScores = [];
 
         foreach ($course->quizzes as $quiz) {
-            $result = UserQuizResult::where('user_id', auth()->id())
+            $result = UserQuizResult::where('user_id', Auth::id())
                 ->where('quiz_id', $quiz->id)
                 ->first();
 
