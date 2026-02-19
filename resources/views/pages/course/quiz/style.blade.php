@@ -72,4 +72,13 @@
         border-radius: 8px;
         font-weight: 600;
     }
+
+    .border-success {
+    border-width: 3px !important;
+}
+
+.border-danger {
+    border-width: 3px !important;
+}
+
 </style>

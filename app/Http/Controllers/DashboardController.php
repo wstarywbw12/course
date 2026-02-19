@@ -147,6 +147,20 @@ class DashboardController extends Controller
             ->latest()
             ->get();
 
-        return view('pages.course.detail', compact('course', 'progress', 'notes'));
+        $quizResults = \App\Models\UserQuizResult::where('user_id', $userId)
+            ->pluck('quiz_id')
+            ->toArray();
+
+        $quizAnswers = \App\Models\UserQuizAnswer::where('user_id', $userId)
+            ->get()
+            ->groupBy('quiz_question_id');
+
+        return view('pages.course.detail', compact(
+            'course',
+            'progress',
+            'notes',
+            'quizResults',
+            'quizAnswers'
+        ));
     }
 }

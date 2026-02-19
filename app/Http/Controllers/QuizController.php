@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Quiz;
+use App\Models\UserQuizAnswer;
 use App\Models\UserQuizResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -24,7 +26,7 @@ class QuizController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $course->quizzes()->create($request->only('title','time', 'description'));
+        $course->quizzes()->create($request->only('title', 'time', 'description'));
 
         return back()->with('success', 'Quiz berhasil ditambahkan');
     }
@@ -37,7 +39,7 @@ class QuizController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $quiz->update($request->only('title','time', 'description'));
+        $quiz->update($request->only('title', 'time', 'description'));
 
         return back()->with('success', 'Quiz berhasil diperbarui');
     }
@@ -51,43 +53,61 @@ class QuizController extends Controller
 
     public function submit(Request $request, Quiz $quiz)
     {
-        $quiz->load('questions.options');
+        $userId = Auth::id();
 
         $score = 0;
         $total = $quiz->questions->count();
 
+        // hapus jawaban lama jika ada
+        UserQuizAnswer::where('user_id', $userId)
+            ->where('quiz_id', $quiz->id)
+            ->delete();
+
         foreach ($quiz->questions as $question) {
 
-            $selectedOptionId = $request->input("answers.$question->id");
+            $selectedOptionId = $request->answers[$question->id] ?? null;
 
-            if ($selectedOptionId) {
-
-                $option = $question->options
-                    ->where('id', $selectedOptionId)
-                    ->first();
-
-                if ($option && $option->is_correct) {
-                    $score++;
-                }
+            if (! $selectedOptionId) {
+                continue;
             }
+
+            $option = $question->options()
+                ->where('id', $selectedOptionId)
+                ->first();
+
+            $isCorrect = $option->is_correct ?? false;
+
+            if ($isCorrect) {
+                $score++;
+            }
+
+            UserQuizAnswer::create([
+                'user_id' => $userId,
+                'quiz_id' => $quiz->id,
+                'quiz_question_id' => $question->id,
+                'quiz_option_id' => $selectedOptionId,
+                'is_correct' => $isCorrect,
+            ]);
         }
 
-        $finalScore = $total > 0 ? ($score / $total) * 100 : 0;
-        $isPassed = $finalScore >= 70;
+        $finalScore = round(($score / $total) * 100);
 
-        UserQuizResult::create([
-            'user_id' => auth()->id(),
-            'quiz_id' => $quiz->id,
-            'score' => round($finalScore),
-            'is_passed' => $isPassed,
-            'submitted_at' => now(),
-        ]);
-
-        return redirect()->back()->with([
-            'quiz_result' => [
-                'score' => round($finalScore),
-                'passed' => $isPassed,
+        UserQuizResult::updateOrCreate(
+            [
+                'user_id' => $userId,
+                'quiz_id' => $quiz->id,
             ],
-        ]);
+            [
+                'score' => $finalScore,
+                'is_passed' => $finalScore >= 70,
+                'submitted_at' => now(),
+            ]
+        );
+
+        return redirect()->back()
+            ->with('quiz_result', [
+                'score' => $finalScore,
+                'passed' => $finalScore >= 70,
+            ]);
     }
 }
