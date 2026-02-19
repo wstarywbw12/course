@@ -31,7 +31,6 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button class="btn btn-primary">Simpan</button>
                 </div>
             </div>
