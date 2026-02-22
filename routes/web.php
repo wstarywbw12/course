@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseMaterialController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\QuizController;
@@ -15,8 +16,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('pages.home.index');
 });
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/activity', [ActivityController::class, 'index'])->name('activity.index');
 

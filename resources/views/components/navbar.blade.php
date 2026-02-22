@@ -1,6 +1,6 @@
  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
      <div class="container">
-         <a class="navbar-brand fw-bold text-brand" style="font-size: 30px" href="#">UM<span>Lab</span></a>
+         <a class="navbar-brand fw-bold text-brand" style="font-size: 30px" href="{{ route('home') }}">UM<span>Lab</span></a>
 
          <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navmenu">
              <span class="navbar-toggler-icon"></span>
