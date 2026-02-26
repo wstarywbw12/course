@@ -35,7 +35,7 @@
                                 <button class="btn btn-info btn-sm btn-edit" data-id="{{ $item->id }}"
                                     data-title="{{ $item->title }}" data-sub_title="{{ $item->sub_title }}"
                                     data-icon="{{ $item->icon }}">
-                                    Edit
+                                   <i class="bx bx-edit"></i> Edit
                                 </button>
 
                                 <form action="{{ route('setting.about.destroy', $item->id) }}" method="POST"
@@ -43,7 +43,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="button" class="btn btn-danger btn-sm btn-delete">
-                                        Hapus
+                                      <i class="bx bx-trash"></i> Hapus
                                     </button>
                                 </form>
                             </td>
@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button class="btn btn-primary">Simpan</button>
+                        <button class="btn btn-primary"><i class="bx bx-check-circle"></i> Simpan</button>
                     </div>
                 </div>
             </form>

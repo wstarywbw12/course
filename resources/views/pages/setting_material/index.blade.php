@@ -34,7 +34,7 @@
                             data-id="{{ $item->id }}"
                             data-title="{{ $item->title }}"
                         >
-                            Edit
+                            <i class="bx bx-edit"></i> Edit
                         </button>
 
                         <form action="{{ route('setting.material.destroy', $item->id) }}"
@@ -43,7 +43,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-danger btn-sm btn-delete">
-                                Hapus
+                                <i class="bx bx-trash"></i> Hapus
                             </button>
                         </form>
 
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-primary">Simpan</button>
+                    <button class="btn btn-primary"><i class="bx bx-check-circle"></i> Simpan</button>
                 </div>
             </div>
         </form>
