@@ -10,6 +10,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\ResultQuizController;
+use App\Http\Controllers\SettingAboutController;
 use App\Http\Controllers\SettingBerandaController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
@@ -121,6 +122,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/setting-beranda', [SettingBerandaController::class, 'index'])->name('setting.beranda');
     Route::put('/setting/beranda', [SettingBerandaController::class, 'update'])->name('setting.beranda.update');
+
+    Route::prefix('setting-about')->name('setting.about.')->group(function () {
+        Route::get('/', [SettingAboutController::class, 'index'])->name('index');
+        Route::post('/store', [SettingAboutController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [SettingAboutController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [SettingAboutController::class, 'destroy'])->name('destroy');
+    });
+
 });
 
 require __DIR__.'/auth.php';

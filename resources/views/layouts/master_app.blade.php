@@ -12,6 +12,13 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('/') }}public/assets/images/favicon.ico">
 
+    <!--datatable css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+
     <!-- Layout config Js -->
     <script src="{{ asset('/') }}public/assets/js/layout.js"></script>
     <!-- Bootstrap Css -->
@@ -562,8 +569,8 @@
                     <div class="row gy-3">
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout01" name="data-layout" type="radio"
-                                    value="vertical" class="form-check-input">
+                                <input id="customizer-layout01" name="data-layout" type="radio" value="vertical"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout01">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
@@ -587,8 +594,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout02" name="data-layout" type="radio"
-                                    value="horizontal" class="form-check-input">
+                                <input id="customizer-layout02" name="data-layout" type="radio" value="horizontal"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout02">
                                     <span class="d-flex h-100 flex-column gap-1">
                                         <span class="bg-light d-flex p-1 gap-1 align-items-center">
@@ -605,8 +612,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout03" name="data-layout" type="radio"
-                                    value="twocolumn" class="form-check-input">
+                                <input id="customizer-layout03" name="data-layout" type="radio" value="twocolumn"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout03">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
@@ -640,8 +647,8 @@
 
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout04" name="data-layout" type="radio"
-                                    value="semibox" class="form-check-input">
+                                <input id="customizer-layout04" name="data-layout" type="radio" value="semibox"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout04">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0 p-1">
@@ -738,8 +745,7 @@
                                 <div class="form-check card-radio">
                                     <input class="form-check-input" type="radio" name="data-sidebar-visibility"
                                         id="sidebar-visibility-show" value="show">
-                                    <label class="form-check-label p-0 avatar-md w-100"
-                                        for="sidebar-visibility-show">
+                                    <label class="form-check-label p-0 avatar-md w-100" for="sidebar-visibility-show">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0 p-1">
                                                 <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -817,8 +823,7 @@
                                 <div class="form-check card-radio">
                                     <input class="form-check-input" type="radio" name="data-layout-width"
                                         id="layout-width-boxed" value="boxed">
-                                    <label class="form-check-label p-0 avatar-md w-100 px-2"
-                                        for="layout-width-boxed">
+                                    <label class="form-check-label p-0 avatar-md w-100 px-2" for="layout-width-boxed">
                                         <span class="d-flex gap-1 h-100 border-start border-end">
                                             <span class="flex-shrink-0">
                                                 <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
@@ -854,8 +859,7 @@
 
                             <input type="radio" class="btn-check" name="data-layout-position"
                                 id="layout-position-scrollable" value="scrollable">
-                            <label class="btn btn-light w-sm ms-0"
-                                for="layout-position-scrollable">Scrollable</label>
+                            <label class="btn btn-light w-sm ms-0" for="layout-position-scrollable">Scrollable</label>
                         </div>
                     </div>
                     <h6 class="mt-4 mb-0 fw-bold text-uppercase">Topbar Color</h6>
@@ -1359,12 +1363,24 @@
     <script src="{{ asset('/') }}public/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="{{ asset('/') }}public/assets/js/plugins.js"></script>
 
+    <!--datatable js-->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+
     <!-- App js -->
     <script src="{{ asset('/') }}public/assets/js/app.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-     @stack('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="{{ asset('/') }}public/assets/js/pages/datatables.init.js"></script>
+
+    @stack('scripts')
 </body>
 
 </html>

@@ -62,10 +62,10 @@
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Beranda </a>
+                                <a href="{{ route('setting.beranda') }}" class="nav-link" data-key="t-chat"> Beranda </a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Abaout </a>
+                                <a href="{{ route('setting.about.index') }}" class="nav-link" data-key="t-chat"> Abaout </a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Material </a>
