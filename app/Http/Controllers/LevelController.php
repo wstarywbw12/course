@@ -16,35 +16,38 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'level' => 'required|string|max:50',
-            'icon'  => 'nullable|string|max:100',
+            'level' => 'required',
+            'icon'  => 'nullable'
         ]);
 
-        Level::create($request->only('level', 'icon'));
+        Level::create([
+            'level' => $request->level,
+            'icon'  => $request->icon
+        ]);
 
-        return redirect()->route('levels.index')
-            ->with('success', 'Level berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Level berhasil ditambahkan');
     }
 
-    public function update(Request $request, Level $level)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'level' => 'required|string|max:50',
-            'icon'  => 'nullable|string|max:100',
+            'level' => 'required',
+            'icon'  => 'nullable'
         ]);
 
-        $level->update($request->only('level', 'icon'));
+        $level = Level::findOrFail($id);
 
-        return redirect()->route('levels.index')
-            ->with('success', 'Level berhasil diperbarui');
+        $level->update([
+            'level' => $request->level,
+            'icon'  => $request->icon
+        ]);
+
+        return redirect()->back()->with('success', 'Level berhasil diupdate');
     }
 
-    public function destroy(Level $level)
+    public function destroy($id)
     {
-        $level->delete();
-
-        return redirect()->route('levels.index')
-            ->with('success', 'Level berhasil dihapus');
+        Level::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Level berhasil dihapus');
     }
 }
-

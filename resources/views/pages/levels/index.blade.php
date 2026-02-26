@@ -1,198 +1,176 @@
-@extends('layouts.app')
-@section('content')
-    <div class="container">
+@extends('layouts.master_app')
 
-    <div class="card mb-3">
-        <div class="card-body d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Manage Level</h5>
-            <button class="btn btn-primary" onclick="openCreateModal()">Tambah Level</button>
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between mb-3">
+                <h4>Manajemen Level</h4>
+                <button class="btn btn-primary btn-sm btn-add">
+                    <i class="bx bx-plus"></i> Tambah
+                </button>
+            </div>
         </div>
     </div>
 
     <div class="card">
-        <div class="card-body table-responsive">
-            <table class="table align-middle">
+        <div class="card-body">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th width="5%">No</th>
-                        <th width="20%">Keterangan</th>
                         <th>Icon</th>
-                        <th width="20%" class="text-end">Aksi</th>
+                        <th>Level</th>
+                        <th width="15%" class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($levels as $level)
+                    @foreach ($levels as $key => $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $level->level }}</td>
-                            <td>{{ $level->icon }}</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-warning"
-                                    onclick='openEditModal(@json($level))'>
-                                    Edit
+                            <td class="text-center">{{ $key + 1 }}</td>
+                            <td>
+                                @if ($item->icon)
+                                    <i class="{{ $item->icon }}"></i> {{ $item->icon }}
+                                @endif
+                            </td>
+                            <td>{{ $item->level }}</td>
+                            <td class="text-center">
+
+                                <button class="btn btn-info btn-sm btn-edit" data-id="{{ $item->id }}"
+                                    data-level="{{ $item->level }}" data-icon="{{ $item->icon }}">
+                                    <i class="bx bx-edit"></i> Edit
                                 </button>
 
-                                <button class="btn btn-sm btn-danger"
-                                    onclick="confirmDelete({{ $level->id }}, 'delete-level')">
-                                    Delete
-                                </button>
-
-                                <form id="delete-level-{{ $level->id }}"
-                                      action="{{ route('levels.destroy', $level->id) }}"
-                                      method="POST" class="d-none">
+                                <form action="{{ route('levels.destroy', $item->id) }}" method="POST"
+                                    class="d-inline form-delete">
                                     @csrf
                                     @method('DELETE')
+                                    <button type="button" class="btn btn-danger btn-sm btn-delete">
+                                        <i class="bx bx-trash"></i> Hapus
+                                    </button>
                                 </form>
+
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center text-muted">
-                                Belum ada data level
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
 
-</div>
+    {{-- MODAL --}}
+    <div class="modal fade" id="levelModal">
+        <div class="modal-dialog">
+            <form method="POST" id="levelForm">
+                @csrf
+                <input type="hidden" name="_method" id="formMethod">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Form Level</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
 
+                    <div class="modal-body">
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f3f5f7;
-            min-height: 100vh;
-        }
+                        <div class="mb-3">
+                            <label>Level</label>
+                            <input type="text" name="level" id="level" class="form-control" required>
+                        </div>
 
-        .text-logo {
-            color: #1e4ed8;
-        }
+                        <div class="mb-3">
+                            <label>Icon (contoh: bx bx-star)</label>
+                            <input type="text" name="icon" id="icon" class="form-control">
+                        </div>
 
-        .text-brand {
-            color: #1e4ed8;
-        }
+                    </div>
 
-        a.text-nav {
-            color: #1e4ed8 !important;
-            text-decoration: none;
-        }
-
-        .text-sub {
-            color: #1e4ed8 !important;
-        }
-
-        .custom-tabs {
-            background-color: #1e63ff;
-            border-radius: 8px;
-            padding: 6px;
-            display: flex;
-            gap: 6px;
-            width: 100%;
-        }
-
-        .custom-tabs .nav-link {
-            color: #fff;
-            font-weight: 600;
-            border-radius: 6px;
-            padding: 8px 16px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .custom-tabs .nav-link.active {
-            background-color: #fff;
-            color: #1e63ff !important;
-        }
-
-        @media (min-width: 992px) {
-            .custom-tabs {
-                width: fit-content;
-            }
-
-            .custom-tabs .nav-link {
-                padding: 6px 48px;
-                width: auto;
-            }
-        }
-
-
-
-
-
-        .nav-pills-materi {
-            display: flex;
-            width: 100%;
-            gap: 12px;
-        }
-
-        .nav-pills-materi .nav-item {
-            flex: 1;
-        }
-
-        /* default = btn-outline-secondary */
-        .nav-pills-materi .nav-link {
-            width: 100%;
-            text-align: center;
-            background-color: transparent;
-            color: #2b2c2d !important;
-            border: 2px solid #6c757d;
-            border-radius: 12px;
-            transition: all .2s ease;
-        }
-
-        /* hover efek */
-        .nav-pills-materi .nav-link:hover {
-            background-color: #6c757d;
-            color: #fff !important;
-        }
-
-        /* active = btn-primary */
-        .nav-pills-materi .nav-link.active {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-            color: #fff !important;
-        }
-    </style>
-
-    @include('pages.levels.modal')
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">
+                            <i class="bx bx-check-circle"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 
 @push('scripts')
-<script>
-    const levelModal = new bootstrap.Modal(
-        document.getElementById('levelModal')
-    );
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-    // =====================
-    // CREATE
-    // =====================
-    window.openCreateModal = function () {
-        document.getElementById('modalTitle').innerText = 'Tambah Level';
-        document.getElementById('levelForm').action = "{{ route('levels.store') }}";
-        document.getElementById('formMethod').value = 'POST';
+            let modal = new bootstrap.Modal(document.getElementById('levelModal'));
+            let form = document.getElementById('levelForm');
 
-        document.getElementById('level').value = '';
-        document.getElementById('icon').value = '';
+            // TAMBAH
+            document.querySelector('.btn-add').addEventListener('click', function() {
+                form.action = "{{ route('levels.store') }}";
+                document.getElementById('formMethod').value = '';
+                form.reset();
+                modal.show();
+            });
 
-        levelModal.show();
-    };
+            // EDIT
+            document.querySelectorAll('.btn-edit').forEach(button => {
+                button.addEventListener('click', function() {
 
-    // =====================
-    // EDIT
-    // =====================
-    window.openEditModal = function (level) {
-        document.getElementById('modalTitle').innerText = 'Edit Level';
-        document.getElementById('levelForm').action = `/levels/${level.id}`;
-        document.getElementById('formMethod').value = 'PUT';
+                    let id = this.dataset.id;
 
-        document.getElementById('level').value = level.level;
-        document.getElementById('icon').value = level.icon ?? '';
+                    form.action = "/levels/update/" + id;
+                    document.getElementById('formMethod').value = 'PUT';
 
-        levelModal.show();
-    };
-</script>
+                    document.getElementById('level').value = this.dataset.level;
+                    document.getElementById('icon').value = this.dataset.icon ?? '';
+
+                    modal.show();
+                });
+            });
+
+            // DELETE
+            document.querySelectorAll('.btn-delete').forEach(button => {
+                button.addEventListener('click', function() {
+
+                    let formDelete = this.closest('.form-delete');
+
+                    Swal.fire({
+                        title: 'Yakin hapus level?',
+                        text: "Data tidak bisa dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            formDelete.submit();
+                        }
+                    });
+
+                });
+            });
+
+        });
+    </script>
+
+    @if (Session::has('success'))
+        <script>
+            const message = "{{ Session::get('success') }}";
+
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                customClass: {
+                    popup: 'my-toast'
+                },
+                html: `
+        <div class="toast-wrapper">
+            <i class="ri-checkbox-circle-fill align-middle text-success"></i>
+            <span class="text-success"><b>${message}</b></span>
+            <i class="ri-close-line toast-close" onclick="Swal.close()"></i>
+        </div>
+    `
+            });
+        </script>
+    @endif
 @endpush

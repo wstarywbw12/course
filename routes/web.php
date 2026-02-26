@@ -70,12 +70,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-
-    Route::get('/levels', [LevelController::class, 'index'])->name('levels.index');
-    Route::post('/levels', [LevelController::class, 'store'])->name('levels.store');
-    Route::put('/levels/{level}', [LevelController::class, 'update'])->name('levels.update');
-    Route::delete('/levels/{level}', [LevelController::class, 'destroy'])->name('levels.destroy');
-
     Route::resource('courses', CourseController::class)->except(['create']);
 
     // quiz
@@ -146,6 +140,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [UserController::class, 'store'])->name('store');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('levels')->name('levels.')->group(function () {
+        Route::get('/', [LevelController::class, 'index'])->name('index');
+        Route::post('/store', [LevelController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [LevelController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [LevelController::class, 'destroy'])->name('destroy');
     });
 
 });
