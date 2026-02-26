@@ -12,6 +12,7 @@ use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\ResultQuizController;
 use App\Http\Controllers\SettingAboutController;
 use App\Http\Controllers\SettingBerandaController;
+use App\Http\Controllers\SettingMaterialController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -128,6 +129,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [SettingAboutController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SettingAboutController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SettingAboutController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('setting-material')->name('setting.material.')->group(function () {
+        Route::get('/', [SettingMaterialController::class, 'index'])->name('index');
+        Route::post('/store', [SettingMaterialController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [SettingMaterialController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [SettingMaterialController::class, 'destroy'])->name('destroy');
     });
 
 });

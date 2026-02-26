@@ -68,7 +68,7 @@
                                 <a href="{{ route('setting.about.index') }}" class="nav-link" data-key="t-chat"> Abaout </a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Material </a>
+                                <a href="{{ route('setting.material.index') }}" class="nav-link" data-key="t-chat"> Material </a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Features </a>
