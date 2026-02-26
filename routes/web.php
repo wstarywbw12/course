@@ -10,6 +10,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\ResultQuizController;
+use App\Http\Controllers\SettingBerandaController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -117,6 +118,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     });
 
     Route::get('/results-quiz', [ResultQuizController::class, 'index'])->name('results-quiz.index');
+
+
+    Route::get('/setting-beranda', [SettingBerandaController::class, 'index'])->name('setting.beranda');
+    Route::put('/setting-beranda/{id}', [SettingBerandaController::class, 'update'])->name('setting.beranda.update');
 });
 
 require __DIR__.'/auth.php';

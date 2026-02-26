@@ -39,6 +39,30 @@
                  </li>
                  @endrole
 
+                  @role('admin')
+                 <li class="nav-item ms-lg-3 dropdown">
+                     <a class="nav-link text-nav d-flex align-items-center gap-2 dropdown-toggle custom-dropdown-btn"
+                         type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                         <span>Setting</span>
+                     </a>
+
+                     <ul class="dropdown-menu custom-dropdown-menu">
+                         <li>
+                             <a class="dropdown-item" href="{{ route('setting.beranda') }}">Beranda</a>
+                         </li>
+                         <li>
+                             <a class="dropdown-item" href="{{ route('levels.index') }}">Abouts</a>
+                         </li>
+                         <li>
+                             <a class="dropdown-item" href="{{ route('courses.index') }}">Materials</a>
+                         </li>
+                          <li>
+                             <a class="dropdown-item" href="{{ route('results-quiz.index') }}">Feature</a>
+                         </li>
+                     </ul>
+                 </li>
+                 @endrole
+
 
                   <li class="nav-item ms-lg-3 dropdown">
                      <a class="nav-link text-nav d-flex align-items-center gap-2 dropdown-toggle custom-dropdown-btn"
