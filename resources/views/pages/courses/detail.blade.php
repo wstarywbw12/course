@@ -102,7 +102,6 @@
 
     </div>
 
-    @include('pages.courses.style')
     @include('pages.courses.modal_detail')
     @include('pages.courses.modal_add_materi')
 @endsection

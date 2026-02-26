@@ -67,7 +67,6 @@
     </div>
 
     @include('pages.courses.quiz.questions.modal')
-    @include('pages.courses.style')
 @endsection
 
 

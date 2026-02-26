@@ -5,7 +5,9 @@
         <div class="card mb-3">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <h5>Manage Course</h5>
-                <button class="btn btn-primary" onclick="openCreateModal()">Tambah Course</button>
+               <button class="btn btn-primary" id="btnCreateCourse">
+    Tambah Course
+</button>
             </div>
         </div>
 
@@ -60,8 +62,6 @@
     </div>
 
     @include('pages.courses.modal')
-
-    @include('pages.courses.style')
 @endsection
 
 @push('scripts')
@@ -71,8 +71,21 @@ let modal;
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    modal = new bootstrap.Modal(document.getElementById('courseModal'));
+    // =============================
+    // INIT MODAL
+    // =============================
+    const modalElement = document.getElementById('courseModal');
 
+    if (!modalElement) {
+        console.error('Modal courseModal tidak ditemukan');
+        return;
+    }
+
+    modal = new bootstrap.Modal(modalElement);
+
+    // =============================
+    // CKEDITOR CUSTOM UPLOAD
+    // =============================
     function MyUploadAdapter(loader) {
         this.loader = loader;
     }
@@ -120,7 +133,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    //  INIT EDITOR SEKALI SAJA
+    // =============================
+    // INIT EDITOR SEKALI
+    // =============================
     Promise.all([
         createEditor('#description'),
         createEditor('#transcript'),
@@ -132,7 +147,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // =============================
-    // CREATE
+    // BUTTON TAMBAH
+    // =============================
+    const btnCreate = document.getElementById('btnCreateCourse');
+    if (btnCreate) {
+        btnCreate.addEventListener('click', function () {
+            openCreateModal();
+        });
+    }
+
+    // =============================
+    // FUNCTION CREATE
     // =============================
     window.openCreateModal = function () {
 
@@ -151,14 +176,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =============================
-    // EDIT
+    // FUNCTION EDIT
     // =============================
     window.openEditModal = function (id) {
 
         fetch(`/courses/${id}/edit`, {
-            headers: {
-                'Accept': 'application/json'
-            }
+            headers: { 'Accept': 'application/json' }
         })
         .then(res => res.json())
         .then(course => {
@@ -178,10 +201,48 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(err => {
             console.error(err);
-            alert('Gagal mengambil data');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal mengambil data'
+            });
+        });
+    }
+
+    // =============================
+    // DELETE SWEET ALERT
+    // =============================
+    window.confirmDelete = function (id) {
+
+        Swal.fire({
+            title: 'Yakin hapus course?',
+            text: "Data tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
         });
     }
 
 });
 </script>
+
+{{-- TOAST SUCCESS --}}
+@if(session('success'))
+<script>
+Swal.fire({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    icon: 'success',
+    title: "{{ session('success') }}"
+});
+</script>
+@endif
+
 @endpush

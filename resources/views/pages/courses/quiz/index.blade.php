@@ -106,7 +106,6 @@
 
     </div>
 
-    @include('pages.courses.style')
     @include('pages.courses.quiz.modal_add_quiz')
 @endsection
 
