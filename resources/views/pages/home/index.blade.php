@@ -60,8 +60,13 @@
                     </div>
                 </div>
                 <div class="col-lg-6 text-center">
-                    <img src="{{ asset('public/storage/' . $beranda->hero_image) }}" alt="ilustrasi belajar"
-                        class="img-fluid rounded-4 shadow-lg">
+                    @if ($beranda->hero_image)
+                        <img src="{{ asset('public/storage/' . $beranda->hero_image) }}" alt="ilustrasi belajar"
+                            class="img-fluid rounded-4 shadow-lg">
+                    @else
+                        <img src="https://via.placeholder.com/150x200" alt="ilustrasi belajar"
+                            class="img-fluid rounded-4 shadow-lg">
+                    @endif
                 </div>
             </div>
         </div>
