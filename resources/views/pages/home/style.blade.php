@@ -75,9 +75,15 @@
     }
 
     .hero-headline {
-        font-size: 3.2rem;
+        font-size: 2.8rem;
         font-weight: 700;
         line-height: 1.2;
+    }
+
+    @media (max-width: 768px) {
+        .hero-headline {
+            font-size: 2rem;
+        }
     }
 
     .section-title {

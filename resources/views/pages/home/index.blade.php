@@ -50,7 +50,7 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 fade-in">
-                    <h1 class="hero-headline mb-4">{{ $beranda->hero_title ?? '' }}</h1>
+                    <h4 class="hero-headline mb-4">{{ $beranda->hero_title ?? '' }}</h4>
                     <p class="lead mb-4 opacity-90">{{ $beranda->hero_sub_title ?? '' }}</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="{{ route('login') }}"
@@ -75,27 +75,15 @@
                 <p class="text-secondary col-lg-8 mx-auto">{{ $beranda->about_sub_title ?? '' }}</p>
             </div>
             <div class="row g-4">
-                <div class="col-md-4 fade-in">
+                @foreach ($home_about as $about )
+                     <div class="col-md-4 fade-in">
                     <div class="icon-box text-center">
-                        <i class="bi bi-diagram-3"></i>
-                        <h5 class="fw-bold mt-3">Materi Terstruktur</h5>
-                        <p class="text-secondary">Kurikulum bertahap dari dasar hingga mahir, cocok untuk pemula.</p>
+                        <i class="{{ $about->icon ?? 'bi bi-patch-check' }}"></i>
+                        <h5 class="fw-bold mt-3">{{ $about->title  ?? ''}}</h5>
+                        <p class="text-secondary">{{ $about->sub_title ?? '' }}</p>
                     </div>
                 </div>
-                <div class="col-md-4 fade-in" style="animation-delay:0.1s">
-                    <div class="icon-box text-center">
-                        <i class="bi bi-patch-question"></i>
-                        <h5 class="fw-bold mt-3">Quiz Interaktif</h5>
-                        <p class="text-secondary">Soal latihan & kuis untuk menguji pemahaman setiap diagram.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 fade-in" style="animation-delay:0.2s">
-                    <div class="icon-box text-center">
-                        <i class="bi bi-patch-check"></i>
-                        <h5 class="fw-bold mt-3">Sertifikat Digital</h5>
-                        <p class="text-secondary">Dapatkan sertifikat setelah menyelesaikan level tertentu.</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -116,13 +104,9 @@
                 <!-- Kanan -->
                 <div class="col-lg-7">
                     <div class="timeline">
-
-                        <div class="timeline-item">Use Case Diagram – Interaksi aktor dengan sistem</div>
-                        <div class="timeline-item">Class Diagram – Struktur kelas & relasi</div>
-                        <div class="timeline-item">Activity Diagram – Alur aktivitas sistem</div>
-                        <div class="timeline-item">Sequence Diagram – Interaksi antar objek</div>
-                        <div class="timeline-item">State Diagram – Perubahan state objek</div>
-                        <div class="timeline-item">Component Diagram – Struktur komponen sistem</div>
+                        @foreach ($home_materials as $materi)
+                             <div class="timeline-item">{{ $materi->title }}</div>
+                        @endforeach
 
                     </div>
                 </div>
@@ -142,16 +126,11 @@
                     <h2 class="section-title">{{ $beranda->feature_title ?? '' }}</h2>
                     <p class="text-secondary mb-4">{{ $beranda->feature_sub_title ?? '' }}</p>
                     <div class="fitur-list">
-                        <div class="d-flex align-items-center mb-4"><i class="bi bi-pencil-square"></i> <span
-                                class="fw-medium">Sistem Quiz Online & Nilai Otomatis</span></div>
-                        <div class="d-flex align-items-center mb-4"><i class="bi bi-bar-chart-line"></i> <span
-                                class="fw-medium">Tracking Progress Belajar</span></div>
-                        <div class="d-flex align-items-center mb-4"><i class="bi bi-check-circle"></i> <span
-                                class="fw-medium">Evaluasi & Nilai Otomatis</span></div>
-                        <div class="d-flex align-items-center mb-4"><i class="bi bi-person-circle"></i> <span
-                                class="fw-medium">Dashboard User Personal</span></div>
-                        <div class="d-flex align-items-center mb-4"><i class="bi bi-phone"></i> <span
-                                class="fw-medium">Responsive Design, Belajar di mana saja</span></div>
+                        @foreach ($home_features as $feature)
+                             <div class="d-flex align-items-center mb-4"><i class="{{ $feature->icon }}"></i> <span
+                                class="fw-medium">{{ $feature->title }}</span></div>
+                        @endforeach
+                           
                     </div>
                 </div>
             </div>
