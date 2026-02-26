@@ -1,12 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.master_app')
 
 @section('content')
 
-<div class="container pb-5">
+ <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between mb-3">
+                <h4>Hasil Quiz Users</h4>
+            </div>
+        </div>
+    </div>
 
-    <h3 class="fw-bold mb-4">Hasil Quiz Users</h3>
-
-    <div class="card shadow-sm">
+<div class="card shadow-sm">
         <div class="card-body p-0">
 
             <div class="table-responsive">
@@ -55,8 +59,6 @@
 
         </div>
     </div>
-
-</div>
 
 
 @include('pages.result_quiz.style')

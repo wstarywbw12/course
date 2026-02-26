@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master_app')
 
 @section('content')
     <div class="container">
@@ -7,7 +7,7 @@
             <div class="card-body d-flex justify-content-between align-items-center">
                 <h5>Detail Course</h5>
                 <a href="{{ route('courses.index') }}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Back
+                    <i class="bx bx-arrow-left"></i> Back
                 </a>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     <h5 class="mb-0">Quiz Course</h5>
                     <div>
                         <button class="btn btn-primary btn-sm" onclick="openCreateQuiz()">
-                            <i class="bi bi-plus"></i> Tambah Quiz
+                            <i class="bx bx-plus"></i> Tambah Quiz
                         </button>
 
 
@@ -67,13 +67,13 @@
                                     {{-- Button Soal / Option --}}
                                     <a href="{{ route('quiz.questions.index', $quiz->id) }}" class="btn btn-sm btn-primary"
                                         title="Kelola Soal">
-                                        <i class="bi bi-list-check"></i>
+                                        <i class="bx bx-list-check"></i>
                                     </a>
 
                                     {{-- Edit --}}
                                     <button class="btn btn-sm btn-warning"
                                         onclick='openEditQuiz(@json($quiz))'>
-                                        <i class="bi bi-pencil"></i>
+                                        <i class="bx bx-pencil"></i>
                                     </button>
 
                                     {{-- Delete --}}
@@ -83,7 +83,7 @@
                                         @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-danger"
                                             onclick="confirmDelete({{ $quiz->id }})">
-                                            <i class="bi bi-trash"></i>
+                                            <i class="bx bx-trash"></i>
                                         </button>
                                     </form>
 

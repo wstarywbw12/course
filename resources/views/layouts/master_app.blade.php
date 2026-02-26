@@ -1408,7 +1408,82 @@
 
     <script src="{{ asset('/') }}public/assets/js/pages/datatables.init.js"></script>
 
+
+       <script>
+        /**
+         * Global SweetAlert delete confirmation
+         * @param {number|string} id
+         * @param {string|null} formPrefix (optional)
+         */
+        window.confirmDelete = function(id, formPrefix = 'delete-form') {
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: 'Data akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formId = `${formPrefix}-${id}`;
+                    const form = document.getElementById(formId);
+
+                    if (!form) {
+                        console.error(`Form dengan id "${formId}" tidak ditemukan`);
+                        return;
+                    }
+
+                    form.submit();
+                }
+            });
+        };
+    </script>
+
+    {{-- GLOBAL TOAST --}}
+    @if (session('success'))
+        <script>
+                    const message = "{{ Session::get('success') }}";
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            customClass: {
+                popup: 'my-toast'
+            },
+            html: `
+            <div class="toast-wrapper">
+                <i class="ri-checkbox-circle-fill align-middle text-success"></i>
+                <span class="text-success"><b>${message}</b></span>
+                <i class="ri-close-line toast-close" onclick="Swal.close()"></i>
+            </div>
+        `
+        });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: @json(session('error')),
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        </script>
+    @endif
+
+
     @stack('scripts')
+
+
+
 
 
     

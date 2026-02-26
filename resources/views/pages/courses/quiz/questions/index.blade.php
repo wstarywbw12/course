@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master_app')
 
 @section('content')
     <div class="container">
@@ -7,7 +7,7 @@
             <div class="card-header d-flex justify-content-between">
                 <h5>Soal Quiz: {{ $quiz->title }}</h5>
                 <button class="btn btn-primary btn-sm" onclick="openCreate()">
-                    <i class="bi bi-plus"></i> Tambah Soal
+                    <i class="bx bx-plus"></i> Tambah Soal
                 </button>
             </div>
 
@@ -45,7 +45,7 @@
 
 
                         <button class="btn btn-sm btn-warning" onclick='openEdit(@json($question))'>
-                            <i class="bi bi-pencil"></i> Edit
+                            <i class="bx bx-pencil"></i> Edit
                         </button>
 
                         <form id="delete-form-{{ $question->id }}"
@@ -54,7 +54,7 @@
                             @method('DELETE')
                             <button type="button" class="btn btn-sm btn-danger"
                                 onclick="confirmDelete({{ $question->id }})">
-                                <i class="bi bi-trash"></i> Hapus
+                                <i class="bx bx-trash"></i> Hapus
                             </button>
                         </form>
 

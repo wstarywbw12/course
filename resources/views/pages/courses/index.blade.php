@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master_app')
 @section('content')
     <div class="container">
 
@@ -28,15 +28,15 @@
                                 <td>{{ $course->level->level }}</td>
                                 <td class="text-end">
                                     <button class="btn btn-sm btn-warning" onclick="openEditModal({{ $course->id }})">
-                                        <i class="bi bi-pencil"></i> Edit
+                                        <i class="bx bx-edit"></i> Edit
                                     </button>
 
                                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-primary btn-sm">
-                                        <i class="bi bi-eye"></i> Materi
+                                        <i class="bx bx-book"></i> Materi
                                     </a>
 
                                     <a href="{{ route('quiz.index', $course->id) }}" class="btn btn-info btn-sm">
-                                        <i class="bi bi-eye"></i> Quiz
+                                        <i class="bx bx-book"></i> Quiz
                                     </a>
 
 
@@ -47,7 +47,7 @@
                                         @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-danger"
                                             onclick="confirmDelete({{ $course->id }})">
-                                            <i class="bi bi-trash"></i> Delete
+                                            <i class="bx bx-trash"></i> Delete
                                         </button>
                                     </form>
                                 </td>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.master_app')
 
 @section('content')
     <div class="container">
@@ -7,7 +7,7 @@
             <div class="card-body d-flex justify-content-between align-items-center">
                 <h5>Detail Course</h5>
                 <a href="{{ route('courses.index') }}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Back
+                    <i class="bx bx-arrow-left"></i> Back
                 </a>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     <h5 class="mb-0">Materi Course</h5>
                     <div>
                         <button class="btn btn-primary btn-sm" onclick="openCreateMateri()">
-                            <i class="bi bi-plus"></i> Tambah Materi
+                            <i class="bx bx-plus"></i> Tambah Materi
                         </button>
 
                     </div>
@@ -72,7 +72,7 @@
                                 <td class="text-end">
                                     <button class="btn btn-sm btn-warning"
                                         onclick='openEditMateri(@json($materi))'>
-                                        <i class="bi bi-pencil"></i>
+                                        <i class="bx bx-pencil"></i>
                                     </button>
 
                                     <form id="delete-form-{{ $materi->id }}"
@@ -82,7 +82,7 @@
                                         @method('DELETE')
                                         <button type="button" class="btn btn-sm btn-danger"
                                             onclick="confirmDelete({{ $materi->id }})">
-                                            <i class="bi bi-trash"></i>
+                                            <i class="bx bx-trash"></i>
                                         </button>
                                     </form>
                                 </td>
