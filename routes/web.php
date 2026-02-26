@@ -119,9 +119,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/results-quiz', [ResultQuizController::class, 'index'])->name('results-quiz.index');
 
-
     Route::get('/setting-beranda', [SettingBerandaController::class, 'index'])->name('setting.beranda');
-    Route::put('/setting-beranda/{id}', [SettingBerandaController::class, 'update'])->name('setting.beranda.update');
+    Route::put('/setting/beranda', [SettingBerandaController::class, 'update'])->name('setting.beranda.update');
 });
 
 require __DIR__.'/auth.php';
