@@ -1,238 +1,192 @@
-@extends('layouts.app')
+@extends('layouts.master_app')
+
 @section('content')
-    <div class="container">
-
-        <div class="card mb-3">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Manage User</h5>
-                <button class="btn btn-primary" onclick="openCreateModal()">Tambah User</button>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between mb-3">
+                <h4>Manajemen User</h4>
+                <button class="btn btn-primary btn-sm btn-add">
+                    <i class="bx bx-plus"></i> Tambah
+                </button>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-body table-responsive">
-                <table class="table align-middle">
-                    <thead>
-                        <tr>
-                            <th width="5%">No</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th width="10%">Role</th>
-                            <th width="20%" class="text-end">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $user)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td class="text-nowrap">{{ $user->name }}</td>
-                                <td class="text-nowrap">{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td class="text-end">
-                                    <button class="btn btn-sm btn-warning"
-                                        onclick='openEditModal(@json($user))'>
-                                        Edit
-                                    </button>
-
-                                    <button class="btn btn-sm btn-danger" onclick="confirmDelete({{ $user->id }})">
-                                        Delete
-                                    </button>
-
-                                    <form id="delete-form-{{ $user->id }}"
-                                        action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-none">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        @if ($users->isEmpty())
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">
-                                    Tidak ada data user
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th width="15%" class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($users as $key => $user)
+                        <tr>
+                            <td class="text-center">{{ $key + 1 }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <span class="badge bg-{{ $user->role == 'admin' ? 'danger' : 'secondary' }}">
+                                    {{ $user->role }}
+                                </span>
+                            </td>
+                            <td class="text-center">
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f3f5f7;
-            min-height: 100vh;
-        }
+                                <button class="btn btn-info btn-sm btn-edit" data-id="{{ $user->id }}"
+                                    data-name="{{ $user->name }}" data-email="{{ $user->email }}"
+                                    data-role="{{ $user->role }}">
+                                    <i class="bx bx-edit"></i> Edit
+                                </button>
 
-        .text-logo {
-            color: #1e4ed8;
-        }
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                    class="d-inline form-delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger btn-sm btn-delete">
+                                        <i class="bx bx-trash"></i> Hapus
+                                    </button>
+                                </form>
 
-        .text-brand {
-            color: #1e4ed8;
-        }
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        a.text-nav {
-            color: #1e4ed8 !important;
-            text-decoration: none;
-        }
+    {{-- MODAL --}}
+    <div class="modal fade" id="userModal">
+        <div class="modal-dialog">
+            <form method="POST" id="userForm">
+                @csrf
+                <input type="hidden" name="_method" id="formMethod">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Form User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
 
-        .text-sub {
-            color: #1e4ed8 !important;
-        }
+                    <div class="modal-body">
 
-        .custom-tabs {
-            background-color: #1e63ff;
-            border-radius: 8px;
-            padding: 6px;
-            display: flex;
-            gap: 6px;
-            width: 100%;
-        }
+                        <div class="mb-3">
+                            <label>Nama</label>
+                            <input type="text" name="name" id="name" class="form-control" required>
+                        </div>
 
-        .custom-tabs .nav-link {
-            color: #fff;
-            font-weight: 600;
-            border-radius: 6px;
-            padding: 8px 16px;
-            text-align: center;
-            width: 100%;
-        }
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
 
-        .custom-tabs .nav-link.active {
-            background-color: #fff;
-            color: #1e63ff !important;
-        }
+                        <div class="mb-3">
+                            <label>Password (kosongkan jika tidak diubah)</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                        </div>
 
-        @media (min-width: 992px) {
-            .custom-tabs {
-                width: fit-content;
-            }
+                        <div class="mb-3">
+                            <label>Role</label>
+                            <select name="role" id="role" class="form-control" required>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
 
-            .custom-tabs .nav-link {
-                padding: 6px 48px;
-                width: auto;
-            }
-        }
+                    </div>
 
-
-
-
-
-        .nav-pills-materi {
-            display: flex;
-            width: 100%;
-            gap: 12px;
-        }
-
-        .nav-pills-materi .nav-item {
-            flex: 1;
-        }
-
-        /* default = btn-outline-secondary */
-        .nav-pills-materi .nav-link {
-            width: 100%;
-            text-align: center;
-            background-color: transparent;
-            color: #2b2c2d !important;
-            border: 2px solid #6c757d;
-            border-radius: 12px;
-            transition: all .2s ease;
-        }
-
-        /* hover efek */
-        .nav-pills-materi .nav-link:hover {
-            background-color: #6c757d;
-            color: #fff !important;
-        }
-
-        /* active = btn-primary */
-        .nav-pills-materi .nav-link.active {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-            color: #fff !important;
-        }
-    </style>
-
-    @include('pages.users.modal')
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            });
-        </script>
-    @endif
+                    <div class="modal-footer">
+                        <button class="btn btn-primary"><i class="bx-check-circle"></i> Simpan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
-
 
 @push('scripts')
     <script>
-        const userModalEl = document.getElementById('userModal');
-        const userModal = new bootstrap.Modal(userModalEl);
+        document.addEventListener('DOMContentLoaded', function() {
 
-        // =====================
-        // CREATE
-        // =====================
-        window.openCreateModal = function() {
-            document.getElementById('modalTitle').innerText = 'Tambah User';
-            document.getElementById('userForm').action = "{{ route('users.store') }}";
-            document.getElementById('formMethod').value = 'POST';
+            let modal = new bootstrap.Modal(document.getElementById('userModal'));
+            let form = document.getElementById('userForm');
 
-            ['name', 'email', 'password'].forEach(id => {
-                document.getElementById(id).value = '';
+            // TAMBAH
+            document.querySelector('.btn-add').addEventListener('click', function() {
+                form.action = "{{ route('users.store') }}";
+                document.getElementById('formMethod').value = '';
+                form.reset();
+                modal.show();
             });
 
-            document.getElementById('role').value = 'user';
+            // EDIT
+            document.querySelectorAll('.btn-edit').forEach(button => {
+                button.addEventListener('click', function() {
 
-            userModal.show();
-        };
+                    let id = this.dataset.id;
 
-        // =====================
-        // EDIT
-        // =====================
-        window.openEditModal = function(user) {
-            document.getElementById('modalTitle').innerText = 'Edit User';
-            document.getElementById('userForm').action = `/users/${user.id}`;
-            document.getElementById('formMethod').value = 'PUT';
+                    form.action = "/users/update/" + id;
+                    document.getElementById('formMethod').value = 'PUT';
 
-            document.getElementById('name').value = user.name;
-            document.getElementById('email').value = user.email;
-            document.getElementById('role').value = user.role;
-            document.getElementById('password').value = '';
+                    document.getElementById('name').value = this.dataset.name;
+                    document.getElementById('email').value = this.dataset.email;
+                    document.getElementById('role').value = this.dataset.role;
+                    document.getElementById('password').value = '';
 
-            userModal.show();
-        };
-
-        // =====================
-        // DELETE CONFIRM
-        // =====================
-        window.confirmDelete = function(id) {
-            Swal.fire({
-                title: 'Yakin ingin menghapus?',
-                text: 'Data user akan dihapus permanen!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, hapus',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById(`delete-form-${id}`).submit();
-                }
+                    modal.show();
+                });
             });
-        };
+
+            // DELETE SWEET ALERT
+            document.querySelectorAll('.btn-delete').forEach(button => {
+                button.addEventListener('click', function() {
+
+                    let formDelete = this.closest('.form-delete');
+
+                    Swal.fire({
+                        title: 'Yakin hapus user?',
+                        text: "Data tidak bisa dikembalikan!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            formDelete.submit();
+                        }
+                    });
+
+                });
+            });
+
+        });
     </script>
+    @if (Session::has('success'))
+    <script>
+        const message = "{{ Session::get('success') }}";
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            customClass: {
+                popup: 'my-toast'
+            },
+            html: `
+            <div class="toast-wrapper">
+                <i class="ri-checkbox-circle-fill align-middle text-success"></i>
+                <span class="text-success"><b>${message}</b></span>
+                <i class="ri-close-line toast-close" onclick="Swal.close()"></i>
+            </div>
+        `
+        });
+    </script>
+@endif
 @endpush

@@ -11,39 +11,43 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->get();
-
         return view('pages.users.index', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,user',
+            'role'     => 'required|in:admin,user',
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
+            'role'     => $request->role,
         ]);
 
-        return back()->with('success', 'Data berhasil disimpan');
-
+        return redirect()->back()->with('success', 'User berhasil ditambahkan');
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'role' => 'required|in:admin,user',
+            'name'  => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role'  => 'required|in:admin,user',
         ]);
 
-        $data = $request->only('name', 'email', 'role');
+        $user = User::findOrFail($id);
+
+        $data = [
+            'name'  => $request->name,
+            'email' => $request->email,
+            'role'  => $request->role,
+        ];
 
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
@@ -51,15 +55,12 @@ class UserController extends Controller
 
         $user->update($data);
 
-       return back()->with('success', 'Data berhasil diperbarui');
-
+        return redirect()->back()->with('success', 'User berhasil diupdate');
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
-
-        return back()->with('success', 'Data berhasil dihapus');
-
+        User::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'User berhasil dihapus');
     }
 }

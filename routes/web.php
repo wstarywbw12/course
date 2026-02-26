@@ -71,11 +71,6 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-
     Route::get('/levels', [LevelController::class, 'index'])->name('levels.index');
     Route::post('/levels', [LevelController::class, 'store'])->name('levels.store');
     Route::put('/levels/{level}', [LevelController::class, 'update'])->name('levels.update');
@@ -144,6 +139,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [SettingFeatureController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SettingFeatureController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SettingFeatureController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::post('/store', [UserController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('destroy');
     });
 
 });

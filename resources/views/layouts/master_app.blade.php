@@ -30,6 +30,34 @@
     <!-- custom Css-->
     <link href="{{ asset('/') }}public/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
 
+    <style>
+        .my-toast {
+            border-left: 4px solid #28a745 !important;
+            background: #e9f9ef !important;
+            padding: 12px 16px !important;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .toast-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+            color: #28a745 !important;
+        }
+
+        .toast-close {
+            margin-left: auto;
+            cursor: pointer;
+            font-size: 18px;
+            color: #28a745 !important;
+        }
+    </style>
 
 </head>
 
@@ -1381,6 +1409,9 @@
     <script src="{{ asset('/') }}public/assets/js/pages/datatables.init.js"></script>
 
     @stack('scripts')
+
+
+    
 </body>
 
 </html>

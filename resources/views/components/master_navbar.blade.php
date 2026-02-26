@@ -40,16 +40,16 @@
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> User</a>
+                                <a href="{{ route('users.index') }}" class="nav-link" data-key="t-crm"> User</a>
                             </li>
                             <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm">Level Course</a>
+                                <a href="{{ route('levels.index') }}" class="nav-link" data-key="t-crm">Level Course</a>
                             </li>
                             <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> Course</a>
+                                <a href="{{ route('courses.index') }}" class="nav-link" data-key="t-crm"> Course</a>
                             </li>
                             <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> Result Quiz</a>
+                                <a href="{{ route('results-quiz.index') }}" class="nav-link" data-key="t-crm"> Result Quiz</a>
                             </li>
                         </ul>
                     </div>
