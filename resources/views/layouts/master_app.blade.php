@@ -72,7 +72,7 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box horizontal-logo">
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="{{ route('home') }}" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="{{ asset('/') }}public/assets/images/logo-sm.png" alt=""
                                         height="22">
@@ -83,14 +83,12 @@
                                 </span>
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
-                                <span class="logo-sm">
-                                    <img src="{{ asset('/') }}public/assets/images/logo-sm.png" alt=""
-                                        height="22">
+                            <a href="{{ route('home') }}" class="logo logo-light">
+                                <span class="logo-sm text-white fw-bold" style="font-size: 26px">
+                                    UMLab
                                 </span>
-                                <span class="logo-lg">
-                                    <img src="{{ asset('/') }}public/assets/images/logo-light.png" alt=""
-                                        height="17">
+                                <span class="logo-lg text-white fw-bold" style="font-size: 26px">
+                                    UMLab
                                 </span>
                             </a>
                         </div>
@@ -463,21 +461,24 @@
                                         src="{{ asset('/') }}public/assets/images/users/avatar-1.jpg"
                                         alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
-                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna
-                                            Adame</span>
-                                        <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Founder</span>
+                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name ?? 'User' }}</span>
+                                        <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ Auth::user()->role ?? 'User' }}</span>
                                     </span>
                                 </span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
-                                <h6 class="dropdown-header">Welcome Anna!</h6>
-                                <a class="dropdown-item" href="pages-profile.html"><i
+                                <h6 class="dropdown-header">Welcome {{ Auth::user()->name ?? 'User' }}!</h6>
+                                <a class="dropdown-item" href="{{ route('setting.beranda') }}"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>
-                                <a class="dropdown-item" href="auth-logout-basic.html"><i
-                                        class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
-                                        class="align-middle" data-key="t-logout">Logout</span></a>
+                                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
+                                            class="align-middle" data-key="t-logout">Logout</span>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -1404,7 +1405,6 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 
