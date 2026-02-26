@@ -33,9 +33,13 @@
                     <li class="nav-item"><a class="nav-link" href="#materi">Materi</a></li>
                     <li class="nav-item"><a class="nav-link" href="#fitur">Fitur</a></li>
                     <li class="nav-item"><a class="nav-link" href="#testimoni">Testimoni</a></li>
-                    <li class="nav-item ms-lg-2"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                    <li class="nav-item ms-lg-2"><a class="btn btn-primary text-white"
-                            href="{{ route('register') }}">Daftar</a></li>
+                    @if (auth()->check())
+                        <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
+                    @else
+                        <li class="nav-item ms-lg-2"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        <li class="nav-item ms-lg-2"><a class="btn btn-primary text-white"
+                                href="{{ route('register') }}">Daftar</a></li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -46,9 +50,8 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 fade-in">
-                    <h1 class="hero-headline mb-4">Belajar UML <br>Lebih Mudah dan Interaktif</h1>
-                    <p class="lead mb-4 opacity-90">Platform pembelajaran UML online untuk mahasiswa dan profesional IT.
-                        Dilengkapi quiz, evaluasi, dan sertifikat.</p>
+                    <h1 class="hero-headline mb-4">{{ $beranda->hero_title ?? '' }}</h1>
+                    <p class="lead mb-4 opacity-90">{{ $beranda->hero_sub_title ?? '' }}</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="{{ route('login') }}"
                             class="btn btn-light btn-outline-light text-dark bg-white border-0 px-4 py-2 fw-semibold">Mulai
@@ -57,7 +60,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 text-center">
-                    <img src="{{ asset('public/img/belajar.png') }}" alt="ilustrasi belajar"
+                    <img src="{{ asset('public/storage/' . $beranda->hero_image) }}" alt="ilustrasi belajar"
                         class="img-fluid rounded-4 shadow-lg">
                 </div>
             </div>
@@ -68,10 +71,8 @@
     <section id="tentang" class="py-5" style="background-color: #f8fbff;">
         <div class="container py-5">
             <div class="text-center mb-5">
-                <h2 class="section-title">Apa itu UMLAB?</h2>
-                <p class="text-secondary col-lg-8 mx-auto">UMLAB adalah platform pembelajaran online yang menyediakan
-                    materi UML lengkap mulai dari dasar hingga lanjutan, disertai quiz interaktif dan evaluasi hasil
-                    belajar.</p>
+                <h2 class="section-title">{{ $beranda->about_title ?? '' }}</h2>
+                <p class="text-secondary col-lg-8 mx-auto">{{ $beranda->about_sub_title ?? '' }}</p>
             </div>
             <div class="row g-4">
                 <div class="col-md-4 fade-in">
@@ -106,11 +107,9 @@
 
                 <!-- Kiri -->
                 <div class="col-lg-5">
-                    <h2 class="materi-title">Kurikulum Kelas</h2>
+                    <h2 class="materi-title">{{ $beranda->material_title ?? '' }}</h2>
                     <p class="materi-desc">
-                        Akses lengkap materi UML dari dasar hingga lanjutan.
-                        Disusun sistematis agar mudah dipahami baik untuk mahasiswa
-                        maupun profesional IT.
+                        {{ $beranda->material_sub_title ?? '' }}
                     </p>
                 </div>
 
@@ -136,12 +135,12 @@
         <div class="container py-4">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
-                    <img src="{{ asset('public/img/actifity.png') }}" alt="dashboard umlab"
+                    <img src="{{ asset('public/storage/' . $beranda->feature_image) }}" alt="dashboard umlab"
                         class="img-fluid rounded-4 shadow">
                 </div>
                 <div class="col-lg-6">
-                    <h2 class="section-title">Fitur Unggulan</h2>
-                    <p class="text-secondary mb-4">Semua alat untuk mendukung perjalanan belajarmu.</p>
+                    <h2 class="section-title">{{ $beranda->feature_title ?? '' }}</h2>
+                    <p class="text-secondary mb-4">{{ $beranda->feature_sub_title ?? '' }}</p>
                     <div class="fitur-list">
                         <div class="d-flex align-items-center mb-4"><i class="bi bi-pencil-square"></i> <span
                                 class="fw-medium">Sistem Quiz Online & Nilai Otomatis</span></div>
@@ -162,8 +161,8 @@
     <!-- Testimoni -->
     <section id="testimoni" class="py-5">
         <div class="container py-4">
-            <h2 class="section-title text-center mx-auto">Testimoni Mahasiswa</h2>
-            <p class="text-center text-secondary mb-5">Apa kata mereka setelah belajar di UMLAB</p>
+            <h2 class="section-title text-center mx-auto">{{ $beranda->testimonial_title ?? '' }}</h2>
+            <p class="text-center text-secondary mb-5">{{ $beranda->testimonial_sub_title ?? '' }}</p>
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="testimoni-card fade-in">
@@ -203,9 +202,10 @@
     <section class="py-5">
         <div class="container">
             <div class="cta-biru p-5 text-center text-white">
-                <h2 class="fw-bold display-6">Siap Menguasai UML?</h2>
-                <p class="mb-4 col-lg-6 mx-auto">Gabung sekarang dan akses semua materi, kuis, dan sertifikat.</p>
-                <a href="{{ route('register') }}" class="btn btn-light text-primary fw-semibold px-5 py-3 rounded-pill">Daftar
+                <h2 class="fw-bold display-6">{{ $beranda->cta_title ?? '' }}</h2>
+                <p class="mb-4 col-lg-6 mx-auto">{{ $beranda->cta_sub_title ?? '' }}</p>
+                <a href="{{ route('register') }}"
+                    class="btn btn-light text-primary fw-semibold px-5 py-3 rounded-pill">Daftar
                     Sekarang</a>
             </div>
         </div>
@@ -217,8 +217,7 @@
             <div class="row gy-4">
                 <div class="col-md-5">
                     <h4 class="text-white fw-bold">UMLAB</h4>
-                    <p class="small opacity-75">Platform pembelajaran UML online dengan pendekatan interaktif,
-                        dilengkapi quiz dan evaluasi untuk mahasiswa dan profesional.</p>
+                    <p class="small opacity-75">{{ $beranda->footer_about ?? '' }}</p>
                 </div>
                 <div class="col-md-2">
                     <h6 class="text-white">Link Cepat</h6>
@@ -232,9 +231,9 @@
                 <div class="col-md-2">
                     <h6 class="text-white">Kontak</h6>
                     <ul class="list-unstyled small">
-                        <li><a href="#" class="opacity-75">support@umlab.id</a></li>
-                        <li><a href="#" class="opacity-75">+62 812 3456 7890</a></li>
-                        <li><a href="#" class="opacity-75">@umlab_learn</a></li>
+                        <li><a href="#" class="opacity-75">{{ $beranda->footer_email ?? '' }}</a></li>
+                        <li><a href="#" class="opacity-75">{{ $beranda->footer_hp ?? '' }}</a></li>
+                        <li><a href="#" class="opacity-75"></a>{{ $beranda->footer_website ?? '' }}</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
