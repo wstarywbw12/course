@@ -230,19 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-{{-- TOAST SUCCESS --}}
-@if(session('success'))
-<script>
-Swal.fire({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    icon: 'success',
-    title: "{{ session('success') }}"
-});
-</script>
-@endif
+
 
 @endpush
