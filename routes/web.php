@@ -12,6 +12,7 @@ use App\Http\Controllers\QuizQuestionController;
 use App\Http\Controllers\ResultQuizController;
 use App\Http\Controllers\SettingAboutController;
 use App\Http\Controllers\SettingBerandaController;
+use App\Http\Controllers\SettingFeatureController;
 use App\Http\Controllers\SettingMaterialController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
@@ -136,6 +137,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [SettingMaterialController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SettingMaterialController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SettingMaterialController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('setting-feature')->name('setting.feature.')->group(function () {
+        Route::get('/', [SettingFeatureController::class, 'index'])->name('index');
+        Route::post('/store', [SettingFeatureController::class, 'store'])->name('store');
+        Route::put('/update/{id}', [SettingFeatureController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [SettingFeatureController::class, 'destroy'])->name('destroy');
     });
 
 });
