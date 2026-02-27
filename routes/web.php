@@ -18,6 +18,10 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialiteController;
+
+Route::get('/auth/google', [SocialiteController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
 
 Route::get('/',  [HomeController::class, 'index']);
 
