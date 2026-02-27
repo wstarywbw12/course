@@ -162,11 +162,6 @@
 
                         <!-- Google Button -->
                         <div class="d-grid mb-3">
-                            {{-- <button class="btn btn-outline-primary">
-                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20"
-                                    class="me-2">
-                                Sign in with Google
-                            </button> --}}
                             <a href="{{ url('/auth/google') }}"
                                 class="btn btn-outline-primary">
                                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20">

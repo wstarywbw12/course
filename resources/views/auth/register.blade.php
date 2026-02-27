@@ -181,14 +181,11 @@
                         <!-- DIVIDER -->
                         <div class="divider mb-4">or</div>
 
-                         <!-- Google Button -->
-                        <div class="d-grid mb-3">
-                            <button class="btn btn-outline-primary">
-                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20"
-                                    class="me-2">
-                                Sign in with Google
-                            </button>
-                        </div>
+                        <!-- Google Button -->
+                        <a href="{{ url('/auth/google') }}" class="btn btn-outline-primary">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20">
+                            Sign in with Google
+                        </a>
 
                         <div class="text-center small">
                             Already have an account?
