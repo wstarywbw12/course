@@ -1,39 +1,85 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
-
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UMLab Reset Password</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body { height: 100vh; overflow: hidden; }
+        .left-panel {
+            background: linear-gradient(160deg, #000000 40%, #1e4ed8 70%, #e5e7eb 100%);
+            color: white;
+        }
+        .brand-text { font-size: 48px; font-weight: 700; }
+        .vertical-line { width: 3px; height: 120px; background: white; margin: 40px auto 0; }
+        .right-panel { background-color: #f8f9fa; }
+        .login-card { width: 100%; max-width: 310px; }
+        .form-control:focus { box-shadow: none; border-color: #2563eb; }
+        .btn-primary { background-color: #2563eb; border: none; }
+        .btn-primary:hover { background-color: #1d4ed8; }
+    </style>
+</head>
+<body>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <!-- LEFT -->
+        <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center left-panel">
+            <div class="text-center">
+                <div class="brand-text">UMLab</div>
+                <div class="vertical-line"></div>
+            </div>
         </div>
+        <!-- RIGHT -->
+        <div class="col-lg-6 d-flex align-items-center justify-content-center right-panel">
+            <div class="login-card">
+                <h3 class="fw-bold">Reset Password</h3>
+                <p class="text-muted mb-4">Enter your new password below</p>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <form method="POST" action="{{ route('password.update') }}">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" name="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   placeholder="Email" value="{{ old('email', request('email')) }}" required>
+                        </div>
+                        @error('email') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                    </div>
+
+                    <!-- Password Baru -->
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   placeholder="New Password" required>
+                        </div>
+                        @error('password') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                    </div>
+
+                    <!-- Konfirmasi Password -->
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" name="password_confirmation"
+                                   class="form-control"
+                                   placeholder="Confirm Password" required>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Reset Password</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+</div>
+</body>
+</html>

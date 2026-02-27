@@ -111,27 +111,42 @@
                     <h3 class="fw-bold">Forgot Password?</h3>
                     <p class="text-muted mb-4">You'll receive an email to recover your password</p>
 
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('password.email') }}">
                         @csrf
+
+                        <!-- Tampilkan pesan sukses -->
+                        @if (session('status'))
+                            <div class="alert alert-success mb-3">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
                         <!-- EMAIL -->
                         <div class="mb-3">
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="bi bi-envelope"></i>
                                 </span>
-                                <input type="email" name="email" class="form-control" placeholder="Enter your email"
-                                    required>
+                                <input type="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    placeholder="Enter your email" value="{{ old('email') }}" required>
                             </div>
+                            @error('email')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
-
-                        <!-- Login Button -->
+                        <!-- Send Button -->
                         <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-primary ">Send</button>
+                            <button type="submit" class="btn btn-primary">Send</button>
                         </div>
 
+                        <div class="text-center">
+                            <a href="{{ route('login') }}" class="text-muted small">
+                                <i class="bi bi-arrow-left"></i> Back to Login
+                            </a>
+                        </div>
                     </form>
-
 
                 </div>
             </div>
