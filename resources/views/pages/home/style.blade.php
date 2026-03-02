@@ -3,10 +3,21 @@
         font-family: 'Poppins', sans-serif;
     }
 
+    html {
+        overflow-x: hidden;
+    }
+
     body {
+        margin: 0;
         padding-top: 70px;
-        /* agar konten tidak ketutupan navbar fixed */
         scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+
+    .container,
+    .container-fluid {
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
 
