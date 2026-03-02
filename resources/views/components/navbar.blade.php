@@ -82,6 +82,7 @@
 .nav-link {
     color: #dbeafe !important;
     font-weight: 500;
+    font-size: 1rem;
 }
 
 .nav-link.active {
