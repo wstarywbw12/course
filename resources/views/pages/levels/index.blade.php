@@ -14,46 +14,48 @@
 
     <div class="card">
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th width="5%">No</th>
-                        <th>Icon</th>
-                        <th>Level</th>
-                        <th width="15%" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($levels as $key => $item)
+            <div class="table-responsive">
+                <table class="table table-bordered text-nowrap">
+                    <thead>
                         <tr>
-                            <td class="text-center">{{ $key + 1 }}</td>
-                            <td>
-                                @if ($item->icon)
-                                    <i class="{{ $item->icon }}"></i> {{ $item->icon }}
-                                @endif
-                            </td>
-                            <td>{{ $item->level }}</td>
-                            <td class="text-center">
-
-                                <button class="btn btn-info btn-sm btn-edit" data-id="{{ $item->id }}"
-                                    data-level="{{ $item->level }}" data-icon="{{ $item->icon }}">
-                                    <i class="bx bx-edit"></i> Edit
-                                </button>
-
-                                <form action="{{ route('levels.destroy', $item->id) }}" method="POST"
-                                    class="d-inline form-delete">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-danger btn-sm btn-delete">
-                                        <i class="bx bx-trash"></i> Hapus
-                                    </button>
-                                </form>
-
-                            </td>
+                            <th width="5%">No</th>
+                            <th>Icon</th>
+                            <th>Level</th>
+                            <th width="15%" class="text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($levels as $key => $item)
+                            <tr>
+                                <td class="text-center">{{ $key + 1 }}</td>
+                                <td>
+                                    @if ($item->icon)
+                                        <i class="{{ $item->icon }}"></i> {{ $item->icon }}
+                                    @endif
+                                </td>
+                                <td>{{ $item->level }}</td>
+                                <td class="text-center">
+
+                                    <button class="btn btn-info btn-sm btn-edit" data-id="{{ $item->id }}"
+                                        data-level="{{ $item->level }}" data-icon="{{ $item->icon }}">
+                                        <i class="bx bx-edit"></i> Edit
+                                    </button>
+
+                                    <form action="{{ route('levels.destroy', $item->id) }}" method="POST"
+                                        class="d-inline form-delete">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger btn-sm btn-delete">
+                                            <i class="bx bx-trash"></i> Hapus
+                                        </button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

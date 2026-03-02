@@ -14,7 +14,8 @@
 
     <div class="card">
         <div class="card-body">
-            <table class="table table-bordered">
+           <div class="table-responsive">
+             <table class="table table-bordered text-nowrap">
                 <thead>
                     <tr>
                         <th width="5%">No</th>
@@ -51,6 +52,7 @@
                     @endforeach
                 </tbody>
             </table>
+           </div>
         </div>
     </div>
 
