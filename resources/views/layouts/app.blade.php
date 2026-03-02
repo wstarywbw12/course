@@ -14,14 +14,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(180deg, #081b3a 0%, #1e4ed8 45%, #e9edf5 100%);
             min-height: 100vh;
         }
 
         .ck-editor__editable {
-    min-height: 200px;
-}
+            min-height: 200px;
+        }
 
 
         /* HERO */
@@ -153,7 +153,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 

@@ -51,9 +51,29 @@
             text-decoration: none;
         }
 
+        .navbar-brand {
+            color: #1e4ed8 !important;
+            text-decoration: none;
+        }
+
+        a.nav-link {
+            color: #1e4ed8 !important;
+            text-decoration: none;
+        }
+
         .text-sub {
             color: #1e4ed8 !important;
         }
+
+        /* Ubah warna garis hamburger jadi biru */
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 102, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Optional: border tombol jadi biru */
+.navbar-toggler {
+    border-color: #0066ff;
+}
 
         .custom-tabs {
             background-color: #1e63ff;
