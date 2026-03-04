@@ -469,7 +469,7 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <h6 class="dropdown-header">Welcome {{ Auth::user()->name ?? 'User' }}!</h6>
-                                <a class="dropdown-item" href="{{ route('setting.beranda') }}"><i
+                                <a class="dropdown-item" href="{{ route('setting.profile.index') }}"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Profile</span></a>
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">

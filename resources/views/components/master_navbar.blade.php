@@ -73,7 +73,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('setting.about.index') }}" class="nav-link" data-key="t-chat"> Abaout
+                                <a href="{{ route('setting.about.index') }}" class="nav-link" data-key="t-chat"> about
+
                                 </a>
                             </li>
                             <li class="nav-item">

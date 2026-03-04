@@ -14,6 +14,7 @@ use App\Http\Controllers\SettingAboutController;
 use App\Http\Controllers\SettingBerandaController;
 use App\Http\Controllers\SettingFeatureController;
 use App\Http\Controllers\SettingMaterialController;
+use App\Http\Controllers\SettingProfileController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -155,6 +156,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [SettingFeatureController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SettingFeatureController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SettingFeatureController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('setting-profile')->name('setting.profile.')->group(function () {
+        Route::get('/', [SettingProfileController::class,  'index'])->name('index');
+        Route::post('/update', [SettingProfileController::class, 'update'])->name('update');
     });
 
     Route::prefix('users')->name('users.')->group(function () {
