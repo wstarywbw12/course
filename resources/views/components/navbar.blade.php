@@ -46,10 +46,16 @@
 
                 <li class="nav-item ms-lg-3 dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle fs-4"></i>
+                        @if (auth()->user()->foto)
+                            <img src="{{ asset('public/storage/' . auth()->user()->foto) }}"height="30" width="30"
+                                class="rounded-circle d-inline" id="previewImage">
+                        @else
+                             <i class="bi bi-person-circle fs-4"></i>
+                        @endif
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ route('setting.profile.index') }}">Profile</a></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -78,7 +84,7 @@
 
     .navbar .navbar-brand {
         font-weight: 700;
-        color: white ;
+        color: white;
         font-size: 1.6rem;
     }
 

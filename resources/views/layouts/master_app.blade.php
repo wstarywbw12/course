@@ -457,12 +457,20 @@
                             <button type="button" class="btn" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
-                                    <img class="rounded-circle header-profile-user"
-                                        src="{{ asset('/') }}public/assets/images/users/avatar-1.jpg"
-                                        alt="Header Avatar">
+
+                                    @if (auth()->user()->foto)
+                                    <img src="{{ asset('public/storage/'.auth()->user()->foto) }}"height="32" width="32"
+                                            class="rounded-circle mb-2 d-block" id="previewImage">
+                                    @else
+                                        <img src="https://via.placeholder.com/100" width="100"
+                                            class="rounded mb-2 d-block" id="previewImage">
+                                    @endif
+
                                     <span class="text-start ms-xl-2">
-                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name ?? 'User' }}</span>
-                                        <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ Auth::user()->role ?? 'User' }}</span>
+                                        <span
+                                            class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name ?? 'User' }}</span>
+                                        <span
+                                            class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ Auth::user()->role ?? 'User' }}</span>
                                     </span>
                                 </span>
                             </button>
@@ -1406,14 +1414,14 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
     <script src="{{ asset('/') }}public/assets/js/pages/datatables.init.js"></script>
 
 
-       <script>
+    <script>
         /**
          * Global SweetAlert delete confirmation
          * @param {number|string} id
@@ -1448,24 +1456,24 @@
     {{-- GLOBAL TOAST --}}
     @if (session('success'))
         <script>
-                    const message = "{{ Session::get('success') }}";
+            const message = "{{ Session::get('success') }}";
 
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            customClass: {
-                popup: 'my-toast'
-            },
-            html: `
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                customClass: {
+                    popup: 'my-toast'
+                },
+                html: `
             <div class="toast-wrapper">
                 <i class="ri-checkbox-circle-fill align-middle text-success"></i>
                 <span class="text-success"><b>${message}</b></span>
                 <i class="ri-close-line toast-close" onclick="Swal.close()"></i>
             </div>
         `
-        });
+            });
         </script>
     @endif
 
@@ -1490,7 +1498,7 @@
 
 
 
-    
+
 </body>
 
 </html>
