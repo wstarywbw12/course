@@ -27,7 +27,7 @@
         <!-- LEFT -->
         <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center left-panel">
             <div class="text-center">
-                <div class="brand-text">UMLab</div>
+                <div class="brand-text"><img src="{{ asset('public/img/logo_light.png') }}" alt="sss" height="38"></div>
                 <div class="vertical-line"></div>
             </div>
         </div>

@@ -30,7 +30,7 @@
             <div class="d-flex gap-2 mb-4">
                 @foreach ($quiz->questions as $index => $question)
                     <button type="button"
-                        class="btn quiz-step d-flex align-items-center justify-content-center {{ $index == 0 ? 'bg-primary text-white' : 'bg-secondary text-white' }}"
+                        class="btn quiz-step d-flex align-items-center justify-content-center bg-secondary text-white"
                         data-step="{{ $index }}">
                         {{ $index + 1 }}
                     </button>
@@ -272,6 +272,27 @@
             clearInterval(activeTimer);
 
             // ==========================================
+            // UPDATE WARNA STEP
+            // ==========================================
+            function updateStepStatus() {
+
+                questions.forEach((questionEl, index) => {
+
+                    const hasAnswer = questionEl.querySelector('input[type="radio"]:checked');
+
+                    steps[index].classList.remove('bg-primary', 'bg-success', 'bg-secondary');
+
+                    if (index === current) {
+                        steps[index].classList.add('bg-primary');
+                    } else if (hasAnswer) {
+                        steps[index].classList.add('bg-success');
+                    } else {
+                        steps[index].classList.add('bg-secondary');
+                    }
+                });
+            }
+
+            // ==========================================
             // SHOW QUESTION
             // ==========================================
             function showQuestion(index) {
@@ -281,15 +302,9 @@
                 questions.forEach(q => q.classList.add('d-none'));
                 questions[index].classList.remove('d-none');
 
-                steps.forEach(s => {
-                    s.classList.remove('bg-primary');
-                    s.classList.add('bg-secondary');
-                });
-
-                steps[index].classList.remove('bg-secondary');
-                steps[index].classList.add('bg-primary');
-
                 current = index;
+
+                updateStepStatus();
             }
 
             // ==========================================
@@ -314,7 +329,16 @@
             });
 
             // ==========================================
-            // TIMER (HANYA JALAN JIKA BUKAN REVIEW)
+            // RADIO CHANGE (update warna otomatis)
+            // ==========================================
+            container.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    updateStepStatus();
+                });
+            });
+
+            // ==========================================
+            // TIMER (HANYA JIKA BUKAN REVIEW)
             // ==========================================
             if (!isReview && timerEl) {
 
@@ -348,7 +372,17 @@
                 activeTimer = setInterval(updateTimer, 1000);
             }
 
-            // Tampilkan soal pertama
+            // ==========================================
+            // MODE REVIEW → semua hijau
+            // ==========================================
+            if (isReview) {
+                steps.forEach(step => {
+                    step.classList.remove('bg-secondary');
+                    step.classList.add('bg-success');
+                });
+            }
+
+            // tampilkan soal pertama
             showQuestion(0);
         }
 
