@@ -79,11 +79,20 @@
                                             </div>
 
 
-                                            <a href="{{ route('courses.detail', $course) }}"
-                                                class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
-                                                <span class="me-1">Mulai</span>
-                                                <i class="bi bi-arrow-right"></i>
-                                            </a>
+
+                                            @if ($course->is_completed)
+                                                <a href="{{ route('courses.detail', $course) }}"
+                                                    class="btn btn-success rounded-pill px-4 btn-sm d-flex align-items-center">
+                                                    <span class="me-1">Lulus</span>
+                                                    <i class="bi bi-stars"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('courses.detail', $course) }}"
+                                                    class="btn btn-outline-primary rounded-pill px-4 btn-sm d-flex align-items-center">
+                                                    <span class="me-1">Mulai</span>
+                                                    <i class="bi bi-arrow-right"></i>
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
 

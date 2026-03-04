@@ -15,10 +15,6 @@ class DashboardController extends Controller
     {
         $userId = Auth::id();
 
-        $courses = Course::with('level')
-            ->orderBy('id', 'desc')
-            ->get();
-
         $levels = Level::with('courses.materials')->get();
 
         // ================================
@@ -32,13 +28,16 @@ class DashboardController extends Controller
         $continueCourse = $lastActivity?->material?->course;
 
         // ================================
-        // LEVEL PROGRESS
+        // AMBIL SEMUA MATERIAL YANG SUDAH COMPLETE
         // ================================
         $completedMaterialIds = \App\Models\UserMaterialActivity::where('user_id', $userId)
             ->where('activity_type', 'complete')
             ->pluck('material_id')
             ->toArray();
 
+        // ================================
+        // LEVEL PROGRESS
+        // ================================
         $levelProgress = [];
 
         foreach ($levels as $level) {
@@ -65,7 +64,8 @@ class DashboardController extends Controller
             ->where('user_material_activities.activity_type', 'complete')
             ->sum('course_materials.time');
 
-        $totalHoursAllTime = round($totalMinutesAllTime / 60, 1);
+        $totalHours = floor($totalMinutesAllTime / 60);
+        $totalRemainingMinutes = $totalMinutesAllTime % 60;
 
         // ================================
         // TOTAL TIME THIS WEEK
@@ -82,20 +82,28 @@ class DashboardController extends Controller
 
         $totalHoursThisWeek = round($totalMinutesThisWeek / 60, 1);
 
-        $totalHours = floor($totalMinutesAllTime / 60);
-        $totalRemainingMinutes = $totalMinutesAllTime % 60;
-
         // ================================
-        // COURSES + TOTAL TIME MATERIAL
+        // COURSES + PROGRESS
         // ================================
-        $courses = Course::with('level')
+        $courses = Course::with('level', 'materials')
             ->withSum('materials as total_minutes', 'time')
             ->orderBy('id', 'desc')
             ->get();
 
-        // convert menit ke jam
         foreach ($courses as $course) {
+
+            // convert ke jam
             $course->total_hours = round(($course->total_minutes ?? 0) / 60, 1);
+
+            $materialIds = $course->materials->pluck('id');
+
+            $totalMaterials = $materialIds->count();
+
+            $completedCount = collect($completedMaterialIds)
+                ->intersect($materialIds)
+                ->count();
+
+            $course->is_completed = $totalMaterials > 0 && $completedCount == $totalMaterials;
         }
 
         return view('dashboard', compact(
@@ -103,7 +111,6 @@ class DashboardController extends Controller
             'levelProgress',
             'courses',
             'continueCourse',
-            'totalHoursAllTime',
             'totalHoursThisWeek',
             'totalHours',
             'totalRemainingMinutes'
