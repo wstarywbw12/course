@@ -111,6 +111,15 @@
                     <h3 class="fw-bold">Hi!</h3>
                     <p class="text-muted mb-4">Let’s start your UML Class Diagram journey</p>
 
+                    {{-- GLOBAL ERROR ALERT --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ $errors->first() }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <!-- EMAIL -->
@@ -162,8 +171,7 @@
 
                         <!-- Google Button -->
                         <div class="d-grid mb-3">
-                            <a href="{{ url('/auth/google') }}"
-                                class="btn btn-outline-primary">
+                            <a href="{{ url('/auth/google') }}" class="btn btn-outline-primary">
                                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20">
                                 Sign in with Google
                             </a>
@@ -202,6 +210,8 @@
             }
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

@@ -111,22 +111,33 @@
                     <h3 class="fw-bold">Hi!</h3>
                     <p class="text-muted mb-4">Let’s start your UML Class Diagram journey</p>
 
+                    {{-- GLOBAL ERROR ALERT --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            {{ $errors->first() }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <!-- NAME -->
                         <div class="mb-3">
-                            <div class="input-group">
+                            <div class="input-group has-validation">
                                 <span class="input-group-text">
                                     <i class="bi bi-person"></i>
                                 </span>
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror"
                                     placeholder="Enter your name" value="{{ old('name') }}" required autofocus>
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         <!-- EMAIL -->
@@ -150,16 +161,20 @@
                                 <span class="input-group-text">
                                     <i class="bi bi-lock"></i>
                                 </span>
-                                <input id="password" type="password" name="password"
-                                    class="form-control @error('password') is-invalid @enderror"
+                                <input id="password" type="password" name="password" class="form-control"
                                     placeholder="Enter your password" required>
                                 <span class="input-group-text" style="cursor:pointer" onclick="togglePassword()">
                                     <i class="bi bi-eye-slash" id="eyeIcon"></i>
                                 </span>
                             </div>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+
+                            <!-- LIVE VALIDATION -->
+                            <div class="mt-2 small">
+                                <div id="length" class="text-danger">• Minimum 6 characters</div>
+                                <div id="uppercase" class="text-danger">• At least one uppercase letter</div>
+                                <div id="number" class="text-danger">• At least one number</div>
+                                <div id="special" class="text-danger">• At least one special character</div>
+                            </div>
                         </div>
 
                         <!-- CONFIRM PASSWORD -->
@@ -168,9 +183,14 @@
                                 <span class="input-group-text">
                                     <i class="bi bi-lock"></i>
                                 </span>
-                                <input type="password" name="password_confirmation" class="form-control"
-                                    placeholder="Confirm your password" required>
+                                <input type="password" id="confirmPassword" name="password_confirmation"
+                                    class="form-control" placeholder="Confirm your password" required>
+                                <span class="input-group-text" style="cursor:pointer" onclick="toggleConfirmPassword()">
+                                    <i class="bi bi-eye-slash" id="eyeConfirmIcon"></i>
+                                </span>
                             </div>
+
+                            <div id="matchMessage" class="small mt-2"></div>
                         </div>
 
                         <!-- BUTTON -->
@@ -181,11 +201,14 @@
                         <!-- DIVIDER -->
                         <div class="divider mb-4">or</div>
 
+
                         <!-- Google Button -->
-                        <a href="{{ url('/auth/google') }}" class="btn btn-outline-primary">
-                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20">
-                            Sign in with Google
-                        </a>
+                        <div class="d-grid mb-3">
+                            <a href="{{ url('/auth/google') }}" class="btn btn-outline-primary">
+                                <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20">
+                                Sign in with Google
+                            </a>
+                        </div>
 
                         <div class="text-center small">
                             Already have an account?
@@ -217,6 +240,123 @@
             }
         }
     </script>
+
+    <script>
+        function togglePassword() {
+            const password = document.getElementById("password");
+            const eye = document.getElementById("eyeIcon");
+
+            if (password.type === "password") {
+                password.type = "text";
+                eye.classList.replace("bi-eye-slash", "bi-eye");
+            } else {
+                password.type = "password";
+                eye.classList.replace("bi-eye", "bi-eye-slash");
+            }
+        }
+
+        function toggleConfirmPassword() {
+            const password = document.getElementById("confirmPassword");
+            const eye = document.getElementById("eyeConfirmIcon");
+
+            if (password.type === "password") {
+                password.type = "text";
+                eye.classList.replace("bi-eye-slash", "bi-eye");
+            } else {
+                password.type = "password";
+                eye.classList.replace("bi-eye", "bi-eye-slash");
+            }
+        }
+    </script>
+
+    <script>
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+
+        const lengthCheck = document.getElementById("length");
+        const uppercaseCheck = document.getElementById("uppercase");
+        const numberCheck = document.getElementById("number");
+        const specialCheck = document.getElementById("special");
+        const matchMessage = document.getElementById("matchMessage");
+
+        password.addEventListener("keyup", validatePassword);
+        confirmPassword.addEventListener("keyup", checkMatch);
+
+        function validatePassword() {
+            const value = password.value;
+
+            // Min 6
+            if (value.length >= 6) {
+                lengthCheck.classList.replace("text-danger", "text-success");
+            } else {
+                lengthCheck.classList.replace("text-success", "text-danger");
+            }
+
+            // Uppercase
+            if (/[A-Z]/.test(value)) {
+                uppercaseCheck.classList.replace("text-danger", "text-success");
+            } else {
+                uppercaseCheck.classList.replace("text-success", "text-danger");
+            }
+
+            // Number
+            if (/[0-9]/.test(value)) {
+                numberCheck.classList.replace("text-danger", "text-success");
+            } else {
+                numberCheck.classList.replace("text-success", "text-danger");
+            }
+
+            // Special Character
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                specialCheck.classList.replace("text-danger", "text-success");
+            } else {
+                specialCheck.classList.replace("text-success", "text-danger");
+            }
+
+            checkMatch();
+        }
+
+        function checkMatch() {
+            if (confirmPassword.value === "") {
+                matchMessage.innerHTML = "";
+                return;
+            }
+
+            if (password.value === confirmPassword.value) {
+                matchMessage.innerHTML = "✓ Passwords match";
+                matchMessage.className = "small mt-2 text-success";
+            } else {
+                matchMessage.innerHTML = "✗ Passwords do not match";
+                matchMessage.className = "small mt-2 text-danger";
+            }
+        }
+
+        function togglePassword() {
+            const eye = document.getElementById("eyeIcon");
+
+            if (password.type === "password") {
+                password.type = "text";
+                eye.classList.replace("bi-eye-slash", "bi-eye");
+            } else {
+                password.type = "password";
+                eye.classList.replace("bi-eye", "bi-eye-slash");
+            }
+        }
+
+        function toggleConfirmPassword() {
+            const eye = document.getElementById("eyeConfirmIcon");
+
+            if (confirmPassword.type === "password") {
+                confirmPassword.type = "text";
+                eye.classList.replace("bi-eye-slash", "bi-eye");
+            } else {
+                confirmPassword.type = "password";
+                eye.classList.replace("bi-eye", "bi-eye-slash");
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
