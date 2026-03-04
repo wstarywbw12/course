@@ -6,13 +6,48 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Level;
+use App\Models\UserMaterialActivity;
 
 class SettingProfileController extends Controller
 {
     public function index()
     {
+        $userId = Auth::id();
+        
+        // Ambil semua level dengan courses dan materials
+        $levels = Level::with('courses.materials')->get();
+        
+        // Ambil material IDs yang sudah complete
+        $completedMaterialIds = UserMaterialActivity::where('user_id', $userId)
+            ->where('activity_type', 'complete')
+            ->pluck('material_id')
+            ->toArray();
+        
+        // Hitung progress per level
+        $levelProgress = [];
+        $highestCompletedLevel = null;
+        
+        foreach ($levels as $level) {
+            $materials = $level->courses->flatMap->materials;
+            $total = $materials->count();
+            $completed = $materials->whereIn('id', $completedMaterialIds)->count();
+            
+            $progress = $total > 0 ? round(($completed / $total) * 100) : 0;
+            $levelProgress[$level->id] = $progress;
+            
+            // Cek apakah level ini sudah complete (100%)
+            if ($progress >= 100) {
+                $highestCompletedLevel = $level;
+            }
+        }
+        
+        // Tentukan title berdasarkan level tertinggi yang complete
+        $userTitle = $highestCompletedLevel ? $highestCompletedLevel->level : 'Beginner';
+        
         return view('pages.setting_profile.index', [
-            'user' => Auth::user()
+            'user' => Auth::user(),
+            'userTitle' => $userTitle
         ]);
     }
 

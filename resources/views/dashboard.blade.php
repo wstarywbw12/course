@@ -8,7 +8,18 @@
         <div class="level-box">
             <div class="mb-2 text-dark">
                 You are now a <b class="text-primary">
-                    {{ $levels->sortByDesc(fn($l) => $levelProgress[$l->id])->first()->name ?? 'Beginner' }}
+                    @php
+                        $currentLevel = $levels->firstWhere('id', 1); // default level 1
+
+                        foreach ($levels as $level) {
+                            if (($levelProgress[$level->id] ?? 0) >= 100) {
+                                $currentLevel = $level;
+                            } else {
+                                break; // berhenti jika nemu level yang belum complete
+                            }
+                        }
+                    @endphp
+                    {{ $currentLevel->level ?? 'Beginner' }}
                 </b>
             </div>
 
