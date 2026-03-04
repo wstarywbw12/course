@@ -24,7 +24,7 @@
     /* NAVBAR FIX */
     .navbar {
         transition: all 0.3s ease;
-        background-color: #ffffff !important;
+        background: #081b3a;
         /* selalu ada background */
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         padding: 0.8rem 0;
@@ -32,12 +32,12 @@
 
     .navbar .navbar-brand {
         font-weight: 700;
-        color: #1e4ed8 !important;
+        color: white !important;
         font-size: 1.6rem;
     }
 
     .navbar .nav-link {
-        color: #333 !important;
+        color: white !important;
         font-weight: 500;
         margin: 0 8px;
     }

@@ -66,29 +66,15 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-        <header id="page-topbar">
+        <header id="page-topbar" style="background-color: white">
             <div class="layout-width">
                 <div class="navbar-header">
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box horizontal-logo">
-                            <a href="{{ route('home') }}" class="logo logo-dark">
-                                <span class="logo-sm">
-                                    <img src="{{ asset('/') }}public/assets/images/logo-sm.png" alt=""
-                                        height="22">
-                                </span>
-                                <span class="logo-lg">
-                                    <img src="{{ asset('/') }}public/assets/images/logo-dark.png" alt=""
-                                        height="17">
-                                </span>
-                            </a>
-
                             <a href="{{ route('home') }}" class="logo logo-light">
-                                <span class="logo-sm text-white fw-bold" style="font-size: 26px">
-                                    UMLab
-                                </span>
-                                <span class="logo-lg text-white fw-bold" style="font-size: 26px">
-                                    UMLab
+                                <span class="d-none d-lg-block">
+                                    <img src="{{ asset('public/img/logo_dark.png') }}" alt="sss" height="22">
                                 </span>
                             </a>
                         </div>
@@ -453,14 +439,14 @@
                             </div>
                         </div>
 
-                        <div class="dropdown ms-sm-3 header-item topbar-user">
+                        <div class="dropdown ms-sm-3 header-item topbar-user ">
                             <button type="button" class="btn" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
 
                                     @if (auth()->user()->foto)
-                                    <img src="{{ asset('public/storage/'.auth()->user()->foto) }}"height="32" width="32"
-                                            class="rounded-circle mb-2 d-block" id="previewImage">
+                                        <img src="{{ asset('public/storage/' . auth()->user()->foto) }}"height="32"
+                                            width="32" class="rounded-circle mb-2 d-block" id="previewImage">
                                     @else
                                         <img src="https://via.placeholder.com/100" width="100"
                                             class="rounded mb-2 d-block" id="previewImage">

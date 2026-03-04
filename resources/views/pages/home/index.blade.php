@@ -17,15 +17,16 @@
 <body>
 
     <!-- Navbar Fixed Top -->
-    <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top">
+    <nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">
-                UM<span>Lab</span>
+                <img src="{{ asset('public/img/logo_light.png') }}" alt="sss" height="22">
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
+ 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link" href="#">Beranda</a></li>
@@ -80,14 +81,14 @@
                 <p class="text-secondary col-lg-8 mx-auto">{{ $beranda->about_sub_title ?? '' }}</p>
             </div>
             <div class="row g-4">
-                @foreach ($home_about as $about )
-                     <div class="col-md-4 fade-in">
-                    <div class="icon-box text-center">
-                        <i class="{{ $about->icon ?? 'bi bi-patch-check' }}"></i>
-                        <h5 class="fw-bold mt-3">{{ $about->title  ?? ''}}</h5>
-                        <p class="text-secondary">{{ $about->sub_title ?? '' }}</p>
+                @foreach ($home_about as $about)
+                    <div class="col-md-4 fade-in">
+                        <div class="icon-box text-center">
+                            <i class="{{ $about->icon ?? 'bi bi-patch-check' }}"></i>
+                            <h5 class="fw-bold mt-3">{{ $about->title ?? '' }}</h5>
+                            <p class="text-secondary">{{ $about->sub_title ?? '' }}</p>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </div>
@@ -110,7 +111,7 @@
                 <div class="col-lg-7">
                     <div class="timeline">
                         @foreach ($home_materials as $materi)
-                             <div class="timeline-item">{{ $materi->title }}</div>
+                            <div class="timeline-item">{{ $materi->title }}</div>
                         @endforeach
 
                     </div>
@@ -132,10 +133,10 @@
                     <p class="text-secondary mb-4">{{ $beranda->feature_sub_title ?? '' }}</p>
                     <div class="fitur-list">
                         @foreach ($home_features as $feature)
-                             <div class="d-flex align-items-center mb-4"><i class="{{ $feature->icon }}"></i> <span
-                                class="fw-medium">{{ $feature->title }}</span></div>
+                            <div class="d-flex align-items-center mb-4"><i class="{{ $feature->icon }}"></i> <span
+                                    class="fw-medium">{{ $feature->title }}</span></div>
                         @endforeach
-                           
+
                     </div>
                 </div>
             </div>

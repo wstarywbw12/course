@@ -2,7 +2,9 @@
     <div class="container d-flex justify-content-between align-items-center">
 
         <!-- LOGO KIRI -->
-        <a class="navbar-brand " href="{{ route('home') }}">UMLab</a>
+        <a class="navbar-brand " href="{{ route('home') }}">
+             <img src="{{ asset('public/img/logo_light.png') }}" alt="sss" height="22">
+        </a>
 
         <!-- TOGGLER -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu"
