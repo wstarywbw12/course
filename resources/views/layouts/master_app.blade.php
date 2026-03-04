@@ -448,8 +448,8 @@
                                         <img src="{{ asset('public/storage/' . auth()->user()->foto) }}"height="32"
                                             width="32" class="rounded-circle mb-2 d-block" id="previewImage">
                                     @else
-                                        <img src="https://via.placeholder.com/100" width="100"
-                                            class="rounded mb-2 d-block" id="previewImage">
+                                        <img src="{{ asset('public/assets/images/users/user-dummy-img.jpg') }}" height="32" width="32"
+                                            class="rounded-circle mb-2 d-block" id="previewImage">
                                     @endif
 
                                     <span class="text-start ms-xl-2">
