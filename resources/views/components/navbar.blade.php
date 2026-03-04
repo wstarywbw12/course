@@ -1,9 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top mb-5">
     <div class="container d-flex justify-content-between align-items-center">
 
         <!-- LOGO KIRI -->
         <a class="navbar-brand " href="{{ route('home') }}">
-             <img src="{{ asset('public/img/logo_light.png') }}" alt="sss" height="22">
+            <img src="{{ asset('public/img/logo_light.png') }}" alt="sss" height="22">
         </a>
 
         <!-- TOGGLER -->
@@ -52,7 +52,7 @@
                             <img src="{{ asset('public/storage/' . auth()->user()->foto) }}"height="30" width="30"
                                 class="rounded-circle d-inline" id="previewImage">
                         @else
-                             <i class="bi bi-person-circle fs-4"></i>
+                            <i class="bi bi-person-circle fs-4"></i>
                         @endif
                     </a>
 
@@ -72,16 +72,26 @@
     </div>
 </nav>
 
+
+
 <style>
     .navbar-custom {
         background: transparent;
         padding: 18px 0;
+         background: #0e2c5c;
     }
 
-    .nav-link {
-        color: #dbeafe !important;
-        font-weight: 500;
-        font-size: 1rem;
+    .navbar-nav .nav-link {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        color: #f1f5f9 !important;
+        /* Putih soft */
+        transition: 0.2s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: white !important;
     }
 
     .navbar .navbar-brand {
