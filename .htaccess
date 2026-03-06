@@ -5,17 +5,58 @@
 
     RewriteEngine On
 
-    # Handle Authorization Header
+    ############################################
+    # BLOCK SENSITIVE FILES
+    ############################################
+
+    # Block .env
+    <Files .env>
+        Order allow,deny
+        Deny from all
+    </Files>
+
+    # Block hidden files (.git, .env, dll)
+    RewriteRule /\.(?!well-known).* - [F,L]
+
+    # Block composer files
+    <FilesMatch "(composer\.json|composer\.lock|package\.json|package-lock\.json)">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+
+    # Block access to vendor
+    RewriteRule ^vendor/ - [F,L]
+
+    # Block storage logs
+    RewriteRule ^storage/logs/ - [F,L]
+
+    # Block environment config files
+    <FilesMatch "\.(env|ini|log|conf)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+
+    ############################################
+    # HANDLE AUTH HEADER
+    ############################################
+
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
+    ############################################
+    # REMOVE TRAILING SLASH
+    ############################################
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
     RewriteRule ^ %1 [L,R=301]
 
-    # Send Requests To Front Controller...
+    ############################################
+    # LARAVEL FRONT CONTROLLER
+    ############################################
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
 </IfModule>
