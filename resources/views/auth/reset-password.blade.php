@@ -109,9 +109,8 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('password.update') }}" id="resetForm">
-                    @csrf
-                     @method('PUT')  
+                <form method="POST" action="{{ route('password.store') }}" id="resetForm">
+                    @csrf 
                     <input type="hidden" name="token" value="{{ $request->route('token') ?? $token ?? '' }}">
 
                     <!-- Email -->
