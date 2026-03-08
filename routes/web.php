@@ -90,6 +90,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/notes/{note}', [NoteController::class, 'destroy'])
         ->name('notes.destroy');
 
+    Route::prefix('setting-profile')->name('setting.profile.')->group(function () {
+        Route::get('/', [SettingProfileController::class,  'index'])->name('index');
+        Route::post('/update', [SettingProfileController::class, 'update'])->name('update');
+    });
+
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -156,11 +161,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/store', [SettingFeatureController::class, 'store'])->name('store');
         Route::put('/update/{id}', [SettingFeatureController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [SettingFeatureController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::prefix('setting-profile')->name('setting.profile.')->group(function () {
-        Route::get('/', [SettingProfileController::class,  'index'])->name('index');
-        Route::post('/update', [SettingProfileController::class, 'update'])->name('update');
     });
 
     Route::prefix('users')->name('users.')->group(function () {

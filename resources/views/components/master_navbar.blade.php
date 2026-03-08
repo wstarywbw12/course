@@ -33,62 +33,62 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('dashboard') }}" role="button"
-                        aria-expanded="false" >
+                    <a class="nav-link menu-link" href="{{ route('dashboard') }}" role="button" aria-expanded="false">
                         <i class="bx bxs-dashboard"></i> <span data-key="t-dashboards">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="bx bxs-data"></i> <span data-key="t-dashboards">Data Master</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarDashboards">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link" data-key="t-crm"> User</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('levels.index') }}" class="nav-link" data-key="t-crm">Level Course</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('courses.index') }}" class="nav-link" data-key="t-crm"> Course</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('results-quiz.index') }}" class="nav-link" data-key="t-crm"> Result
-                                    Quiz</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> <!-- end Dashboard Menu -->
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
-                        aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="bx bx-layer"></i> <span data-key="t-apps">Settings</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarApps">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('setting.beranda') }}" class="nav-link" data-key="t-chat"> Beranda
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('setting.about.index') }}" class="nav-link" data-key="t-chat"> about
+                @role('admin')
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarDashboards">
+                            <i class="bx bxs-data"></i> <span data-key="t-dashboards">Data Master</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarDashboards">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index') }}" class="nav-link" data-key="t-crm"> User</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('levels.index') }}" class="nav-link" data-key="t-crm">Level Course</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('courses.index') }}" class="nav-link" data-key="t-crm"> Course</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('results-quiz.index') }}" class="nav-link" data-key="t-crm"> Result
+                                        Quiz</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li> <!-- end Dashboard Menu -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarApps">
+                            <i class="bx bx-layer"></i> <span data-key="t-apps">Settings</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarApps">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('setting.beranda') }}" class="nav-link" data-key="t-chat"> Beranda
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('setting.about.index') }}" class="nav-link" data-key="t-chat"> about
 
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('setting.material.index') }}" class="nav-link" data-key="t-chat">
-                                    Material </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('setting.feature.index') }}" class="nav-link" data-key="t-chat">
-                                    Features </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('setting.material.index') }}" class="nav-link" data-key="t-chat">
+                                        Material </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('setting.feature.index') }}" class="nav-link" data-key="t-chat">
+                                        Features </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endrole
 
             </ul>
         </div>
