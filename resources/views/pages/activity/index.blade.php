@@ -8,44 +8,62 @@
 
             <!-- LEFT CONTENT -->
             <div class="col-lg-8">
+                @if ($courses->count() > 0)
+                    @foreach ($courses as $course)
+                        <div class="level-card mb-4">
 
-                @foreach ($courses as $course)
-                    <div class="level-card mb-4">
-
-                        <div class="d-flex align-items-center mb-2">
-                            <div class="level-icon">
-                                <i class="{{ $course->level->icon }}"></i>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="level-icon">
+                                    <i class="{{ $course->level->icon }}"></i>
+                                </div>
+                                <h5 class="mb-0 fw-semibold">
+                                    {{ $course->level->level }}
+                                </h5>
                             </div>
-                            <h5 class="mb-0 fw-semibold">
-                                {{ $course->level->level }}
-                            </h5>
-                        </div>
 
-                        <p class="level-desc mt-3">
-                            {!! Str::limit(strip_tags($course->description ?? ''), 83) !!}
+                            <p class="level-desc mt-3">
+                                {!! Str::limit(strip_tags($course->description ?? ''), 83) !!}
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="level-meta">
+                                    <i class="bi bi-clock"></i>
+                                    {{ $course->total_hours }} Hours
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="level-meta">
+                                    {{ $course->total_modules }} Modul Pembelajaran
+                                </div>
+
+                                <a href="{{ route('courses.detail', $course->id) }}" class="btn btn-detail">
+                                    Detail →
+                                </a>
+                            </div>
+
+                        </div>
+                    @endforeach
+                @else
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="empty-state-card text-center p-5">
+                        <div class="empty-state-icon mb-3">
+                            <i class="bi bi-journal-bookmark-fill" style="font-size: 4rem; color: #ccc;"></i>
+                        </div>
+                        <h4 class="fw-semibold mb-2">Belum Ada Course</h4>
+                        <p class="text-muted mb-0">
+                            Anda belum mempelajari course apapun. Yuk, mulai belajar sekarang!
                         </p>
-
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <div class="level-meta">
-                                <i class="bi bi-clock"></i>
-                                {{ $course->total_hours }} Hours
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="level-meta">
-                                {{ $course->total_modules }} Modul Pembelajaran
-                            </div>
-
-                            <a href="{{ route('courses.detail', $course->id) }}" class="btn btn-detail">
-                                Detail →
-                            </a>
-                        </div>
-
+                        <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">
+                            Lihat Semua Course
+                        </a>
                     </div>
-                @endforeach
+                        </div>
+                    </div>
+                @endif
 
 
             </div>
@@ -74,7 +92,7 @@
                         <h6 class="my-2">{{ Str::limit($continueCourse->title, 30) }}</h6>
 
                         <small>
-                             {!! Str::limit(strip_tags($continueCourse->description ?? ''), 83) !!}
+                            {!! Str::limit(strip_tags($continueCourse->description ?? ''), 83) !!}
                         </small>
 
                         <div class="text-end mt-3">
@@ -135,7 +153,8 @@
 
             for (let day = 1; day <= daysInMonth; day++) {
 
-                const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const fullDate =
+                `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
                 const isActive = activityDates.includes(fullDate);
 
