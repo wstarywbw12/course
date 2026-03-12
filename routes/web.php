@@ -160,4 +160,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
+Route::get('/notification/read/{id}', function($id){
+
+    $notif = auth()->user()->notifications()->findOrFail($id);
+
+    $notif->markAsRead();
+
+    return redirect($notif->data['url'] ?? '#');
+
+});
+
 require __DIR__.'/auth.php';

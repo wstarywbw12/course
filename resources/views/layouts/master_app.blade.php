@@ -114,7 +114,7 @@
                                 data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                                 <i class='bx bx-bell fs-22'></i>
                                 <span
-                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span
+                                    class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ auth()->user()->unreadNotifications->count() }}<span
                                         class="visually-hidden">unread messages</span></span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
@@ -127,7 +127,7 @@
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
                                             <div class="col-auto dropdown-tabs">
-                                                <span class="badge bg-light-subtle text-body fs-13"> 4 New</span>
+                                                <span class="badge bg-light-subtle text-body fs-13"> {{ auth()->user()->unreadNotifications->count() }} New</span>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                             <li class="nav-item waves-effect waves-light">
                                                 <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab"
                                                     role="tab" aria-selected="true">
-                                                    All (4)
+                                                    All ({{ auth()->user()->unreadNotifications->count() }})
                                                 </a>
                                             </li>
                                         </ul>
@@ -152,7 +152,7 @@
                                         <div data-simplebar style="max-height: 300px;" class="pe-2">
 
                                             @forelse($notifications as $notif)
-                                                <a href="{{ $notif->data['url'] ?? '#' }}"
+                                                <a href="/notification/read/{{ $notif->id }}"
                                                     class="text-reset notification-item d-block dropdown-item position-relative">
 
                                                     <div class="d-flex">
@@ -196,7 +196,7 @@
 
 
                                             <div class="my-3 text-center view-all">
-                                                <a href="/notifications"
+                                                <a href=""
                                                     class="btn btn-soft-success waves-effect waves-light">
                                                     View All Notifications
                                                     <i class="ri-arrow-right-line align-middle"></i>
