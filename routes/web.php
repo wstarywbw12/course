@@ -15,17 +15,19 @@ use App\Http\Controllers\SettingBerandaController;
 use App\Http\Controllers\SettingFeatureController;
 use App\Http\Controllers\SettingMaterialController;
 use App\Http\Controllers\SettingProfileController;
+use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
+use App\Models\CourseMaterial;
+use App\Models\UserMaterialActivity;
+use App\Notifications\MaterialCompletedNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SocialiteController;
-
 
 Route::get('/auth/google', [SocialiteController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
 
-Route::get('/',  [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -42,10 +44,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dasboard/courses/{course}', [DashboardController::class, 'show'])
         ->name('courses.detail');
 
-    Route::post('/materials/{material}/complete', function (\App\Models\CourseMaterial $material) {
-        \App\Models\UserMaterialActivity::updateOrCreate(
+    Route::post('/materials/{material}/complete', function (CourseMaterial $material) {
+
+        $user = Auth::user();
+
+        UserMaterialActivity::updateOrCreate(
             [
-                'user_id' => Auth::id(),
+                'user_id' => $user->id,
                 'material_id' => $material->id,
                 'activity_type' => 'complete',
             ],
@@ -53,6 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'activity_time' => now(),
             ]
         );
+
+        // kirim notifikasi
+        $user->notify(new MaterialCompletedNotification($material));
 
         return response()->json([
             'success' => true,
@@ -160,7 +168,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
-Route::get('/notification/read/{id}', function($id){
+Route::get('/notification/read/{id}', function ($id) {
 
     $notif = auth()->user()->notifications()->findOrFail($id);
 

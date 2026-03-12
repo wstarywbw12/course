@@ -127,7 +127,8 @@
                                                 <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                             </div>
                                             <div class="col-auto dropdown-tabs">
-                                                <span class="badge bg-light-subtle text-body fs-13"> {{ auth()->user()->unreadNotifications->count() }} New</span>
+                                                <span class="badge bg-light-subtle text-body fs-13">
+                                                    {{ auth()->user()->unreadNotifications->count() }} New</span>
                                             </div>
                                         </div>
                                     </div>
@@ -153,20 +154,22 @@
 
                                             @forelse($notifications as $notif)
                                                 <a href="/notification/read/{{ $notif->id }}"
-                                                    class="text-reset notification-item d-block dropdown-item position-relative">
+                                                    class="text-reset notification-item d-block dropdown-item position-relative
+                    {{ is_null($notif->read_at) ? 'bg-light' : '' }}">
 
                                                     <div class="d-flex">
 
                                                         <div class="avatar-xs me-3 flex-shrink-0">
                                                             <span
-                                                                class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
+                                                                class="avatar-title rounded-circle fs-16
+                                {{ is_null($notif->read_at) ? 'bg-primary-subtle text-primary' : 'bg-info-subtle text-info' }}">
                                                                 <i class="bx bx-bell"></i>
                                                             </span>
                                                         </div>
 
                                                         <div class="flex-grow-1">
 
-                                                            <h6 class="mt-0 mb-2 lh-base">
+                                                            <h6 class="mt-0 mb-2 lh-base fw-semibold">
                                                                 {{ $notif->data['title'] ?? 'Notifikasi' }}
                                                             </h6>
 
@@ -196,7 +199,7 @@
 
 
                                             <div class="my-3 text-center view-all">
-                                                <a href=""
+                                                <a href="/notifications"
                                                     class="btn btn-soft-success waves-effect waves-light">
                                                     View All Notifications
                                                     <i class="ri-arrow-right-line align-middle"></i>
