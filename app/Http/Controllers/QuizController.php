@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Quiz;
 use App\Models\UserQuizAnswer;
 use App\Models\UserQuizResult;
+use App\Notifications\QuizFinishedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,6 +55,7 @@ class QuizController extends Controller
     public function submit(Request $request, Quiz $quiz)
     {
         $userId = Auth::id();
+        $user = Auth::user();
 
         $score = 0;
         $total = $quiz->questions->count();
@@ -92,7 +94,8 @@ class QuizController extends Controller
 
         $finalScore = round(($score / $total) * 100);
 
-        UserQuizResult::updateOrCreate(
+        // simpan result
+        $result = UserQuizResult::updateOrCreate(
             [
                 'user_id' => $userId,
                 'quiz_id' => $quiz->id,
@@ -103,6 +106,9 @@ class QuizController extends Controller
                 'submitted_at' => now(),
             ]
         );
+
+        // kirim notifikasi
+        $user->notify(new QuizFinishedNotification($quiz, $result));
 
         return redirect()->back()
             ->with('quiz_result', [

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +29,20 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('endrole', function () {
             return '<?php endif; ?>';
         });
+
+        View::composer('*', function ($view) {
+
+        if (Auth::check()) {
+
+            $notifications = Auth::user()
+                ->notifications()
+                ->latest()
+                ->take(10)
+                ->get();
+
+            $view->with('notifications', $notifications);
+        }
+
+    });
     }
 }
