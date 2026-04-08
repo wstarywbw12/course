@@ -11,24 +11,27 @@ class UserController extends Controller
     public function index()
     {
         $users = User::latest()->get();
+
         return view('pages.users.index', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name'     => 'required',
-            'email'    => 'required|email|unique:users,email',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role'     => 'required|in:admin,user',
+            'role' => 'required|in:admin,user',
         ]);
 
-        User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => $request->role,
+            'role' => $request->role,
         ]);
+
+        //$user->markEmailAsVerified();
 
         return redirect()->back()->with('success', 'User berhasil ditambahkan');
     }
@@ -36,17 +39,17 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'  => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'role'  => 'required|in:admin,user',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'role' => 'required|in:admin,user',
         ]);
 
         $user = User::findOrFail($id);
 
         $data = [
-            'name'  => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
-            'role'  => $request->role,
+            'role' => $request->role,
         ];
 
         if ($request->password) {
@@ -61,6 +64,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::findOrFail($id)->delete();
+
         return redirect()->back()->with('success', 'User berhasil dihapus');
     }
 }
